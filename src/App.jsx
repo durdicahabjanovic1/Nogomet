@@ -7,6 +7,7 @@ import { IME_APLIKACIJE, RouteNames } from './constants'
 import { Route, Routes } from 'react-router-dom'
 import Home from './pages/Home'
 import IgracPregled from './pages/igraci/IgracPregled'
+import OAplikaciji from './pages/OAplikaciji'
 
 function App() {
  
@@ -17,6 +18,7 @@ function App() {
         <Routes>
           <Route path={RouteNames.HOME} element={<Home />} />
           <Route path={RouteNames.IGRACI} element={<IgracPregled />} />
+          <Route path={RouteNames.OAPLIKACIJI} element={<OAplikaciji />} />
         </Routes>
 
       </Container>

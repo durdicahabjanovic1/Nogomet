@@ -5,5 +5,6 @@ export const IME_APLIKACIJE = 'Nogomet'
 
 export const RouteNames = {
     HOME: '/',
-    IGRACI: '/igraci'
+    IGRACI: '/igraci',
+    OAPLIKACIJI:'/oaplikaciji',
 }

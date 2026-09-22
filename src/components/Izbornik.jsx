@@ -3,10 +3,14 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import { IME_APLIKACIJE } from '../constants';
+import { IME_APLIKACIJE, RouteNames } from '../constants';
+import { useNavigate } from 'react-router-dom';
 
 
 export default function Izbornik() {
+    
+const navigate= useNavigate()
+
 
 
     return (
@@ -18,12 +22,22 @@ export default function Izbornik() {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
-                        <Nav.Link href="#home">Početna</Nav.Link>
+                        <Nav.Link 
+                        onClick={()=>navigate(RouteNames.HOME)}
+                        >Početna</Nav.Link>
                        
                         <NavDropdown title="Programi" id="basic-nav-dropdown">
-                            <NavDropdown.Item href="#action/3.1">Igrači</NavDropdown.Item>
+
+                            <NavDropdown.Item
+                            onClick={()=>navigate(RouteNames.IGRACI)}
+                            >Igrači</NavDropdown.Item>
+
+                          
                            
                         </NavDropdown>
+                         <Nav.Link 
+                        onClick={()=>navigate(RouteNames.OAPLIKACIJI)}
+                        >O Aplikaciji</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Container>
