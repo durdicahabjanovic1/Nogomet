@@ -8,6 +8,8 @@ import { Route, Routes } from 'react-router-dom'
 import Home from './pages/Home'
 import IgracPregled from './pages/igraci/IgracPregled'
 import OAplikaciji from './pages/OAplikaciji'
+import IgracNovi from './pages/igraci/IgracNovi'
+
 
 function App() {
  
@@ -19,6 +21,7 @@ function App() {
           <Route path={RouteNames.HOME} element={<Home />} />
           <Route path={RouteNames.IGRACI} element={<IgracPregled />} />
           <Route path={RouteNames.OAPLIKACIJI} element={<OAplikaciji />} />
+          <Route path={RouteNames.IGRACI_DODAJ} element={<IgracNovi />} />
         </Routes>
 
       </Container>
