@@ -64,7 +64,7 @@ export default function IgracNovi() {
 
                 <Row className="mt-4">
                     <Col>
-                        <Link to={RouteNames.SMJEROVI}
+                        <Link to={RouteNames.IGRACI}
                         className="btn btn-danger">
                             Odustani
                         </Link>
