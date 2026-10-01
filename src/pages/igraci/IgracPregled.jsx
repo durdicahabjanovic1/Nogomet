@@ -54,11 +54,11 @@ export default function IgracPregled() {
                 ))}
             </tbody>
         </Table>
-    Ukupno & nbsp;
+    Ukupno
     <Badge pill bg="success">
         {igraci && igraci.length}
     </Badge>
-        & nbsp; igrača
+         igrača
         </>
     )
 }
