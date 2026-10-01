@@ -22,6 +22,7 @@ function App() {
           <Route path={RouteNames.IGRACI} element={<IgracPregled />} />
           <Route path={RouteNames.OAPLIKACIJI} element={<OAplikaciji />} />
           <Route path={RouteNames.IGRACI_DODAJ} element={<IgracNovi />} />
+          <Route path={RouteNames.IGRACI_PROMJENA} element={<IgracPromjena />} />
         </Routes>
 
       </Container>

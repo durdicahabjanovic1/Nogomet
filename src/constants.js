@@ -10,6 +10,7 @@ export const RouteNames = {
      HOME: '/',
     IGRACI: '/igraci',
     IGRACI_DODAJ: '/igraci/novi',
+    IGRACI_PROMJENA:'/igraci/:sifra'
 
 }
 

@@ -1,8 +1,16 @@
+
 import { igraci } from "./IgracPodaci";
 
 async function get() {
     return { data: [...igraci] }
 }
+
+async function getBySifra(sifra) {
+    return { data: igraci.find(s => s.sifra === parseInt(sifra)) }
+
+}
+
+
 
 async function dodaj(igrac) {
     if (igraci.length === 0) {
@@ -15,6 +23,6 @@ async function dodaj(igrac) {
 
 export default {
     get,
-
+    getBySifra,
     dodaj
 }
