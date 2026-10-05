@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import IgracService from "../../services/igraci/IgracService"
-import { Badge, Table } from "react-bootstrap"
+import { Badge, Button, Table } from "react-bootstrap"
 import { RouteNames } from "../../constants"
 import { Link, useNavigate  } from "react-router-dom"
 
@@ -49,6 +49,9 @@ export default function IgracPregled() {
                         <th>Pozicija</th>
                         <th>Datum rođenja</th>
                         <th>Broj registracije</th>
+                        <th>
+                            Akcija 
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -61,6 +64,11 @@ export default function IgracPregled() {
                             <td>{igrac.pozicija}</td>
                             <td>{igrac.datumRodenja}</td>
                             <td>{igrac.brojRegistracije}</td>
+                            <td>
+                                <Button
+                                onClick={()=>{navigate(`/igraci/${igrac.sifra}`)}}
+                                >Promijeni</Button>
+                            </td>
                         </tr>
                     ))}
                 </tbody>

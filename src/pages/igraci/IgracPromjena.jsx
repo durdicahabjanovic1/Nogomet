@@ -9,16 +9,14 @@ import { useEffect, useState } from "react";
 export default function IgracPromjena() {
 
     const navigate = useNavigate()
-    const parmas = useParams()
+    const params = useParams()
     const [igrac, setIgrac] = useState({})
-    const [aktivan, setAktivan] = useState(false)
 
    async function ucitajIgraca(){
-         await IgracService.getBySifra(parmas.sifra).then((odgovor)=>{
+         await IgracService.getBySifra(params.sifra).then((odgovor)=>{
             const s = odgovor.data
-            s.datumPokretanja = s.datumPokretanja.substring(0,10)
+            s.datumRodenja = s.datumRodenja.substring(0,10)
             setIgrac(s)
-            setAktivan(s.aktivan)
          })
    }
     
@@ -60,35 +58,49 @@ export default function IgracPromjena() {
 
             <Form onSubmit={obradiSubmit}>
 
-                <Form.Group controlId="naziv">
-                    <Form.Label>Naziv</Form.Label>
-                    <Form.Control type="text" name="naziv" required 
-                    defaultValue={igrac.naziv}/>
+                <Form.Group controlId="ime">
+                    <Form.Label>Ime</Form.Label>
+                    <Form.Control type="text" name="ime" required 
+                    defaultValue={igrac.ime}/>
                 </Form.Group>
 
-                <Form.Group controlId="trajanje">
-                    <Form.Label>Trajanje</Form.Label>
-                    <Form.Control type="number" name="trajanje" step={1} 
-                    defaultValue={igrac.trajanje}/>
+                <Form.Group controlId="prezime">
+                    <Form.Label>Prezime</Form.Label>
+                    <Form.Control type="text" name="prezime"  
+                    defaultValue={igrac.prezime}/>
                 </Form.Group>
 
-                <Form.Group controlId="cijena">
-                    <Form.Label>Cijena</Form.Label>
-                    <Form.Control type="number" name="cijena" step={0.01} 
-                    defaultValue={igrac.cijena}/>
+                <Form.Group controlId="brojDresa">
+                    <Form.Label>Broj dresa</Form.Label>
+                    <Form.Control type="number" name="brojDresa" step={1} 
+                    defaultValue={igrac.brojDresa}/>
                 </Form.Group>
 
-                <Form.Group controlId="datumPokretanja">
-                    <Form.Label>Datum pokretanja</Form.Label>
-                    <Form.Control type="date" name="datumPokretanja" 
-                    defaultValue={igrac.datumPokretanja}/>
+                <Form.Group controlId="brojKopacki">
+                    <Form.Label>Broj kopački</Form.Label>
+                    <Form.Control type="number" name="brojKopacki" 
+                    defaultValue={igrac.brojKopacki}/>
                 </Form.Group>
 
-                <Form.Group controlId="aktivan" className="mt-3">
-                    <Form.Check label="Aktivan" name="aktivan" 
-                    checked={aktivan}
-                    onChange={(e)=>{setAktivan(e.target.checked)}}/>
+                 <Form.Group controlId="pozicija">
+                    <Form.Label>Pozicija</Form.Label>
+                    <Form.Control type="text" name="pozicija" 
+                    defaultValue={igrac.Pozicija}/>
                 </Form.Group>
+
+                 <Form.Group controlId="datumRodenja">
+                    <Form.Label>Datum rođenja</Form.Label>
+                    <Form.Control type="date" name="datumRodenja" 
+                    defaultValue={igrac.datumRodenja}/>
+                </Form.Group>
+
+            
+                 <Form.Group controlId="brojRegistracije">
+                    <Form.Label>Broj registracije</Form.Label>
+                    <Form.Control type="text" name="brojRegistracije" 
+                    defaultValue={igrac.brojRegistracije}/>
+                </Form.Group>
+
 
 
                 <Row className="mt-4">
@@ -100,7 +112,7 @@ export default function IgracPromjena() {
                     </Col>
                     <Col>
                         <Button type="submit" variant="success">
-                            Dodaj
+                            Promijeni
                         </Button>
                     </Col>
                 </Row>
