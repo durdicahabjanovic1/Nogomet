@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 
 
 
-export default function IgracPregled() {
+export default function IgracPromjena() {
 
     const navigate = useNavigate()
     const parmas = useParams()

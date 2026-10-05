@@ -2,17 +2,17 @@ import { useEffect, useState } from "react"
 import IgracService from "../../services/igraci/IgracService"
 import { Badge, Table } from "react-bootstrap"
 import { RouteNames } from "../../constants"
-import { Link, useNavigate,  } from "react-router-dom"
+import { Link, useNavigate  } from "react-router-dom"
 
 
 export default function IgracPregled() {
 
     const [igraci, setIgraci] = useState([])
 
-    const useNavigate = useNavigate()
+    const navigate = useNavigate()
 
     async function ucitajIgrace() {
-        await IgracService.get.then((odgovor) => {
+        await IgracService.get().then((odgovor) => {
             // console.table(odgovor.data)
            setIgraci(odgovor.data)
         })

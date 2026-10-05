@@ -9,6 +9,7 @@ import Home from './pages/Home'
 import IgracPregled from './pages/igraci/IgracPregled'
 import OAplikaciji from './pages/OAplikaciji'
 import IgracNovi from './pages/igraci/IgracNovi'
+import IgracPromjena from './pages/igraci/IgracPromjena'
 
 
 function App() {
