@@ -11,7 +11,7 @@ export default function IgracNovi() {
     const navigate = useNavigate()
 
     async function dodaj(igrac){
-        await IgracService.dodaj(igrac).then(()=>{
+        await IgracService.promjeni(igrac).then(()=>{
             navigate(RouteNames.IGRACI)
         })
     }
@@ -20,11 +20,16 @@ export default function IgracNovi() {
         e.preventDefault() // nemoj odraditi submit
         const podaci = new FormData(e.target)
         dodaj({
-            naziv: podaci.get('naziv'),
-            trajanje: parseInt(podaci.get('trajanje')),
-            cijena: parseFloat(podaci.get('cijena')),
-            datumPokretanja: new Date(podaci.get('datumPokretanja')).toISOString(),
-            aktivan: podaci.get('aktivan') === 'on'
+            ime: podaci.get('ime'),
+        prezime: podaci.get('prezime'),
+        brojDresa: parseInt(podaci.get('brojDresa')),
+        brojKopackih: parseInt(podaci.get('brojKopacki')),
+        pozicija: podaci.get('pozicija'),
+        datumRodenja: new Date(podaci.get('datumRodenja')).toISOString(),
+        brojRegistracije: parseInt(podaci.get('brojRegistracije'))
+       
+
+          
         })
     }
 
@@ -37,29 +42,43 @@ export default function IgracNovi() {
 
             <Form onSubmit={obradiSubmit}>
 
-                <Form.Group controlId="naziv">
-                    <Form.Label>Naziv</Form.Label>
-                    <Form.Control type="text" name="naziv" required />
+                <Form.Group controlId="ime">
+                    <Form.Label>Ime</Form.Label>
+                    <Form.Control type="text" name="ime" required />
                 </Form.Group>
 
-                <Form.Group controlId="trajanje">
-                    <Form.Label>Trajanje</Form.Label>
-                    <Form.Control type="number" name="trajanje" step={1} />
+                <Form.Group controlId="prezime">
+                    <Form.Label>Prezime</Form.Label>
+                    <Form.Control type="text" name="prezime"  />
                 </Form.Group>
 
-                <Form.Group controlId="cijena">
-                    <Form.Label>Cijena</Form.Label>
-                    <Form.Control type="number" name="cijena" step={0.01} />
+                <Form.Group controlId="brojDresa">
+                    <Form.Label>Broj dresa</Form.Label>
+                    <Form.Control type="number" name="brojDresa" step={1} />
                 </Form.Group>
 
-                <Form.Group controlId="datumPokretanja">
-                    <Form.Label>Datum pokretanja</Form.Label>
-                    <Form.Control type="date" name="datumPokretanja" />
+                <Form.Group controlId="brojKopacki">
+                    <Form.Label>Broj kopački</Form.Label>
+                    <Form.Control type="number" name="brojKopacki" />
                 </Form.Group>
 
-                <Form.Group controlId="aktivan" className="mt-3">
-                    <Form.Check label="Aktivan" name="aktivan" />
+                 <Form.Group controlId="pozicija">
+                    <Form.Label>Pozicija</Form.Label>
+                    <Form.Control type="text" name="pozicija" />
                 </Form.Group>
+
+                 <Form.Group controlId="datumRodenja">
+                    <Form.Label>Datum rođenja</Form.Label>
+                    <Form.Control type="date" name="datumRodenja" />
+                </Form.Group>
+
+            
+                 <Form.Group controlId="brojRegistracije">
+                    <Form.Label>Broj registracije</Form.Label>
+                    <Form.Control type="text" name="brojRegistracije" />
+                </Form.Group>
+
+               
 
 
                 <Row className="mt-4">

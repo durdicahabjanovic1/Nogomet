@@ -12,7 +12,7 @@ async function getBySifra(sifra) {
 
 
 
-async function dodaj(igrac) {
+async function promjeni(igrac) {
     if (igraci.length === 0) {
         igrac.sifra = 1
     } else {
@@ -24,5 +24,5 @@ async function dodaj(igrac) {
 export default {
     get,
     getBySifra,
-    dodaj
+    promjeni
 }
