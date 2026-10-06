@@ -29,8 +29,8 @@ export default function IgracPromjena() {
     }, [])
 
 
-    async function dodaj(igraca){
-        await IgracService.dodaj(igraca).then(()=>{
+    async function promijeni(igraca){
+        await IgracService.promijeni(params.sifra,igraca).then(()=>{
             navigate(RouteNames.IGRACI)
         })
     }
@@ -39,12 +39,14 @@ export default function IgracPromjena() {
      function obradiSubmit(e){ // e je event
         e.preventDefault() // nemoj odraditi submit
         const podaci = new FormData(e.target)
-        dodaj({
-            naziv: podaci.get('naziv'),
-            trajanje: parseInt(podaci.get('trajanje')),
-            cijena: parseFloat(podaci.get('cijena')),
-            datumPokretanja: new Date(podaci.get('datumPokretanja')).toISOString(),
-            aktivan: podaci.get('aktivan') === 'on'
+        promijeni({
+                ime: podaci.get('ime'),
+        prezime: podaci.get('prezime'),
+        brojDresa: parseInt(podaci.get('brojDresa')),
+        brojKopackih: parseInt(podaci.get('brojKopacki')),
+        pozicija: podaci.get('pozicija'),
+        datumRodenja: new Date(podaci.get('datumRodenja')).toISOString(),
+        brojRegistracije: parseInt(podaci.get('brojRegistracije'))
         })
     }    
     
@@ -79,13 +81,13 @@ export default function IgracPromjena() {
                 <Form.Group controlId="brojKopacki">
                     <Form.Label>Broj kopački</Form.Label>
                     <Form.Control type="number" name="brojKopacki" 
-                    defaultValue={igrac.brojKopacki}/>
+                    defaultValue={igrac.brojKopackih}/>
                 </Form.Group>
 
                  <Form.Group controlId="pozicija">
                     <Form.Label>Pozicija</Form.Label>
                     <Form.Control type="text" name="pozicija" 
-                    defaultValue={igrac.Pozicija}/>
+                    defaultValue={igrac.pozicija}/>
                 </Form.Group>
 
                  <Form.Group controlId="datumRodenja">

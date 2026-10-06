@@ -11,7 +11,7 @@ export default function IgracNovi() {
     const navigate = useNavigate()
 
     async function dodaj(igrac){
-        await IgracService.promjeni(igrac).then(()=>{
+        await IgracService.dodaj(igrac).then(()=>{
             navigate(RouteNames.IGRACI)
         })
     }

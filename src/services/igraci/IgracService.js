@@ -12,7 +12,7 @@ async function getBySifra(sifra) {
 
 
 
-async function promjeni(igrac) {
+async function dodaj(igrac) {
     if (igraci.length === 0) {
         igrac.sifra = 1
     } else {
@@ -21,8 +21,27 @@ async function promjeni(igrac) {
     igraci.push(igrac)
 }
 
+async function obrisi(sifra){
+    const index = nadiIndex(sifra)
+    igraci.splice(index,1)
+}
+  function nadiIndex(sifra){
+    return igraci.findIndex(s => s.sifra === parseInt(sifra))
+    
+  }
+  async function promijeni(sifra, igrac){
+    const index = nadiIndex(sifra)
+    igraci[index] = {...igraci[index], ...igrac}
+  }
+    
+
+    
+
+
 export default {
     get,
     getBySifra,
-    promjeni
+    dodaj,
+    promijeni,
+    obrisi
 }

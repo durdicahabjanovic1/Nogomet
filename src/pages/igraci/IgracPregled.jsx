@@ -24,6 +24,14 @@ export default function IgracPregled() {
         ucitajIgrace()
     }, [])
 
+    async function obrisi(sifra){
+        if(!confirm('Sigurno obrisati?')){
+            return
+        }
+        await IgracService.obrisi(sifra)
+        ucitajIgrace()
+    }
+
      
 
     
@@ -65,9 +73,18 @@ export default function IgracPregled() {
                             <td>{igrac.datumRodenja}</td>
                             <td>{igrac.brojRegistracije}</td>
                             <td>
-                                <Button
-                                onClick={()=>{navigate(`/igraci/${igrac.sifra}`)}}
-                                >Promijeni</Button>
+                                <Button onClick={()=>{navigate(`/igraci/${igrac.sifra}`)}}>
+                                Promijeni
+
+                                </Button>
+                   
+                                
+                                &nbsp;&nbsp;
+
+                                <Button variant="danger" onClick={()=>obrisi(igrac.sifra)}>
+                                    Obriši
+
+                                </Button>
                             </td>
                         </tr>
                     ))}
