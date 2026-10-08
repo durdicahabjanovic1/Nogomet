@@ -1,47 +1,45 @@
 
-import { igraci } from "./IgracPodaci";
 
-async function get() {
-    return { data: [...igraci] }
+
+import {DATA_SOURCE } from "../../constants"
+import IgracServiceLocalStorage from "./IgracServiceLoccalStorage"
+import IgracServiceMemorija from "./IgracServiceMemorija"
+
+
+let Servis = null
+
+
+switch(DATA_SOURCE){
+    case 'memorija':
+        Servis = IgracServiceMemorija
+        break
+        case 'localStorage':
+            Servis = IgracServiceLocalStorage
+            break
+            default:
+                Servis = null
 }
 
-async function getBySifra(sifra) {
-    return { data: igraci.find(s => s.sifra === parseInt(sifra)) }
+
+const PrazanServis = {
+
+     get: async () => ({data: []}),
+     getBySifra: async (sifra) => ({data: {}}),
+     dodaj: async (igrac) => {console.error('Servis nije implementiran')},
+     promijeni: async(sifra, igrac) => {console.error('Servis nije implementiran')},
+     obrisi: async (sifra) => {console.error('Servis nije implementiran')}
 
 }
 
-
-
-async function dodaj(igrac) {
-    if (igraci.length === 0) {
-        igrac.sifra = 1
-    } else {
-        igrac.sifra = igraci[igraci.length - 1].sifra + 1
-    }
-    igraci.push(igrac)
-}
-
-async function obrisi(sifra){
-    const index = nadiIndex(sifra)
-    igraci.splice(index,1)
-}
-  function nadiIndex(sifra){
-    return igraci.findIndex(s => s.sifra === parseInt(sifra))
-    
-  }
-  async function promijeni(sifra, igrac){
-    const index = nadiIndex(sifra)
-    igraci[index] = {...igraci[index], ...igrac}
-  }
-    
-
+const AktivniServis = Servis || PrazanServis
     
 
 
 export default {
-    get,
-    getBySifra,
-    dodaj,
-    promijeni,
-    obrisi
+   
+    get: () => AktivniServis.get(),
+    getBySifra: (sifra) => AktivniServis.getBySifra(sifra),
+    dodaj: (igrac) => AktivniServis.dodaj(igrac),
+    promijeni: (sifra,igrac) => AktivniServis.promijeni(sifra,igrac),
+    obrisi: (sifra) => AktivniServis.obrisi(sifra)
 }

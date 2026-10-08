@@ -10,9 +10,15 @@ export const RouteNames = {
      HOME: '/',
     IGRACI: '/igraci',
     IGRACI_DODAJ: '/igraci/novi',
-    IGRACI_PROMJENA:'/igraci/:sifra'
+    IGRACI_PROMJENA:'/igraci/:sifra',
+
+   IGRAČI:'/igraci',
+   IGRAČI_DODAJ: '/igraci/novi',
+   IGRAČI_PROMJENA: '/igraci/:sifra',
 
 }
+
+export const DATA_SOURCE = 'localStorage'
 
 
 
