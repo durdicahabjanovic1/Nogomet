@@ -2,7 +2,7 @@
 
 
 import {DATA_SOURCE } from "../../constants"
-import IgracServiceLocalStorage from "./IgracServiceLoccalStorage"
+import IgracServiceLocalStorage from "./IgracServiceLocalStorage"
 import IgracServiceMemorija from "./IgracServiceMemorija"
 
 

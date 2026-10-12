@@ -32,6 +32,10 @@ const navigate= useNavigate()
                             onClick={()=>navigate(RouteNames.IGRACI)}
                             >Igrači</NavDropdown.Item>
 
+                             <NavDropdown.Item
+                            onClick={()=>navigate(RouteNames.KLUBOVI)}
+                            >Klubovi</NavDropdown.Item>
+
                           
                            
                         </NavDropdown>

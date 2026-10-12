@@ -12,13 +12,13 @@ export const RouteNames = {
     IGRACI_DODAJ: '/igraci/novi',
     IGRACI_PROMJENA:'/igraci/:sifra',
 
-   IGRAČI:'/igraci',
-   IGRAČI_DODAJ: '/igraci/novi',
-   IGRAČI_PROMJENA: '/igraci/:sifra',
+   KLUBOVI:'/klubovi',
+   KLUBOVI_DODAJ: '/klubovi/novi',
+   KLUBOVI_PROMJENA: '/klubovi/:sifra',
 
 }
-
-export const DATA_SOURCE = 'localStorage'
+// memorija   localStorage
+export const DATA_SOURCE = 'memorija'
 
 
 
