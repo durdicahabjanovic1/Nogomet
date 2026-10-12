@@ -3,7 +3,6 @@ import KlubService from "../../services/klubovi/KlubService"
 import { Badge, Button, Table } from "react-bootstrap"
 import { RouteNames } from "../../constants"
 import { Link, useNavigate  } from "react-router-dom"
-import { RouteNames } from "../../constants"
 
 
 export default function klubPregled() {
