@@ -3,25 +3,27 @@ import KlubService from "../../services/klubovi/KlubService"
 import { Badge, Button, Table } from "react-bootstrap"
 import { RouteNames } from "../../constants"
 import { Link, useNavigate  } from "react-router-dom"
+import { RouteNames } from "../../constants"
 
 
 export default function klubPregled() {
 
-    const [klubovi, setklubovi] = useState([])
+    const [klubovi, setKlubovi] = useState([])
 
     const navigate = useNavigate()
 
-    async function ucitajklubove() {
+    async function ucitajKlubove() {
         await KlubService.get().then((odgovor) => {
+            console.log(JSON.stringify(odgovor.data))
             // console.table(odgovor.data)
-           setklubovi(odgovor.data)
+           setKlubovi(odgovor.data)
         })
     }
 
 
     useEffect(() => {
         //console.log('Došao na pregled kluba)
-        ucitajklubove()
+        ucitajKlubove()
     }, [])
 
     async function obrisi(sifra){
@@ -29,7 +31,7 @@ export default function klubPregled() {
             return
         }
         await KlubService.obrisi(sifra)
-        ucitajklubove()
+        ucitajKlubove()
     }
 
      
