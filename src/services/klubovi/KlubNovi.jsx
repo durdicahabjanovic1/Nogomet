@@ -18,7 +18,7 @@ export default function KlubNovi() {
         
     }
 
-    function obradiSubmite(e) { // e je event}
+    function obradiSubmit(e) { // e je event}
         e.preventDefault() // nemoj odraditi submit
         const podaci = new FormData(e.target)
             
@@ -36,7 +36,7 @@ return (
     <h3>
         Dodavanje novog kluba
     </h3>
-    <From onSubmit={obradiSubmite}>
+    <From onSubmit={obradiSubmit}>
 
    
 
