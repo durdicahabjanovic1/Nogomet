@@ -21,15 +21,12 @@ export default function IgracNovi() {
         const podaci = new FormData(e.target)
         dodaj({
             ime: podaci.get('ime'),
-        prezime: podaci.get('prezime'),
-        brojDresa: parseInt(podaci.get('brojDresa')),
-        brojKopackih: parseInt(podaci.get('brojKopacki')),
-        pozicija: podaci.get('pozicija'),
-        datumRodenja: new Date(podaci.get('datumRodenja')).toISOString(),
-        brojRegistracije: parseInt(podaci.get('brojRegistracije'))
-       
-
-          
+            prezime: podaci.get('prezime'),
+            brojDresa: parseInt(podaci.get('brojDresa')),
+            brojKopackih: parseInt(podaci.get('brojKopacki')),
+            pozicija: podaci.get('pozicija'),
+            datumRodenja: new Date(podaci.get('datumRodenja')).toISOString(),
+            brojRegistracije: podaci.get('brojRegistracije')
         })
     }
 

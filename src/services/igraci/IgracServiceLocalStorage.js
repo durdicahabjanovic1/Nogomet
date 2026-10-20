@@ -30,7 +30,7 @@ async function dodaj(igrac){
         igrac.sifra = maxSifra + 1
     }
 
-    igraci.push(smjer)
+    igraci.push(igrac)
     spremiUStorage(igraci)
 }
 

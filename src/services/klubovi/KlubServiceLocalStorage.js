@@ -30,7 +30,7 @@ async function dodaj(klub){
         klub.sifra = maxSifra + 1
     }
 
-    klubovi.push(smjer)
+    klubovi.push(klub)
     spremiUStorage(klubovi)
 }
 
