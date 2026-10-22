@@ -8,7 +8,8 @@ export const igraci = [
         brojKopackih: 42,
         pozicija: 'desno krilo',
         datumRodenja: '2010-10-15T00:00:00',
-        brojRegistracije: '125/2026'
+        brojRegistracije: '125/2026',
+        klub: 1
     },
     {
         sifra: 2,
@@ -18,7 +19,9 @@ export const igraci = [
         brojKopackih: 44,
         pozicija: 'golman',
         datumRodenja: '2010-03-12T00:00:00',
-        brojRegistracije: '126/2026'
+        brojRegistracije: '126/2026',
+        klub: 2
+
     },
     {
         sifra: 3,
@@ -28,7 +31,8 @@ export const igraci = [
         brojKopackih: 43,
         pozicija: 'stoper',
         datumRodenja: '2010-05-20T00:00:00',
-        brojRegistracije: '127/2026'
+        brojRegistracije: '127/2026',
+        klub: 3
     },
     {
         sifra: 4,
@@ -38,7 +42,8 @@ export const igraci = [
         brojKopackih: 41,
         pozicija: 'zadnji vezni',
         datumRodenja: '2011-01-05T00:00:00',
-        brojRegistracije: '128/2026'
+        brojRegistracije: '128/2026',
+        klub: 2
     },
     {
         sifra: 5,
@@ -48,7 +53,8 @@ export const igraci = [
         brojKopackih: 42,
         pozicija: 'ofenzivni vezni',
         datumRodenja: '2010-08-22T00:00:00',
-        brojRegistracije: '129/2026'
+        brojRegistracije: '129/2026',
+        klub: 3
     },
     {
         sifra: 6,
@@ -58,7 +64,8 @@ export const igraci = [
         brojKopackih: 40,
         pozicija: 'lijevo krilo',
         datumRodenja: '2011-04-14T00:00:00',
-        brojRegistracije: '130/2026'
+        brojRegistracije: '130/2026',
+        klub: 1
     },
     {
         sifra: 7,
@@ -68,6 +75,7 @@ export const igraci = [
         brojKopackih: 43,
         pozicija: 'centarfor',
         datumRodenja: '2010-11-30T00:00:00',
-        brojRegistracije: '131/2026'
+        brojRegistracije: '131/2026',
+        klub: 1
     }
 ]

@@ -3,17 +3,20 @@ export const klubovi = [
     {
         sifra: 1,
         naziv: 'HNK Hajduk',
-        mjesto: 'Split'
+        mjesto: 'Split',
+        
     },
     {
         sifra: 2,
         naziv: 'NK Osijek',
-        mjesto: 'Osijek'
+        mjesto: 'Osijek',
+        
     },
     {
         sifra: 3,
         naziv: 'GNK Dinamo',
-        mjesto: 'Zagreb'
+        mjesto: 'Zagreb', 
+        
     }
 ]
 

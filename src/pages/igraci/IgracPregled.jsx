@@ -3,11 +3,13 @@ import IgracService from "../../services/igraci/IgracService"
 import { Badge, Button, Table } from "react-bootstrap"
 import { RouteNames } from "../../constants"
 import { Link, useNavigate  } from "react-router-dom"
+import KlubService from "../../services/klubovi/KlubService"
 
 
 export default function IgracPregled() {
 
     const [igraci, setIgraci] = useState([])
+    const [klubovi, setKlubovi] = useState([])
 
     const navigate = useNavigate()
 
@@ -17,12 +19,19 @@ export default function IgracPregled() {
            setIgraci(odgovor.data)
         })
     }
-
+    async function ucitajKlubove() {
+        await KlubService.get().then((o)=> {
+            setKlubovi(o.data)
+        })
+    }
 
     useEffect(() => {
-        //console.log('Došao na pregled igraca)
+        ucitajKlubove()
         ucitajIgrace()
     }, [])
+
+
+   
 
     async function obrisi(sifra){
         if(!confirm('Sigurno obrisati?')){
@@ -30,6 +39,11 @@ export default function IgracPregled() {
         }
         await IgracService.obrisi(sifra)
         ucitajIgrace()
+    }
+
+    function dohvatiNazivKluba(sifraKluba) {
+        const klub = klubovi.find(s => s.sifra === sifraKluba)
+        return klub.naziv
     }
 
      
@@ -52,6 +66,7 @@ export default function IgracPregled() {
                     <tr>
                         <th>Ime</th>
                         <th>Prezime</th>
+                        <th>Klub</th>
                         <th>Broj dresa</th>
                         <th>Broj kopačkih</th>
                         <th>Pozicija</th>
@@ -65,36 +80,34 @@ export default function IgracPregled() {
                 <tbody>
                     {igraci && igraci.map((igrac) => (
                         <tr key={igrac.sifra}>
-                            <td>{igrac.ime}</td>
-                            <td>{igrac.prezime}</td>
-                            <td>{igrac.brojDresa}</td>
-                            <td>{igrac.brojKopackih}</td>
-                            <td>{igrac.pozicija}</td>
-                            <td>{igrac.datumRodenja}</td>
-                            <td>{igrac.brojRegistracije}</td>
                             <td>
-                                <Button onClick={()=>{navigate(`/igraci/${igrac.sifra}`)}}>
-                                Promijeni
-
-                                </Button>
-                   
-                                
-                                &nbsp;&nbsp;
-
-                                <Button variant="danger" onClick={()=>obrisi(igrac.sifra)}>
-                                    Obriši
-
-                                </Button>
+                                {igrac.naziv}
+                            
                             </td>
+                            <td>
+                                {dohvatiNazivKluba(igrac.klub)}
+                            </td>
+                            <td>
+                                <Button onClick={() => {navigate(`/igraci/${igrac.sifra}`)}}>
+                                    Promjena
+
+                                </Button>
+                                 &nbsp;&nbsp;
+                                    <Button variant="danger" onClick={() => obrisi(igrac.sifra)}>
+                                        Obriši
+                                    </Button>
+                                </td>
                         </tr>
                     ))}
                 </tbody>
             </Table>
-            Ukupno
+            Ukupno igraca: &nbsp;
             <Badge pill bg="success">
                 {igraci && igraci.length}
             </Badge>
-            igrača
+
         </>
     )
 }
+
+                           
