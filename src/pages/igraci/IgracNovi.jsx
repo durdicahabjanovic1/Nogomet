@@ -4,29 +4,40 @@ import { Link, useNavigate } from "react-router-dom";
 import { RouteNames } from "../../constants";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import IgracService from "../../services/igraci/IgracService";
+import { useEffect, useState } from "react";
+import KlubService from "../../services/klubovi/KlubService";
 
 
 export default function IgracNovi() {
 
     const navigate = useNavigate()
 
-    async function dodaj(igrac){
-        await IgracService.dodaj(igrac).then(()=>{
+    const [klubovi, setKlubovi] = useState([])
+
+    async function ucitajKlubove() {
+        await KlubService.get().then((res) => {
+            setKluboviServices(res.data)
+        })
+    }
+
+    useEffect(() => {
+        ucitajKlubove()
+    }, [])
+
+    async function dodaj(igrac) {
+        await IgracService.dodaj(igrac).then(() => {
             navigate(RouteNames.IGRACI)
         })
     }
 
-    function obradiSubmit(e){ // e je event
+    function obradiSubmit(e) { // e je event
         e.preventDefault() // nemoj odraditi submit
         const podaci = new FormData(e.target)
         dodaj({
             ime: podaci.get('ime'),
             prezime: podaci.get('prezime'),
-            brojDresa: parseInt(podaci.get('brojDresa')),
-            brojKopackih: parseInt(podaci.get('brojKopacki')),
-            pozicija: podaci.get('pozicija'),
-            datumRodenja: new Date(podaci.get('datumRodenja')).toISOString(),
-            brojRegistracije: podaci.get('brojRegistracije')
+            klub: parseInt(podaci.get('klub'))
+
         })
     }
 
@@ -46,42 +57,32 @@ export default function IgracNovi() {
 
                 <Form.Group controlId="prezime">
                     <Form.Label>Prezime</Form.Label>
-                    <Form.Control type="text" name="prezime"  />
+                    <Form.Control type="text" name="prezime" required />
                 </Form.Group>
 
-                <Form.Group controlId="brojDresa">
-                    <Form.Label>Broj dresa</Form.Label>
-                    <Form.Control type="number" name="brojDresa" step={1} />
+                <Form.Group controlId="klub">
+                    <Form.Label>Klub</Form.Label>
+                    <Form.Select name="klub" required >
+                        <option value="" key={0}>Obavezan odabir kluba</option>
+                        {klubovi && klubovi.map((s) => (
+                            <option value={s.sifra} key={s.sifra}>
+                                {s.naziv}
+                            </option>
+
+                        ))}
+                    </Form.Select>
+
                 </Form.Group>
 
-                <Form.Group controlId="brojKopacki">
-                    <Form.Label>Broj kopački</Form.Label>
-                    <Form.Control type="number" name="brojKopacki" />
-                </Form.Group>
 
-                 <Form.Group controlId="pozicija">
-                    <Form.Label>Pozicija</Form.Label>
-                    <Form.Control type="text" name="pozicija" />
-                </Form.Group>
 
-                 <Form.Group controlId="datumRodenja">
-                    <Form.Label>Datum rođenja</Form.Label>
-                    <Form.Control type="date" name="datumRodenja" />
-                </Form.Group>
 
-            
-                 <Form.Group controlId="brojRegistracije">
-                    <Form.Label>Broj registracije</Form.Label>
-                    <Form.Control type="text" name="brojRegistracije" />
-                </Form.Group>
-
-               
 
 
                 <Row className="mt-4">
                     <Col>
                         <Link to={RouteNames.IGRACI}
-                        className="btn btn-danger">
+                            className="btn btn-danger">
                             Odustani
                         </Link>
                     </Col>
@@ -91,7 +92,7 @@ export default function IgracNovi() {
                         </Button>
                     </Col>
                 </Row>
-            </Form>
+            </Form >
 
 
         </>

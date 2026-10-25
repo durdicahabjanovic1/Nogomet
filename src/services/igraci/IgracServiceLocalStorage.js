@@ -36,10 +36,10 @@ async function dodaj(igrac){
 
 
 
-async function promijeni(sifra, smjer){
+async function promijeni(sifra, igrac){
     const igraci = dohvatiSveIzStorage()
     const index = igraci.findIndex(s => s.sifra === parseInt(sifra))
-    igraci[index] = {...igraci[index], ...smjer}
+    igraci[index] = {...igraci[index], ...igrac}
     spremiUStorage(igraci)
 }
 

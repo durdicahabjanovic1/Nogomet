@@ -17,6 +17,21 @@ export const klubovi = [
         naziv: 'GNK Dinamo',
         mjesto: 'Zagreb', 
         
+    },
+    {
+        sifra: 4,
+        naziv: 'NK Jedinstvo',
+        mjesto:' Donji miholjac',
+    },
+    {
+        sifra: 5,
+        naziv: 'NK Rijeka',
+        mjesto: 'Rijeka',
+    },
+    {
+        sifra: 6,
+        naziv:'NK Rudeš',
+        mjesto: 'Zagreb'
     }
 ]
 

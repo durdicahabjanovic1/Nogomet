@@ -36,10 +36,10 @@ async function dodaj(klub){
 
 
 
-async function promijeni(sifra, smjer){
+async function promijeni(sifra, klub){
     const klubovi = dohvatiSveIzStorage()
     const index = klubovi.findIndex(s => s.sifra === parseInt(sifra))
-    klubovi[index] = {...klubovi[index], ...smjer}
+    klubovi[index] = {...klubovi[index], ...klub}
     spremiUStorage(klubovi)
 }
 

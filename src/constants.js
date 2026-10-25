@@ -16,8 +16,10 @@ export const RouteNames = {
    KLUBOVI_DODAJ: '/klubovi/novi',
    KLUBOVI_PROMJENA: '/klubovi/:sifra',
 
+    GENERIRANJE_PODATAKA: '/generiraj-podatke'
+
 }
-// memorija   localStorage
+// memorija   localStorage, firebase
 export const DATA_SOURCE = 'memorija'
 
 
