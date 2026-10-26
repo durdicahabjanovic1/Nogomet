@@ -80,13 +80,17 @@ export default function IgracPregled() {
                 <tbody>
                     {igraci && igraci.map((igrac) => (
                         <tr key={igrac.sifra}>
-                            <td>
-                                {igrac.naziv}
-                            
-                            </td>
+                            <td>{igrac.ime}</td>
+                            <td>{igrac.prezime}</td>
                             <td>
                                 {dohvatiNazivKluba(igrac.klub)}
                             </td>
+                            <td>{igrac.brojDresa}</td>
+                            <td>{igrac.brojKopackih}</td>
+                            <td>{igrac.pozicija}</td>
+                            <td>{igrac.datumRodenja}</td>
+                            <td>{igrac.brojRegistracije}</td>
+                            
                             <td>
                                 <Button onClick={() => {navigate(`/igraci/${igrac.sifra}`)}}>
                                     Promjena
