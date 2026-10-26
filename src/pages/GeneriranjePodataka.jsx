@@ -3,13 +3,11 @@ import { Button, Form, Alert, Container, Row, Col } from 'react-bootstrap';
 import { Faker, hr } from '@faker-js/faker';
 import KlubService from '../services/klubovi/KlubService';
 import IgracService from '../services/igraci/IgracService';
-import igracService from '../services/igraci/IgracService';
 
 
 export default function GeneriranjePodataka() {
     const [brojKlubova, setBrojKlubova] = useState(5);
     const [brojIgraca, setBrojIgraca] = useState(20);
-    const [brojIgraca, setBrojIgraca] = useState(10);
     const [poruka, setPoruka] = useState(null);
     const [loading, setLoading] = useState(false);
 
@@ -51,29 +49,6 @@ export default function GeneriranjePodataka() {
         }
     };
 
-    const generirajIgrace = async (broj) => {
-
-        // Dohvati sve klubove
-        const rezultatKlubovi = await KlubService.get();
-        const klubovi = rezultatKlubovi.data;
-
-        
-        if (klubovi.length === 0) {
-            throw new Error('Nema dostupnih klubova. Prvo generirajte klubove.');
-        }
-        
-        for (let i = 0; i < broj; i++) {
-            // Odaberi nasumični klub
-            const randomKlub = klubovi[faker.number.int({ min: 0, max: klubovi.length - 1 })];
-  
-            const igrac = {
-                naziv: randomKlub.naziv.trim().split(/\s+/).slice(0, 2).map(rijec => rijec[0]).join('').toUpperCase(),   
-                smjer: randomKlub.sifra
-            };
-            
-            await IgracService.dodaj(igrac);
-        }
-    };
 
     const handleGenerirajKlubove = async (e) => {
         e.preventDefault();
@@ -120,35 +95,6 @@ export default function GeneriranjePodataka() {
         }
     };
 
-    const handleObrisiIgrace = async () => {
-        if (!window.confirm('Jeste li sigurni da želite obrisati sve igrace?')) {
-            return;
-        }
-
-        setLoading(true);
-        setPoruka(null);
-
-        try {
-            const rezultat = await IgracService.get();
-            const igraci = rezultat.data;
-            
-            for (const igrac of igraci) {
-                await IgracService.obrisi(igrac.sifra);
-            }
-
-            setPoruka({
-                tip: 'success',
-                tekst: `Uspješno obrisano ${igraci.length} igraci!`
-            });
-        } catch (error) {
-            setPoruka({
-                tip: 'danger',
-                tekst: 'Greška pri brisanju igraca: ' + error.message
-            });
-        } finally {
-            setLoading(false);
-        }
-    };
 
     const handleObrisiKlubove = async () => {
         if (!window.confirm('Jeste li sigurni da želite obrisati sve klubove?')) {
@@ -299,30 +245,7 @@ export default function GeneriranjePodataka() {
                     </Form>
                 </Col>
                 <Col md={4}>
-                    <Form onSubmit={handleGenerirajIgrace}>
-                        <Form.Group className="mb-3">
-                            <Form.Label>Broj igraca</Form.Label>
-                            <Form.Control
-                                type="number"
-                                min="1"
-                                max="100"
-                                value={brojIgraca}
-                                onChange={(e) => setBrojIgraca(parseInt(e.target.value))}
-                                disabled={loading}
-                            />
-                            <Form.Text className="text-muted">
-                                Unesite broj igraca (1-100)
-                            </Form.Text>
-                        </Form.Group>
-                        <Button 
-                            variant="primary" 
-                            type="submit" 
-                            disabled={loading}
-                            className="w-100"
-                        >
-                            {loading ? 'Generiranje...' : 'Generiraj igraca'}
-                        </Button>
-                    </Form>
+                   KASNIJE
                 </Col>
             </Row>
 
@@ -360,14 +283,7 @@ export default function GeneriranjePodataka() {
                     </Button>
                 </Col>
                 <Col md={4}>
-                    <Button 
-                        variant="danger" 
-                        onClick={handleObrisiIgrace}
-                        disabled={loading}
-                        className="w-100 mb-2"
-                    >
-                        {loading ? 'Brisanje...' : 'Obriši sve igrace'}
-                    </Button>
+                    KASNIJE
                 </Col>
             </Row>
 

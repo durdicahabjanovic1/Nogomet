@@ -36,7 +36,10 @@ const navigate= useNavigate()
                             onClick={()=>navigate(RouteNames.KLUBOVI)}
                             >Klubovi</NavDropdown.Item>
 
-                          
+                          <NavDropdown.Divider />
+                            <NavDropdown.Item
+                                onClick={() => navigate(RouteNames.GENERIRANJE_PODATAKA)}
+                            >Generiraj podatke</NavDropdown.Item>
                            
                         </NavDropdown>
                          <Nav.Link 
