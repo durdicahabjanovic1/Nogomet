@@ -57,7 +57,7 @@ export default function IgracNovi() {
 
                 <Form.Group controlId="prezime">
                     <Form.Label>Prezime</Form.Label>
-                    <Form.Control type="text" name="prezime" required />
+                    <Form.Control type="text" name="prezime"  />
                 </Form.Group>
 
                 <Form.Group controlId="klub">
@@ -71,8 +71,37 @@ export default function IgracNovi() {
 
                         ))}
                     </Form.Select>
-
                 </Form.Group>
+
+                <Form.Group controlId="brojDresa">
+                    <Form.Label>Broj dresa</Form.Label>
+                    <Form.Control type="number" name="brojDresa" step={1} />
+                </Form.Group>
+
+                <Form.Group controlId="brojKopacki">
+                    <Form.Label>Broj kopački</Form.Label>
+                    <Form.Control type="number" name="brojKopacki" />
+                </Form.Group>
+
+                 <Form.Group controlId="pozicija">
+                    <Form.Label>Pozicija</Form.Label>
+                    <Form.Control type="text" name="pozicija" />
+                </Form.Group>
+
+                 <Form.Group controlId="datumRodenja">
+                    <Form.Label>Datum rođenja</Form.Label>
+                    <Form.Control type="date" name="datumRodenja" />
+                </Form.Group>
+
+            
+                 <Form.Group controlId="brojRegistracije">
+                    <Form.Label>Broj registracije</Form.Label>
+                    <Form.Control type="text" name="brojRegistracije" />
+                </Form.Group>
+
+                
+
+              
 
 
 
