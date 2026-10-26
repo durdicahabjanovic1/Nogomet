@@ -16,7 +16,7 @@ export default function IgracNovi() {
 
     async function ucitajKlubove() {
         await KlubService.get().then((res) => {
-            setKluboviServices(res.data)
+            setKlubovi(res.data)
         })
     }
 
@@ -34,9 +34,15 @@ export default function IgracNovi() {
         e.preventDefault() // nemoj odraditi submit
         const podaci = new FormData(e.target)
         dodaj({
-            ime: podaci.get('ime'),
+           ime: podaci.get('ime'),
             prezime: podaci.get('prezime'),
-            klub: parseInt(podaci.get('klub'))
+            klub: parseInt(podaci.get('klub')),
+            brojDresa: parseInt(podaci.get('brojDresa')),
+            brojKopackih: parseInt(podaci.get('brojKopacki')),
+            pozicija: podaci.get('pozicija'),
+            datumRodenja: new Date(podaci.get('datumRodenja')).toISOString(),
+            brojRegistracije: podaci.get('brojRegistracije')
+            
 
         })
     }

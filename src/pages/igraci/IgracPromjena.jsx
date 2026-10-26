@@ -33,7 +33,7 @@ export default function IgracPromjena() {
     useEffect(() => {
         ucitajKlubove()
 
-        ucitajIgraca()
+        ucitajIgrac()
     }, [])
 
 
@@ -94,6 +94,8 @@ export default function IgracPromjena() {
                     
                    </Form.Select>
                    </Form.Group>
+
+                   
                
                
 
