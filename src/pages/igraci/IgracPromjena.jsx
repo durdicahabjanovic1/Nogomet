@@ -15,7 +15,8 @@ export default function IgracPromjena() {
     const [igrac, setIgrac] = useState({})
 
     async function ucitajKlubove() {
-        await KlubService.getBySifra(params.sifra).then((res) => {
+        await KlubService.get().then((res) => {
+            // console.log(res.data)
             setKlubovi(res.data)
 
 
@@ -23,7 +24,10 @@ export default function IgracPromjena() {
     }
     async function ucitajIgrac() {
         await IgracService.getBySifra(params.sifra).then((res) => {
-            setIgrac(res.data)
+            const s = res.data
+            s.datumRodenja = s.datumRodenja.substring(0, 10)
+            setIgrac(s)
+
         })
     }
 
@@ -32,7 +36,6 @@ export default function IgracPromjena() {
 
     useEffect(() => {
         ucitajKlubove()
-
         ucitajIgrac()
     }, [])
 
@@ -50,8 +53,12 @@ export default function IgracPromjena() {
         promijeni({
             ime: podaci.get('ime'),
             prezime: podaci.get('prezime'),
-            klub: parseInt( podaci.get('klub'))
-          
+            klub: parseInt(podaci.get('klub')),
+            brojDresa: parseInt(podaci.get('brojDresa')),
+            brojKopackih: parseInt(podaci.get('brojKopacki')),
+            pozicija: podaci.get('pozicija'),
+            datumRodenja: new Date(podaci.get('datumRodenja')).toISOString(),
+            brojRegistracije: podaci.get('brojRegistracije')
         })
     }
 
@@ -65,39 +72,95 @@ export default function IgracPromjena() {
 
             <Form onSubmit={obradiSubmit}>
 
-                <Form.Group controlId="ime">
-                    <Form.Label>Ime</Form.Label>
-                    <Form.Control type="text" name="ime" required
-                        defaultValue={igrac.ime} />
-                </Form.Group>
+                <Row>
+                    <Col>
+                        <Form.Group controlId="ime">
+                            <Form.Label>Ime</Form.Label>
+                            <Form.Control type="text" name="ime" required
+                                defaultValue={igrac.ime} />
+                        </Form.Group>
+                    </Col>
+                    <Col>
+                        <Form.Group controlId="prezime">
+                            <Form.Label>Prezime</Form.Label>
+                            <Form.Control type="text" name="prezime" required
+                                defaultValue={igrac.prezime} />
+                        </Form.Group>
+                    </Col>
+                </Row>
 
-                <Form.Group controlId="prezime">
-                    <Form.Label>Prezime</Form.Label>
-                    <Form.Control type="text" name="prezime" required
-                        defaultValue={igrac.prezime} />
-                </Form.Group>
+                <Row>
+                    <Col>
+                        <Form.Group controlId="klub">
+                            <Form.Label>Klub</Form.Label>
+                            <Form.Select name="klub" required
+                                value={igrac.klub}
+                                onChange={(e) => setIgrac({ ...igrac, klub: parseInt(e.target.value) })}>
+                                <option value="" key={0}>Obavezan odabir kluba</option>
+                                {klubovi && klubovi.map((s) => (
+                                    <option value={s.sifra} key={s.sifra}>
+                                        {s.naziv}
+                                    </option>
 
-                 <Form.Group controlId="klub">
-                    <Form.Label>Klub</Form.Label>
-                   <Form.Select name="klub" required
-                   value={igrac.klub}
-                   onChange={(e)=>setIgrac({...igrac, klub: parseInt(e.target.value)})}>
-                    <option value="" key={0}>Obavezan odabir kluba</option>
-                    {klubovi && klubovi.map((s)=>(
-                        <option value={s.sifra} key={s.sifra}>
-                            {s.naziv}
-                        </option>
-                        
 
-                    ))}
+                                ))}
 
-                    
-                   </Form.Select>
-                   </Form.Group>
 
-                   
-               
-               
+                            </Form.Select>
+                        </Form.Group>
+                    </Col>
+                    <Col>
+                        <Form.Group controlId="brojDresa">
+                            <Form.Label>Broj dresa</Form.Label>
+                            <Form.Control type="number" name="brojDresa" step={1}
+                                defaultValue={igrac.brojDresa} />
+                        </Form.Group>
+                    </Col>
+                </Row>
+
+
+                <Row>
+                    <Col>
+                        <Form.Group controlId="brojKopacki">
+                            <Form.Label>Broj kopački</Form.Label>
+                            <Form.Control type="number" name="brojKopacki" 
+                            defaultValue={igrac.brojKopackih}/>
+                        </Form.Group>
+                    </Col>
+                    <Col>
+                        <Form.Group controlId="pozicija">
+                            <Form.Label>Pozicija</Form.Label>
+                            <Form.Control type="text" name="pozicija" 
+                            defaultValue={igrac.pozicija}/>
+                        </Form.Group>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>
+                        <Form.Group controlId="datumRodenja">
+                            <Form.Label>Datum rođenja</Form.Label>
+                            <Form.Control type="date" name="datumRodenja" 
+                            defaultValue={igrac.datumRodenja}/>
+                        </Form.Group>
+                    </Col>
+                    <Col>
+                        <Form.Group controlId="brojRegistracije">
+                            <Form.Label>Broj registracije</Form.Label>
+                            <Form.Control type="text" name="brojRegistracije" 
+                            defaultValue={igrac.brojRegistracije}/>
+                        </Form.Group>
+                    </Col>
+                </Row>
+
+
+
+
+
+
+
+
+
+
 
 
                 <Row className="mt-4">
