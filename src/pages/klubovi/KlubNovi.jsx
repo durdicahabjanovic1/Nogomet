@@ -37,7 +37,9 @@ export default function KlubNovi() {
 
             <Form onSubmit={obradiSubmit}>
 
-                 <Form.Group controlId="naziv">
+                <Row>
+                    <Col>
+                        <Form.Group controlId="naziv">
                     <Form.Label>Naziv</Form.Label>
                     <Form.Control type="text" name="naziv" />
                 </Form.Group>
@@ -47,64 +49,13 @@ export default function KlubNovi() {
                     <Form.Label>Mjesto</Form.Label>
                     <Form.Control type="text" name="mjesto" />
                 </Form.Group>
-                <Row>
-                    <Col>
-                        <Form.Group controlId="ime">
-                            <Form.Label>Ime</Form.Label>
-                            <Form.Control type="text" name="ime" required />
-                        </Form.Group>
-                    </Col>
-                     <Col>
-
-                <Form.Group controlId="prezime">
-                    <Form.Label>Prezime</Form.Label>
-                    <Form.Control type="text" name="prezime" required />
-                </Form.Group>
-                </Col>
-                </Row>
-                <Row>
-                    <Col>
-                <Form.Group controlId="brojDresa">
-                    <Form.Label>brojDresa</Form.Label>
-                    <Form.Control type="text" name="brojDresa" />
-                </Form.Group>
-                </Col>
-                <Col>
-                 <Form.Group controlId="brojKopacki">
-                            <Form.Label>Broj kopački</Form.Label>
-                            <Form.Control type="number" name="brojKopacki" />
-                        </Form.Group>
-                </Col>
-                </Row>
-                <Row>
-                    <Col>
-                     <Form.Group controlId="pozicija">
-                            <Form.Label>Pozicija</Form.Label>
-                            <Form.Control type="text" name="pozicija" />
-                        </Form.Group>
                     </Col>
                     <Col>
-                     <Form.Group controlId="datumRodenja">
-                            <Form.Label>Datum rođenja</Form.Label>
-                            <Form.Control type="date" name="datumRodenja" />
-                        </Form.Group>
-                      
+                        Ovdje dođe traženje i dodavanje igrača. To je kao traženje i dodavanje polaznika na grupi
                     </Col>
                 </Row>
-                 <Form.Group controlId="brojRegistracije">
-                            <Form.Label>Broj registracije</Form.Label>
-                            <Form.Control type="text" name="brojRegistracije" />
-                        </Form.Group>
 
-
-
-
-
-
-
-
-
-
+                 
                 <Row className="mt-4">
                     <Col>
                         <Link to={RouteNames.KLUBOVI}
