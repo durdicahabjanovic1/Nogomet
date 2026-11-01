@@ -33,6 +33,11 @@ export default function klubPregled() {
         ucitajKlubove()
     }
 
+     function dohvatiNazivKluba(sifraKluba) {
+        const klub = klubovi.find(s => s.sifra === sifraKluba) 
+        return klub.naziv
+     }
+
      
 
     
@@ -61,9 +66,13 @@ export default function klubPregled() {
                 <tbody>
                     {klubovi && klubovi.map((klub) => (
                         <tr key={klub.sifra}>
-                            <td>{klub.naziv}</td>
+                            <td>{klub.naziv}
+                                <span title="Broj igraca"> ({klub.igraci.length}) </span>
+                            </td>
                             <td>{klub.mjesto}</td>
-                            <td>
+                            
+                                <td>
+
                                 <Button onClick={()=>{navigate(`/klubovi/${klub.sifra}`)}}>
                                 Promijeni
 
@@ -81,11 +90,11 @@ export default function klubPregled() {
                     ))}
                 </tbody>
             </Table>
-            Ukupno
+            Ukupno klubova: &nbsp;
             <Badge pill bg="success">
                 {klubovi && klubovi.length}
             </Badge>
-            klubova
+            
         </>
     )
 }

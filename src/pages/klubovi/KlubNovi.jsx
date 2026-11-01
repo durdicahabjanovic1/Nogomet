@@ -102,11 +102,11 @@ export default function KlubNovi() {
         e.preventDefault() // nemoj odraditi submit
         const podaci = new FormData(e.target)
 
-        if (!podaci.get('naziv') || podaci.get('naziv'.trim().length === 0) {
+        if (!podaci.get('naziv') || podaci.get('naziv').trim().length === 0) {
             alert("Naziv je obavezan i ne smije sadržavati samo razmake!");
             return;
         }
-    )   if (podaci.get('naziv').trim().length < 3) {
+      if (podaci.get('naziv').trim().length < 3) {
         alert("Naziv grupe mora imati najmanje 3 znaka!");
         return;
     }
@@ -138,13 +138,16 @@ export default function KlubNovi() {
             </h3>
 
             <Form onSubmit={obradiSubmit}>
-                <Container className="mt-4"
+                <Container className="mt-4">
 
                 <Row>
+                    
                     <Col md={6}>
                         <Card className="shadow-sm">
                             <Card.Body>
                                 <Card.Title className="mb-4">Unos novog kluba</Card.Title>
+
+
                         <Form.Group controlId="naziv" className="mb-3">
                     <Form.Label className="fw-bold">Naziv</Form.Label>
                     <Form.Control
@@ -152,7 +155,7 @@ export default function KlubNovi() {
                       name="naziv"
                       placeholder="Unesite naziv kluba"
                       required
-                       />
+                  />   
                 </Form.Group>
               
 
@@ -181,7 +184,7 @@ export default function KlubNovi() {
                                         <Form.Label className="fw-bold">Dodaj Igraca</Form.Label>
                                         <Form.Control
                                             type="text"
-                                            placeholder="Pretraži polaznika..."
+                                            placeholder="Pretraži igraca..."
                                             value={pretragaIgraca}
                                             onChange={(e) => {
                                                 setPretragaIgraca(e.target.value)
