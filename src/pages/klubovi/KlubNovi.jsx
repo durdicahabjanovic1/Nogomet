@@ -16,7 +16,7 @@ export default function KlubNovi() {
     const [igraci, setIgraci] = useState([])
     const [odabraniIgraci, setOdabraniIgraci] = useState([])
     const [pretragaIgraca, setPretragaIgraca] = useState('')
-    const [prikazaAutocoplete, setPrikaziAutocomplete] = useState(false)
+    const [prikaziAutocomplete, setPrikaziAutocomplete] = useState(false)
     const [odabraniIndex, setOdabraniIndex] = useState(-1)
 
     useEffect(() => {

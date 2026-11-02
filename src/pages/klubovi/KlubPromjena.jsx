@@ -15,6 +15,7 @@ export default function KlubPromjena(){
     const [klub, setKlub] = useState({})
     const [igraci, setIgraci] = useState([])
     const [odabraniIgraci, setOdabraniIgraci] = useState([])
+    const [pretragaIgraca, setPretragaIgraca] = useState('')
     const [prikaziAutocomplete, setPrikaziAutocomplete] = useState(false)
     const [odabraniIndex, setOdabraniIndex] = useState(-1)
 
