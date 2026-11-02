@@ -35,7 +35,21 @@ async function obrisi(sifra){
   }
     
 
-    
+    // Straničenje - dohvati stranicu polaznika
+async function dohvatiStranicu(stranica = 1, velicinaStranice = 8) {
+    const pocetniIndeks = (stranica - 1) * velicinaStranice; 
+    const zavrsniIndeks = pocetniIndeks + velicinaStranice;
+    const stranicenjePodaci = igraci.slice(pocetniIndeks, zavrsniIndeks);
+    const ukupnoStavki = igraci.length;
+    const ukupnoStranica = Math.ceil(ukupnoStavki / velicinaStranice);
+
+    return {
+        data: stranicenjePodaci,
+        ukupnoStranica: ukupnoStranica,
+        ukupnoStavki: ukupnoStavki
+    };
+}
+
 
 
 export default {
@@ -43,5 +57,6 @@ export default {
     getBySifra,
     dodaj,
     promijeni,
-    obrisi
+    obrisi,
+    dohvatiStranicu
 }

@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react"
 import IgracService from "../../services/igraci/IgracService"
-import { Badge, Button, Table } from "react-bootstrap"
+import { Badge, Button, Card, Col, Pagination, Row, Table } from "react-bootstrap"
 import { RouteNames } from "../../constants"
 import { Link, useNavigate } from "react-router-dom"
 import { FaEdit, FaTrash } from "react-icons/fa"
+import KlubService from "../../services/klubovi/KlubService"
 
 
 
 export default function IgracPregled() {
 
     const navigate = useNavigate()
+     const [klubovi, setKlubovi] = useState([])
 
     const [igraci, postaviIgrace] = useState([])
     const [trenutnaStranica, postaviTrenutnuStranicu] = useState(1)
@@ -22,6 +24,11 @@ export default function IgracPregled() {
     }, [trenutnaStranica])
 
 
+     async function ucitajKlubove() {
+            await KlubService.get().then((odgovor) => {
+               setKlubovi(odgovor.data)
+            })
+        }
 
     async function ucitajIgrace(stranica) {
         await IgracService.dohvatiStranicu(stranica, velicinaStranice).then((odgovor) => {
@@ -107,7 +114,8 @@ export default function IgracPregled() {
 
                                 <Card.Body className="d-flex flex-column">
                                     <Card.Title>
-                                        {igrac.ime} {igrac.prezime} <span style={{fontSize: '0.5rem'}}</span> 
+                                          {igrac.ime} {igrac.prezime} <br />
+                                       <span style={{fontSize: '0.5rem'}}>{dohvatiNazivKluba(igrac.klub)}</span> 
                                     </Card.Title>
 
                                    
@@ -122,7 +130,7 @@ export default function IgracPregled() {
                                         </Button>
                                         <Button
                                             variant="outline-danger"
-                                            onClick={() => brisanje(igrac.sifra)}
+                                            onClick={() => obrisi(igrac.sifra)}
                                             title="Obriši"
                                         >
                                             <FaTrash />
@@ -185,57 +193,5 @@ export default function IgracPregled() {
         </>
     )
 }
-            <Table hover striped bordered>
-
-                <thead>
-                    <tr>
-                        <th>Ime</th>
-                        <th>Prezime</th>
-                        <th>Klub</th>
-                        <th>Broj dresa</th>
-                        <th>Broj kopačkih</th>
-                        <th>Pozicija</th>
-                        <th>Datum rođenja</th>
-                        <th>Broj registracije</th>
-                        <th>
-                            Akcija
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {igraci && igraci.map((igrac) => (
-                        <tr key={igrac.sifra}>
-                            <td>{igrac.ime}</td>
-                            <td>{igrac.prezime}</td>
-                            <td>
-                                {dohvatiNazivKluba(igrac.klub)}
-                            </td>
-                            <td>{igrac.brojDresa}</td>
-                            <td>{igrac.brojKopackih}</td>
-                            <td>{igrac.pozicija}</td>
-                            <td>{igrac.datumRodenja}</td>
-                            <td>{igrac.brojRegistracije}</td>
-
-                            <td>
-                                <Button onClick={() => { navigate(`/igraci/${igrac.sifra}`) }}>
-                                    Promjena
-
-                                </Button>
-                                &nbsp;&nbsp;
-                                <Button variant="danger" onClick={() => obrisi(igrac.sifra)}>
-                                    Obriši
-                                </Button>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </Table>
-            Ukupno igraca: &nbsp;
-            <Badge pill bg="success">
-                {igraci && igraci.length}
-            </Badge>
-
-        </>
-    )
-}
+            
 
