@@ -3,11 +3,15 @@ import KlubService from "../../services/klubovi/KlubService"
 import { Badge, Button, Table } from "react-bootstrap"
 import { RouteNames } from "../../constants"
 import { Link, useNavigate  } from "react-router-dom"
+import IgracService from "../../services/igraci/IgracService"
+import { FaFilePdf } from "react-icons/fa"
+import KlubPDFGenerator from "../../components/KlubPDFGenerator"
 
 
 export default function klubPregled() {
 
     const [klubovi, setKlubovi] = useState([])
+    
 
     const navigate = useNavigate()
 
@@ -37,6 +41,30 @@ export default function klubPregled() {
         const klub = klubovi.find(s => s.sifra === sifraKluba) 
         return klub.naziv
      }
+
+      async function generirajPDFZaKlub(klub) {
+        // Dohvati klub
+        const klub = klubovi.find(s => s.sifra === klub.)
+        if (!klub) {
+            alert('Klub nije pronađen')
+            return
+        }
+
+          const odgovorIgraci = await IgracService.get()
+
+       
+        const igraciKlubovi = odgovorIgraci.data.filter(p =>
+            klub.igraci && klub.igraci.includes(p.sifra)
+        )
+
+       
+        const generiraj = GrupaPDFGenerator({
+            klub,
+            igraci: igraciKlubovi
+        })
+        await generiraj()
+    }
+
 
      
 

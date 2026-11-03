@@ -27,14 +27,14 @@ export default function KlubPDFGenerator({ klub, igraci }) {
 
     const generirajPDF = async () => {
         const [regBase64, boldBase64] = await Promise.all([
-            fetchFontAsBase64('/fonts/Roboto-Regular.ttf'),
+            fetchFontAsBase64('/fonts/Roboto-Medium.ttf'),
             fetchFontAsBase64('/fonts/Roboto-Bold.ttf')
         ]);
 
         const doc = new jsPDF();
 
-        doc.addFileToVFS('Roboto-Regular.ttf', regBase64);
-        doc.addFont('Roboto-Regular.ttf', 'Roboto', 'normal');
+        doc.addFileToVFS('Roboto-Medium.ttf', regBase64);
+        doc.addFont('Roboto-Bold.ttf', 'Roboto', 'normal');
         doc.addFileToVFS('Roboto-Bold.ttf', boldBase64);
         doc.addFont('Roboto-Bold.ttf', 'Roboto', 'bold');
 

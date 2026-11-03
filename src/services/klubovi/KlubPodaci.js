@@ -1,4 +1,7 @@
 
+import { igraci } from "../igraci/IgracPodaci";
+
+
 export const klubovi = [
     {
         sifra: 1,

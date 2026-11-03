@@ -5,11 +5,24 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { IME_APLIKACIJE, RouteNames } from '../constants';
 import { useNavigate } from 'react-router-dom';
+import { FaMemory } from 'react-icons/fa';
+import { GrStatusUnknown, GrVirtualStorage } from 'react-icons/gr';
 
 
 export default function Izbornik() {
     
 const navigate= useNavigate()
+
+ function izvor() {
+        switch (DATA_SOURCE) {
+            case 'memorija':
+                return <FaMemory title='Memorija' />
+            case 'localStorage':
+                return <GrVirtualStorage title='Local storage' />
+            default:
+                return <GrStatusUnknown title='Nepoznato' />
+        }
+    }
 
 
 
