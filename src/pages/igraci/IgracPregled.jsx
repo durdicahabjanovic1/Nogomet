@@ -40,19 +40,7 @@ export default function IgracPregled() {
 
     }
 
-      async function brisanje(sifra) {
-        if (!confirm('Sigurno obrisati?')) return;
-        await IgracService.obrisi(sifra);
-        
-        const noveUkupneStavke = ukupnoStavki - 1;
-        const noveUkupneStranice = Math.ceil(noveUkupneStavke / velicinaStranice);
-
-        if (trenutnaStranica > noveUkupneStranice && noveUkupneStranice > 0) {
-            postaviTrenutnuStranicu(noveUkupneStranice);
-        } else {
-            ucitajIgrace(trenutnaStranica);
-        }
-    }
+ 
 
     function promijeniStranicu(stranica) {
         postaviTrenutnuStranicu(stranica)
@@ -70,11 +58,17 @@ export default function IgracPregled() {
 
 
     async function obrisi(sifra) {
-        if (!confirm('Sigurno obrisati?')) {
-            return
+         if (!confirm('Sigurno obrisati?')) return;
+        await IgracService.obrisi(sifra);
+        
+        const noveUkupneStavke = ukupnoStavki - 1;
+        const noveUkupneStranice = Math.ceil(noveUkupneStavke / velicinaStranice);
+
+        if (trenutnaStranica > noveUkupneStranice && noveUkupneStranice > 0) {
+            postaviTrenutnuStranicu(noveUkupneStranice);
+        } else {
+            ucitajIgrace(trenutnaStranica);
         }
-        await IgracService.obrisi(sifra)
-        ucitajIgrace()
     }
 
     function dohvatiNazivKluba(sifraKluba) {

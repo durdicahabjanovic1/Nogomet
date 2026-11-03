@@ -9,6 +9,7 @@ import IgracService from "../../services/igraci/IgracService";
 export default function IgracNovi() {
 
     const navigate = useNavigate()
+    
 
    
   

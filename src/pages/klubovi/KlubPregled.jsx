@@ -11,6 +11,13 @@ import KlubPDFGenerator from "../../components/KlubPDFGenerator"
 export default function klubPregled() {
 
     const [klubovi, setKlubovi] = useState([])
+      const [sviIgraci, setSviIgraci] = useState([])
+    const [tooltip, setTooltip] = useState({
+        vidljivo: false,
+        x: 0,
+        y: 0,
+        podaci: []
+    })
     
 
     const navigate = useNavigate()
@@ -37,18 +44,9 @@ export default function klubPregled() {
         ucitajKlubove()
     }
 
-     function dohvatiNazivKluba(sifraKluba) {
-        const klub = klubovi.find(s => s.sifra === sifraKluba) 
-        return klub.naziv
-     }
 
       async function generirajPDFZaKlub(klub) {
-        // Dohvati klub
-        const klub = klubovi.find(s => s.sifra === klub.)
-        if (!klub) {
-            alert('Klub nije pronađen')
-            return
-        }
+     
 
           const odgovorIgraci = await IgracService.get()
 
@@ -58,7 +56,7 @@ export default function klubPregled() {
         )
 
        
-        const generiraj = GrupaPDFGenerator({
+        const generiraj = KlubPDFGenerator({
             klub,
             igraci: igraciKlubovi
         })
@@ -94,7 +92,13 @@ export default function klubPregled() {
                 <tbody>
                     {klubovi && klubovi.map((klub) => (
                         <tr key={klub.sifra}>
-                            <td>{klub.naziv}
+                            <td>
+                              <FaFilePdf
+                                    color="#cb72dd"
+                                    style={{ cursor: 'hand' }}
+                                    onClick={() => generirajPDFZaKlub(klub)} title="Generiraj PDF" />
+                            
+                            {klub.naziv}
                                 <span title="Broj igraca"> ({klub.igraci.length}) </span>
                             </td>
                             <td>{klub.mjesto}</td>

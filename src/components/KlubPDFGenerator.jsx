@@ -15,15 +15,6 @@ export default function KlubPDFGenerator({ klub, igraci }) {
     };
 
 
-    const formatirajAkciju = (akcija) => {
-        if (akcija === undefined || akcija === null || akcija === '' || isNaN(akcija)) return '-';
-
-        const broj = Number(akcija);
-        const [cijeliDio] = broj.toFixed(2).split('.');
-        const formatiraniCijeli = cijeliDio.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-
-        return `${formatiraniCijeli};
-    };
 
     const generirajPDF = async () => {
         const [regBase64, boldBase64] = await Promise.all([
@@ -123,11 +114,11 @@ export default function KlubPDFGenerator({ klub, igraci }) {
                 index + 1,
                 p.ime || '',
                 p.prezime || '',
-                p.brojDresa || ''
-                p.brojKopackih || '' 
+                p.brojDresa || '',
+                p.brojKopackih || '' ,
                 p.pozicija || '', 
-                p.datumRodenja || ''
-                p.brojRegistracije || ''
+                p.datumRodenja || '',
+                p.brojRegistracije || '',
                 p.klub || '',
             ]);
 
