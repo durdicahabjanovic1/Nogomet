@@ -2,31 +2,45 @@ import { useEffect, useState } from "react"
 import KlubService from "../../services/klubovi/KlubService"
 import { Badge, Button, Table } from "react-bootstrap"
 import { RouteNames } from "../../constants"
-import { Link, useNavigate  } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import IgracService from "../../services/igraci/IgracService"
 import { FaFilePdf } from "react-icons/fa"
 import KlubPDFGenerator from "../../components/KlubPDFGenerator"
+import useBreakpoint from "../../hooks/useBreakpoint"
 
 
 export default function klubPregled() {
 
     const [klubovi, setKlubovi] = useState([])
-      const [sviIgraci, setSviIgraci] = useState([])
+    const [sviIgraci, setSviIgraci] = useState([])
     const [tooltip, setTooltip] = useState({
         vidljivo: false,
         x: 0,
         y: 0,
         podaci: []
     })
-    
 
     const navigate = useNavigate()
+    const sirina = useBreakpoint();
+
+    useEffect(() => {
+        ucitajKlubove()
+        ucitajIgrace()
+
+    }, [])
+
 
     async function ucitajKlubove() {
+        const igraciRezultat = await IgracService.get();
         await KlubService.get().then((odgovor) => {
-            console.log(JSON.stringify(odgovor.data))
-            // console.table(odgovor.data)
-           setKlubovi(odgovor.data)
+            // console.log(JSON.stringify(odgovor.data)) 
+            setKlubovi(odgovor.data)
+        })
+    }
+
+    async function ucitajIgrace() {
+        await IgracServiceService.get().then((odgovor) => {
+            setSviIgraci(odgovor.data)
         })
     }
 
@@ -36,97 +50,114 @@ export default function klubPregled() {
         ucitajKlubove()
     }, [])
 
-    async function obrisi(sifra){
-        if(!confirm('Sigurno obrisati?')){
-            return
+    // --- LOGIKA ZA TOOLTIP ---
+    const handleMouseEnter = (sifreIgracaUKlubu) => {
+        if (!sifreIgracaUKlubu || sifreIgracaUKlubu.length === 0) return;
+
+        // Filtriraj objekte polaznika na temelju šifri iz grupe
+        const filtrirani = sviPolaznici.filter(p => sifrePolaznikaUGrupi.includes(p.sifra));
+
+        setTooltip(prev => ({ ...prev, vidljivo: true, podaci: filtrirani }));
+    };
+
+    const handleMouseMove = (e) => {
+        // Pomicanje tooltipa 15px desno i dolje od miša da ne smeta kursoru
+        //console.log(e.pageY)
+        if (e.pageY > 250) {
+            setTooltip(prev => ({ ...prev, x: e.pageX + 15, y: e.pageY - 100 }));
+        } else {
+            setTooltip(prev => ({ ...prev, x: e.pageX + 15, y: e.pageY + 15 }));
         }
-        await KlubService.obrisi(sifra)
-        ucitajKlubove()
-    }
+    };
+
+    const handleMouseLeave = () => {
+        setTooltip(prev => ({ ...prev, vidljivo: false, podaci: [] }));
+    };
 
 
-      async function generirajPDFZaKlub(klub) {
-     
+    async function obrisi(sifra) {
+        if (!confirm('Sigurno obrisati?')) {
+            return
+            async function obrisi(sifra) {
+                if (!confirm('Sigurno obrisati')) return;
 
-          const odgovorIgraci = await IgracService.get()
+                const igraciRezultat = await IgracService.get();
+                const igraciKojeKoristeKlub = igraciRezultat.data.filter(igrac => igrac.klub === parseInt(sifra));
 
-       
-        const igraciKlubovi = odgovorIgraci.data.filter(p =>
-            klub.igraci && klub.igraci.includes(p.sifra)
-        )
-
-       
-        const generiraj = KlubPDFGenerator({
-            klub,
-            igraci: igraciKlubovi
-        })
-        await generiraj()
-    }
+                if (igraciKojeKoristeKlub.length > 0) {
+                    alert(`Ne možete obrisati ovaj klub jer je postavljen na ${igraciKojeKoristeKlub.length} igrac/e. Prvo obrišite ili promijenite klub u tim igracima.`);
+                    return;
+                }
 
 
-     
 
-    
-        
-    
 
-    return (
-        <>
+                await KlubService.obrisi(sifra)
+                ucitajKlubove()
 
-            <Link to ={RouteNames.KLUBOVI_DODAJ}
-                className="btn btn-success w-100 my-3">
+                await KlubService.obrisi(sifra);
+                await KlubService.get().then((odgovor) => {
+                    set(odgovor.data)
+                })
+            }
 
-                Dodavanje novog kluba
-            </Link >
-            <Table hover striped bordered>
 
-                <thead>
-                    <tr>
-                        <th>Naziv</th>
-                        <th>Mjesto</th>
-                        <th>
-                            Akcija 
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {klubovi && klubovi.map((klub) => (
-                        <tr key={klub.sifra}>
-                            <td>
-                              <FaFilePdf
-                                    color="#cb72dd"
-                                    style={{ cursor: 'hand' }}
-                                    onClick={() => generirajPDFZaKlub(klub)} title="Generiraj PDF" />
-                            
-                            {klub.naziv}
-                                <span title="Broj igraca"> ({klub.igraci.length}) </span>
-                            </td>
-                            <td>{klub.mjesto}</td>
-                            
-                                <td>
+            async function generirajPDFZaKlub(klub) {
 
-                                <Button onClick={()=>{navigate(`/klubovi/${klub.sifra}`)}}>
-                                Promijeni
 
-                                </Button>
-                   
-                                
-                                &nbsp;&nbsp;
+                const odgovorIgraci = await IgracService.get()
 
-                                <Button variant="danger" onClick={()=>obrisi(klub.sifra)}>
-                                    Obriši
 
-                                </Button>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </Table>
-            Ukupno klubova: &nbsp;
-            <Badge pill bg="success">
-                {klubovi && klubovi.length}
-            </Badge>
-            
-        </>
-    )
-}
+                const igraciKlubovi = odgovorIgraci.data.filter(p =>
+                    klub.igraci && klub.igraci.includes(p.sifra)
+                )
+
+
+                const generiraj = KlubPDFGenerator({
+                    klub,
+                    igraci: igraciKlubovi
+                })
+                await generiraj()
+            }
+
+
+
+
+
+
+
+
+            return (
+                <>
+
+                    <Link to={RouteNames.KLUBOVI_DODAJ}
+
+                        className="btn btn-success w-100 my-3">
+
+                        Dodavanje novog kluba
+                    </Link >
+
+
+                    {['xs', 'sm', 'md'].includes(sirina) ? (
+                        <KlubPregledGrid
+                            klubovi={klubovi}
+                            navigate={navigate}
+                            obrisi={obrisi}
+                        />
+                    ) : (
+                        <KlubPregledTablica
+                            smjerovi={smjerovi}
+                            navigate={navigate}
+                            obrisi={obrisi}
+                        />
+                    )}
+
+
+                    Ukupno klubova: & nbsp;
+                    <Badge pill bg="success">
+                        {klubovi && klubovi.length}
+                    </Badge>
+
+                </>
+            )
+        }
