@@ -19,7 +19,7 @@ export default function klubPregled() {
         y: 0,
         podaci: []
     })
-
+}
     const navigate = useNavigate()
     const sirina = useBreakpoint();
 
@@ -40,7 +40,7 @@ export default function klubPregled() {
 
     async function ucitajIgrace() {
         await IgracServiceService.get().then((odgovor) => {
-            setSviIgraci(odgovor.data)
+            setSviIgraci(odgovor.data) 
         })
     }
 
@@ -98,7 +98,7 @@ export default function klubPregled() {
                 await KlubService.obrisi(sifra);
                 await KlubService.get().then((odgovor) => {
                     set(odgovor.data)
-                })
+                )
             }
 
 
@@ -161,3 +161,4 @@ export default function klubPregled() {
                 </>
             )
         }
+    }
