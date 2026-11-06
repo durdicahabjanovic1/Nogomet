@@ -4,20 +4,36 @@ import { Link, useNavigate } from "react-router-dom";
 import { RouteNames } from "../../constants";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import IgracService from "../../services/igraci/IgracService";
+import { useEffect, useState } from "react";
+import KlubService from "../../services/klubovi/KlubService";
 
 
 export default function IgracNovi() {
 
     const navigate = useNavigate()
-    
+     const [klubovi, setKlubovi] = useState([])
 
-   
+   useEffect(()=>{
+    ucitajKlubove()
+   },[])
+
+    async function ucitajKlubove() {
+           await KlubService.get().then((odgovor) => {
+               //console.log(JSON.stringify(odgovor.data)) 
+               setKlubovi(odgovor.data)
+           })
+       }
   
 
     async function dodaj(igrac) {
-        await IgracService.dodaj(igrac).then(() => {
-            navigate(RouteNames.IGRACI)
-        })
+        const noviIgrac = await IgracService.dodaj(igrac)
+        const klub = await KlubService.getBySifra(igrac.klub)
+        //console.log(klub)
+        klub.data.igraci.push(noviIgrac.sifra)
+       // debugger
+       // console.log(klub.data)
+        await KlubService.promijeni(klub.data.sifra, klub.data)
+        navigate(RouteNames.IGRACI)
     }
 
     function obradiSubmit(e) { // e je event

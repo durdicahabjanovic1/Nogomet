@@ -1,48 +1,40 @@
 import { useEffect, useState } from "react"
 import KlubService from "../../services/klubovi/KlubService"
-import { Badge, Button, Table } from "react-bootstrap"
+import { Badge} from "react-bootstrap"
 import { RouteNames } from "../../constants"
 import { Link, useNavigate } from "react-router-dom"
 import IgracService from "../../services/igraci/IgracService"
-import { FaFilePdf } from "react-icons/fa"
 import KlubPDFGenerator from "../../components/KlubPDFGenerator"
 import useBreakpoint from "../../hooks/useBreakpoint"
+import KlubPregledGrid from "./KlubPregledGrid"
+import KlubPregledTablica from "./KlubPregledTablica"
 
 
 export default function klubPregled() {
 
     const [klubovi, setKlubovi] = useState([])
-    const [sviIgraci, setSviIgraci] = useState([])
     const [tooltip, setTooltip] = useState({
         vidljivo: false,
         x: 0,
         y: 0,
         podaci: []
     })
-}
+
     const navigate = useNavigate()
     const sirina = useBreakpoint();
 
     useEffect(() => {
         ucitajKlubove()
-        ucitajIgrace()
-
     }, [])
 
 
     async function ucitajKlubove() {
-        const igraciRezultat = await IgracService.get();
         await KlubService.get().then((odgovor) => {
             // console.log(JSON.stringify(odgovor.data)) 
             setKlubovi(odgovor.data)
         })
     }
 
-    async function ucitajIgrace() {
-        await IgracServiceService.get().then((odgovor) => {
-            setSviIgraci(odgovor.data) 
-        })
-    }
 
 
     useEffect(() => {
@@ -75,9 +67,7 @@ export default function klubPregled() {
     };
 
 
-    async function obrisi(sifra) {
-        if (!confirm('Sigurno obrisati?')) {
-            return
+
             async function obrisi(sifra) {
                 if (!confirm('Sigurno obrisati')) return;
 
@@ -85,25 +75,23 @@ export default function klubPregled() {
                 const igraciKojeKoristeKlub = igraciRezultat.data.filter(igrac => igrac.klub === parseInt(sifra));
 
                 if (igraciKojeKoristeKlub.length > 0) {
-                    alert(`Ne možete obrisati ovaj klub jer je postavljen na ${igraciKojeKoristeKlub.length} igrac/e. Prvo obrišite ili promijenite klub u tim igracima.`);
+                    alert(`Ne možete obrisati ovaj klub jer je postavljen na ${igraciKojeKoristeKlub.length} igrač/e. Prvo obrišite ili promijenite klub u tim igracima.`);
                     return;
                 }
 
 
 
 
-                await KlubService.obrisi(sifra)
-                ucitajKlubove()
 
                 await KlubService.obrisi(sifra);
                 await KlubService.get().then((odgovor) => {
                     set(odgovor.data)
-                )
+                })
             }
 
 
             async function generirajPDFZaKlub(klub) {
-
+                console.log(klub)
 
                 const odgovorIgraci = await IgracService.get()
 
@@ -143,12 +131,14 @@ export default function klubPregled() {
                             klubovi={klubovi}
                             navigate={navigate}
                             obrisi={obrisi}
+                            generirajPDFZaKlub={generirajPDFZaKlub}
                         />
                     ) : (
                         <KlubPregledTablica
-                            smjerovi={smjerovi}
+                            klubovi={klubovi}
                             navigate={navigate}
                             obrisi={obrisi}
+                            generirajPDFZaKlub={generirajPDFZaKlub}
                         />
                     )}
 
@@ -161,4 +151,4 @@ export default function klubPregled() {
                 </>
             )
         }
-    }
+    

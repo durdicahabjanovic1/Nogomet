@@ -7,7 +7,6 @@ import IgracService from '../services/igraci/IgracService';
 
 export default function GeneriranjePodataka() {
     const [brojKlubova, setBrojKlubova] = useState(5);
-    const [brojIgraca, setBrojIgraca] = useState(20);
     const [poruka, setPoruka] = useState(null);
     const [loading, setLoading] = useState(false);
 
@@ -27,30 +26,40 @@ export default function GeneriranjePodataka() {
         ];
 
         for (let i = 0; i < broj; i++) {
-            await KlubService.dodaj({
-                naziv: naziviKlubova[i % naziviKlubova.length] + (i >= naziviKlubova.length ? ` ${Math.floor(i / naziviKlubova.length) + 1}` : ''),
-                trajanje: faker.number.int({ min: 130, max: 350 }),
-                cijena: faker.number.float({ min: 1100, max: 5000, precision: 0.01 }).toFixed(2),
-                datumPokretanja: faker.date.soon().toISOString().split('T')[0],
-                aktivan: faker.datatype.boolean()
-            });
-        }
-    };
-
-    const generirajIgrace = async (broj) => {
-        for (let i = 0; i < broj; i++) {
+            let igraci = []
+             for (let i = 0; i < 11; i++) {
+                
             const igrac = {
-                ime: i%2===0? faker.person.firstName('male') : faker.person.firstName('female'),
+                ime: faker.person.firstName('male'),
                 prezime: faker.person.lastName(),
-                email: faker.internet.email(),
-                oib: faker.string.numeric(11)
+                brojDresa: faker.number.int({min: 1, max: 100}),
+                brojKopackih: faker.number.int({min: 39, max: 47}),
+                pozicija: 'ofenzivni vezni',
+                datumRodenja: faker.date.birthdate(),
+                brojRegistracije: '129/2026',
+                klub: faker.number.int({min: 1, max: broj}),
+                slika: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAAEsCAIAAAAJmGvpAAADD0lEQVR4nO3SQQ0AIRDAwOP8C1tZmKAhITMK+uiamQ9O+28H8CZjkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBaJDVgNBLAk8IkcAAAAAElFTkSuQmCC'
+   
             };
             await IgracService.dodaj(igrac);
+            igraci.push(igrac.sifra)
+            }
+            await KlubService.dodaj({
+                naziv: naziviKlubova[i % naziviKlubova.length] + (i >= naziviKlubova.length ? ` ${Math.floor(i / naziviKlubova.length) + 1}` : ''),
+                mjesto: faker.location.city(),
+                igraci: igraci
+            });
+        
+
+       
         }
+
     };
 
+    
 
-    const handleGenerirajKlubove = async (e) => {
+
+    const handleGeneriranjePodataka= async (e) => {
         e.preventDefault();
         setLoading(true);
         setPoruka(null);
@@ -72,31 +81,8 @@ export default function GeneriranjePodataka() {
         }
     };
 
-    const handleGenerirajIgrace = async (e) => {
-        e.preventDefault();
-        setLoading(true);
-        setPoruka(null);
 
-        try {
-            
-            await generirajIgrace(brojIgraca);
-
-            setPoruka({
-                tip: 'success',
-                tekst: `Uspješno generirano ${brojIgraca} igraca!`
-            });
-        } catch (error) {
-            setPoruka({
-                tip: 'danger',
-                tekst: 'Greška pri generiranju igraca: ' + error.message
-            });
-        } finally {
-            setLoading(false);
-        }
-    };
-
-
-    const handleObrisiKlubove = async () => {
+    const handleObrisiPodatke = async () => {
         if (!window.confirm('Jeste li sigurni da želite obrisati sve klubove?')) {
             return;
         }
@@ -112,9 +98,16 @@ export default function GeneriranjePodataka() {
                 await KlubService.obrisi(klub.sifra);
             }
 
+             const rezultatI = await IgracService.get();
+            const igraci = rezultatI.data;
+
+            for (const i of igraci) {
+                await IgracService.obrisi(i.sifra);
+            }
+
             setPoruka({
                 tip: 'success',
-                tekst: `Uspješno obrisano ${klubovi.length} klubova!`
+                tekst: `Uspješno obrisano ${klubovi.length} klubova i njihovih igrača!`
             });
         } catch (error) {
             setPoruka({
@@ -126,57 +119,8 @@ export default function GeneriranjePodataka() {
         }
     };
 
-    const handleGenerirajGrupe = async (e) => {
-        e.preventDefault();
-        setLoading(true);
-        setPoruka(null);
+   
 
-        try {
-            await generirajIgrace(brojIgraca);
-
-            setPoruka({
-                tip: 'success',
-                tekst: `Uspješno generirano ${brojIgraca} igraca!`
-            });
-        } catch (error) {
-            setPoruka({
-                tip: 'danger',
-                tekst: 'Greška pri generiranju igraca: ' + error.message
-            });
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    const handleObrisiIgrace = async () => {
-        if (!window.confirm('Jeste li sigurni da želite obrisati sve igrace?')) {
-            return;
-        }
-
-        setLoading(true);
-        setPoruka(null);
-
-        try {
-            const rezultat = await IgracService.get();
-            const igraci = rezultat.data;
-            
-            for (const igrac of igraci) {
-                await IgracService.obrisi(igrac.sifra);
-            }
-
-            setPoruka({
-                tip: 'success',
-                tekst: `Uspješno obrisano ${igraci.length} igrac!`
-            });
-        } catch (error) {
-            setPoruka({
-                tip: 'danger',
-                tekst: 'Greška pri brisanju igraca: ' + error.message
-            });
-        } finally {
-            setLoading(false);
-        }
-    };
 
     return (
         <Container className="mt-4">
@@ -193,7 +137,7 @@ export default function GeneriranjePodataka() {
 
             <Row>
                 <Col md={4}>
-                    <Form onSubmit={handleGenerirajKlubove}>
+                    <Form onSubmit={handleGeneriranjePodataka}>
                         <Form.Group className="mb-3">
                             <Form.Label>Broj klubova</Form.Label>
                             <Form.Control
@@ -219,30 +163,7 @@ export default function GeneriranjePodataka() {
                     </Form>
                 </Col>
                 <Col md={4}>
-                    <Form onSubmit={handleGenerirajIgrace}>
-                        <Form.Group className="mb-3">
-                            <Form.Label>Broj igraca</Form.Label>
-                            <Form.Control
-                                type="number"
-                                min="1"
-                                max="200"
-                                value={brojIgraca}
-                                onChange={(e) => setBrojIgraca(parseInt(e.target.value))}
-                                disabled={loading}
-                            />
-                            <Form.Text className="text-muted">
-                                Unesite broj igraca (1-200)
-                            </Form.Text>
-                        </Form.Group>
-                        <Button 
-                            variant="primary" 
-                            type="submit" 
-                            disabled={loading}
-                            className="w-100"
-                        >
-                            {loading ? 'Generiranje...' : 'Generiraj igrace'}
-                        </Button>
-                    </Form>
+                    KASNIJE
                 </Col>
                 <Col md={4}>
                    KASNIJE
@@ -265,7 +186,7 @@ export default function GeneriranjePodataka() {
                 <Col md={4}>
                     <Button 
                         variant="danger" 
-                        onClick={handleObrisiKlubove}
+                        onClick={handleObrisiPodatke}
                         disabled={loading}
                         className="w-100 mb-2"
                     >
@@ -273,14 +194,7 @@ export default function GeneriranjePodataka() {
                     </Button>
                 </Col>
                 <Col md={4}>
-                    <Button 
-                        variant="danger" 
-                        onClick={handleObrisiIgrace}
-                        disabled={loading}
-                        className="w-100 mb-2"
-                    >
-                        {loading ? 'Brisanje...' : 'Obriši sve igrace'}
-                    </Button>
+                    KASNIJE
                 </Col>
                 <Col md={4}>
                     KASNIJE

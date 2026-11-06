@@ -12,7 +12,6 @@ import IgracService from "../../services/igraci/IgracService"
 export default function KlubNovi() {
 
     const navigate = useNavigate()
-    const [klubovi, setKlubovi] = useState([])
     const [igraci, setIgraci] = useState([])
     const [odabraniIgraci, setOdabraniIgraci] = useState([])
     const [pretragaIgraca, setPretragaIgraca] = useState('')
@@ -20,15 +19,9 @@ export default function KlubNovi() {
     const [odabraniIndex, setOdabraniIndex] = useState(-1)
 
     useEffect(() => {
-        ucitajKlubove()
         ucitajIgrace()
     }, [])
 
-    async function ucitajKlubove() {
-        await KlubService.get().then((odgovor) => {
-            setKlubovi(odgovor.data)
-        })
-    }
 
     async function ucitajIgrace() {
         await IgracService.get().then((odgovor) => {
@@ -37,7 +30,7 @@ export default function KlubNovi() {
     }
 
     function dodajIgraca(igrac) {
-        if (!odabraniIgraci.find(p => p.sifra === polaznik.sifra)) {
+        if (!odabraniIgraci.find(p => p.sifra === igrac.sifra)) {
             setOdabraniIgraci([...odabraniIgraci, igrac])
         }
         setPretragaIgraca('')
@@ -51,9 +44,10 @@ export default function KlubNovi() {
 
     function filtrirajIgrace() {
         if(!pretragaIgraca) return []
+    
         return igraci.filter(p =>
           !odabraniIgraci.find(op => op.sifra === p.sifra) &&
-        (p.ime.toLowerCase().indludes(pretragaIgraca.toLowerCase()) ||
+        (p.ime.toLowerCase().includes(pretragaIgraca.toLowerCase()) ||
           p.prezime.toLowerCase().includes(pretragaIgraca.toLowerCase()) )
     
     )
@@ -110,16 +104,7 @@ export default function KlubNovi() {
         alert("Naziv grupe mora imati najmanje 3 znaka!");
         return;
     }
-    if (!podaci.get('klub') || podaci.get('klub') === "") {
-        alert("Morate odabrati klub!");
-        return;
-    }
 
-    const odabraniKlub = parseInt(podaci.get('klub'));
-    if (isNaN(odabraniKlub) || odabraniKlub <= 0) {
-        alert("Odabrani klub nije valjan!");
-        return;
-    }
         dodaj({
             naziv: podaci.get('naziv'),
             mjesto: podaci.get('mjesto'),

@@ -2,12 +2,11 @@
 
 import { Button, Table } from "react-bootstrap";
 import { GrValidate } from "react-icons/gr";
-import FormatDatuma from "../../components/FormatDatuma";
-import { FaEdit, FaTrash } from "react-icons/fa";
+import { FaEdit, FaFilePdf, FaTrash } from "react-icons/fa";
 import { FaSort, FaSortUp, FaSortDown } from "react-icons/fa";
 import { useState } from "react";
 
-export default function KlubPregledTablica({ klubovi, navigate, obrisi }) {
+export default function KlubPregledTablica({ klubovi, navigate, obrisi,generirajPDFZaKlub }) {
     const [sortConfig, setSortConfig] = useState({ key: null, direction: null });
 
     const handleSort = (key) => {
@@ -27,10 +26,11 @@ export default function KlubPregledTablica({ klubovi, navigate, obrisi }) {
         return sortConfig.direction === 'asc' ? <FaSortUp /> : <FaSortDown />;
     };
 
-        const sortedKlubovi = () => {
+    const sortedKlubovi = () => {
         if (!klubovi || sortConfig.direction === null) {
             return klubovi;
         }
+
 
         const sorted = [...klubovi].sort((a, b) => {
             let aValue = a[sortConfig.key];
@@ -61,9 +61,11 @@ export default function KlubPregledTablica({ klubovi, navigate, obrisi }) {
                 return sortConfig.direction === 'asc' ? result : -result;
             }
 
-           
-         
-      
+            return 0
+        })
+        return sorted
+    }
+
 
     return (
         <Table striped bordered hover responsive>
@@ -73,48 +75,32 @@ export default function KlubPregledTablica({ klubovi, navigate, obrisi }) {
                         Naziv {getSortIcon('naziv')}
                     </th>
                     <th onClick={() => handleSort('mjesto')} style={{ cursor: 'pointer' }}>
-                       Mjesto {getSortIcon('mjesto')}
+                        Mjesto {getSortIcon('mjesto')}
                     </th>
-                   
-                    <th onClick={() => handleSort('igrac')} style={{ cursor: 'pointer' }}>
-                       Igrac {getSortIcon('igrac')}
-                    </th>
-                      <th onClick={() => handleSort('datumPokretanja')} style={{ cursor: 'pointer' }}>
-                        Datum pokretanja {getSortIcon('datumPokretanja')}
-                    </th>
-                    <th onClick={() => handleSort('aktivan')} style={{ cursor: 'pointer' }}>
-                        Aktivan {getSortIcon('aktivan')}
-                    </th>
+                 
                     <th>Akcija</th>
                 </tr>
             </thead>
             <tbody>
                 {sortedKlubovi() && sortedKlubovi().map((klub) => (
                     <tr key={klub.sifra}>
-                        <td className="lead">{klub.naziv}</td>
+                        <td className="lead"> 
+                            <FaFilePdf
+                                    color="#cb72dd"
+                                    style={{ cursor: 'hand' }}
+                                    onClick={() => generirajPDFZaKlub(klub)} title="Generiraj PDF" />
+                            {klub.naziv}</td>
                         <td className='text-end'>{klub.mjesto} </td>
-                        <td className='text-end'>
-                           
-                        </td>
+                  
                         <td>
-                            <FormatDatuma datum={klub.datumPokretanja} />
-                        </td>
-                        <td style={{ textAlign: 'center' }}>
-                            <GrValidate
-                                size={25}
-                                color={klub.aktivan ? 'green' : 'red'}
-                            />
-                        </td>
-                        <td>
-                            <Button onClick={() => navigate(`/smjerovi/${klub.sifra}`)} title="Promjeni">
-                                 <FaEdit />
+                            <Button onClick={() => navigate(`/klubovi/${klub.sifra}`)} title="Promjeni">
+                                <FaEdit />
                             </Button>
-                                &nbsp;&nbsp;
-                                    <Button
-                                    disabled={!klub.mozeSeObrisati}
-                                    variant="danger" onClick={() => obrisi(klub.sifra)} title="Obriši">
-                                        <FaTrash />
-                                    </Button>
+                            &nbsp;&nbsp;
+                            <Button
+                                variant="danger" onClick={() => obrisi(klub.sifra)} title="Obriši">
+                                <FaTrash />
+                            </Button>
                         </td>
                     </tr>
                 ))}

@@ -1,6 +1,4 @@
 
-import { igraci } from "../igraci/IgracPodaci";
-
 
 export const klubovi = [
     {

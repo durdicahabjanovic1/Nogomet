@@ -32,6 +32,7 @@ async function dodaj(igrac){
 
     igraci.push(igrac)
     spremiUStorage(igraci)
+    return igrac
 }
 
 

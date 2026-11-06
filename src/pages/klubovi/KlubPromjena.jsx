@@ -1,6 +1,6 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { RouteNames } from "../../constants";
-import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
+import { Button, Card, Col, Container, Form, Row, Table } from "react-bootstrap";
 import KlubService from "../../services/klubovi/KlubService";
 import { useEffect, useState } from "react";
 import IgracService from "../../services/igraci/IgracService";
@@ -59,7 +59,7 @@ export default function KlubPromjena(){
         return igraci.filter(p =>
             !odabraniIgraci.find(op => op.sifra === p.sifra) &&
             (p.ime.toLowerCase().includes(pretragaIgraca.toLowerCase()) ||
-                p.prezime.toLowerCase().icludes(pretragaIgraca.toLowerCase()))
+                p.prezime.toLowerCase().includes(pretragaIgraca.toLowerCase()))
         )
 
     }
@@ -121,17 +121,6 @@ function obradiSubmit(e){
         return;
     }
 
-    if (!podaci.get('klub') || podaci.get('klub') === "") {
-        alert("Morate odabrati klub!");
-        return;
-    }
-
-
-    const odabraniKlub = parseInt(podaci.get('klub'));
-    if (isNaN(odabraniKlub) || odabraniKlub <= 0) {
-        alert("Odabrani klub nuje valjan!");
-        return;
-    }
     promijeni({
         naziv: podaci.get('naziv'),
         mjesto: podaci.get('mjesto'),

@@ -1,13 +1,8 @@
-
-
-
 import { Button, Card, Row, Col, Container } from "react-bootstrap";
-import { NumericFormat } from "react-number-format";
 import { GrValidate } from "react-icons/gr";
-import FormatDatuma from "../../components/FormatDatuma";
-import { FaEdit, FaTrash } from "react-icons/fa";
+import { FaEdit, FaFilePdf, FaTrash } from "react-icons/fa";
 
-export default function KlubPregledGrid({ klubovi, navigate, obrisi }) {
+export default function KlubPregledGrid({ klubovi, navigate, obrisi,generirajPDFZaKlub }) {
     return (
         <Container className="py-3 px-0">
             <Row>
@@ -16,28 +11,19 @@ export default function KlubPregledGrid({ klubovi, navigate, obrisi }) {
                         <Card className="shadow-sm h-100">
                             <Card.Header className="d-flex justify-content-between align-items-center bg-white py-3">
                                 <span className="fw-bold text-primary" style={{ fontSize: '1.1rem' }}>
+                                   
+                                   <FaFilePdf
+                                    color="#cb72dd"
+                                    style={{ cursor: 'hand' }}
+                                    onClick={() => generirajPDFZaKlub(klub)} title="Generiraj PDF" />
                                     {klub.naziv}
                                 </span>
-                                <GrValidate
-                                    size={22}
-                                    color={klub.aktivan ? 'green' : 'red'}
-                                    title={klub.aktivan ? "Aktivan" : "Neaktivan"}
-                                />
+                                
                             </Card.Header>
 
                             <Card.Body>
                                 <div className="d-flex justify-content-between mb-2">
-                                    <span className="text-muted">Trajanje:</span>
-                                    <span className="fw-semibold">{klub.trajanje} h</span>
-                                </div>
-
-                              
-
-                                <div className="d-flex justify-content-between">
-                                    <span className="text-muted">Početak:</span>
-                                    <span>
-                                        <FormatDatuma datum={klub.datumPokretanja} />
-                                    </span>
+                                    {klub.mjesto}
                                 </div>
                             </Card.Body>
 
@@ -53,7 +39,6 @@ export default function KlubPregledGrid({ klubovi, navigate, obrisi }) {
                                 <Button
                                     variant="outline-danger"
                                     className="flex-fill"
-                                    disabled={!klub.mozeSeObrisati}
                                     onClick={() => obrisi(klub.sifra)}
                                     title="Obriši"
                                 >

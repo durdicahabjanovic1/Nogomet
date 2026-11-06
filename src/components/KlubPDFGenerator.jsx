@@ -18,14 +18,14 @@ export default function KlubPDFGenerator({ klub, igraci }) {
 
     const generirajPDF = async () => {
         const [regBase64, boldBase64] = await Promise.all([
-            fetchFontAsBase64('/fonts/Roboto-Medium.ttf'),
+            fetchFontAsBase64('/fonts/Roboto-Regular.ttf'),
             fetchFontAsBase64('/fonts/Roboto-Bold.ttf')
         ]);
 
         const doc = new jsPDF();
 
-        doc.addFileToVFS('Roboto-Medium.ttf', regBase64);
-        doc.addFont('Roboto-Bold.ttf', 'Roboto', 'normal');
+        doc.addFileToVFS('Roboto-Regular.ttf', regBase64);
+        doc.addFont('Roboto-Regular.ttf', 'Roboto', 'normal');
         doc.addFileToVFS('Roboto-Bold.ttf', boldBase64);
         doc.addFont('Roboto-Bold.ttf', 'Roboto', 'bold');
 
@@ -71,24 +71,12 @@ export default function KlubPDFGenerator({ klub, igraci }) {
             body: [
                 [
                     `Naziv: ${ klub?.naziv || '-' } `,
-                    `Mjesto: ${ mjesto?.naziv || '-' } `
+                    `Mjesto: ${ klub?.mjesto || '-' } `
                 ],
                 [
                     `Broj igraca: ${ igraci?.length || 0 } `,
-                    `Trajanje: ${ klub?.trajanje ? `${klub.trajanje} sati` : '-' } `
-                ],
-                [
-                    '',
-                    `Akcija: ${ formatirajAkciju(klub?.akcija) } `
-                ],
-                [
-                    '',
-                    `Datum pokretanja: ${ klub?.datumPokretanja ? new Date(klub.datumPokretanja).toLocaleDateString('hr-HR') : '-' } `
-                ],
-                [
-                    '',
-                    `Status kluba: ${ klub?.aktivan ? 'Aktivan' : 'Neaktivan' } `
                 ]
+              
             ],
             didParseCell: (data) => {
                 if (data.section === 'head') {
@@ -105,7 +93,7 @@ export default function KlubPDFGenerator({ klub, igraci }) {
         doc.setFont('Roboto', 'bold');
         doc.setFontSize(13);
         doc.setTextColor(...textColor);
-        doc.text('Popis upisanih igraca', 7, currentY);
+        doc.text('Popis upisanih igrača', 7, currentY);
 
         currentY += 5;
 
@@ -118,14 +106,13 @@ export default function KlubPDFGenerator({ klub, igraci }) {
                 p.brojKopackih || '' ,
                 p.pozicija || '', 
                 p.datumRodenja || '',
-                p.brojRegistracije || '',
-                p.klub || '',
+                p.brojRegistracije || ''
             ]);
 
             autoTable(doc, {
                 startY: currentY,
                 margin: { left: 15, right: 15 },
-                head: [['#', 'Ime', 'Prezime', 'BrojDresa', 'BrojKopackih', Pozicija, DatumRodenja, BrojRegistracije, Klub]],
+                head: [['#', 'Ime', 'Prezime', 'Broj dresa', 'Broj kopačkih', 'Pozicija', 'Datum rođenja', 'Broj registracije']],
                 body: tableData,
                 styles: {
                     font: 'Roboto',
@@ -145,18 +132,22 @@ export default function KlubPDFGenerator({ klub, igraci }) {
                     fillColor: [248, 250, 252]
                 },
                 columnStyles: {
-                    0: { cellWidth: 15, halign: 'center' },
-                    1: { cellWidth: 35 },
-                    2: { cellWidth: 35 },
-                    3: { cellWidth: 65 },
-                    4: { cellWidth: 35 }
+                    0: { cellWidth: 20, halign: 'center' },
+                    1: { cellWidth: 20 },
+                    2: { cellWidth: 20 },
+                    3: { cellWidth: 20 },
+                    4: { cellWidth: 20 },
+                    5: { cellWidth: 20 },
+                    6: { cellWidth: 20 },
+                    7: { cellWidth: 20 },
+                    8: { cellWidth: 20 },
                 }
             });
         } else {
             doc.setFont('Roboto', 'normal');
             doc.setFontSize(10);
             doc.setTextColor(...secondaryColor);
-            doc.text('Trenutačno nema upisanih igraca u ovoj klubu.', 7, currentY + 7);
+            doc.text('Trenutačno nema upisanih igrača u ovoj klubu.', 7, currentY + 7);
         }
 
    
