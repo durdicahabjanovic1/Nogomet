@@ -7,6 +7,8 @@ import IgracService from "../../services/igraci/IgracService"
 import { FaFilePdf } from "react-icons/fa"
 import KlubPDFGenerator from "../../components/KlubPDFGenerator"
 import useBreakpoint from "../../hooks/useBreakpoint"
+import KlubPregledGrid from "./KlubPregledGrid"
+import KlubPregledTablica from "./KlubPregledTablica"
 
 
 export default function klubPregled() {
@@ -19,7 +21,7 @@ export default function klubPregled() {
         y: 0,
         podaci: []
     })
-}
+
     const navigate = useNavigate()
     const sirina = useBreakpoint();
 
@@ -39,7 +41,7 @@ export default function klubPregled() {
     }
 
     async function ucitajIgrace() {
-        await IgracServiceService.get().then((odgovor) => {
+        await IgracService.get().then((odgovor) => {
             setSviIgraci(odgovor.data) 
         })
     }
@@ -54,8 +56,8 @@ export default function klubPregled() {
     const handleMouseEnter = (sifreIgracaUKlubu) => {
         if (!sifreIgracaUKlubu || sifreIgracaUKlubu.length === 0) return;
 
-        // Filtriraj objekte polaznika na temelju šifri iz grupe
-        const filtrirani = sviPolaznici.filter(p => sifrePolaznikaUGrupi.includes(p.sifra));
+        // Filtriraj igrače na temelju šifri iz kluba
+        const filtrirani = sviIgraci.filter(p => sifreIgracaUKlubu.includes(p.sifra));
 
         setTooltip(prev => ({ ...prev, vidljivo: true, podaci: filtrirani }));
     };
@@ -76,49 +78,38 @@ export default function klubPregled() {
 
 
     async function obrisi(sifra) {
-        if (!confirm('Sigurno obrisati?')) {
-            return
-            async function obrisi(sifra) {
-                if (!confirm('Sigurno obrisati')) return;
+        if (!confirm('Sigurno obrisati?')) return;
 
-                const igraciRezultat = await IgracService.get();
-                const igraciKojeKoristeKlub = igraciRezultat.data.filter(igrac => igrac.klub === parseInt(sifra));
+        const igraciRezultat = await IgracService.get();
+        const igraciKojeKoristeKlub = igraciRezultat.data.filter(igrac => igrac.klub === parseInt(sifra));
 
-                if (igraciKojeKoristeKlub.length > 0) {
-                    alert(`Ne možete obrisati ovaj klub jer je postavljen na ${igraciKojeKoristeKlub.length} igrac/e. Prvo obrišite ili promijenite klub u tim igracima.`);
-                    return;
-                }
+        if (igraciKojeKoristeKlub.length > 0) {
+            alert(`Ne možete obrisati ovaj klub jer je postavljen na ${igraciKojeKoristeKlub.length} igrac/e. Prvo obrišite ili promijenite klub u tim igracima.`);
+            return;
+        }
 
-
-
-
-                await KlubService.obrisi(sifra)
-                ucitajKlubove()
-
-                await KlubService.obrisi(sifra);
-                await KlubService.get().then((odgovor) => {
-                    set(odgovor.data)
-                )
-            }
+        await KlubService.obrisi(sifra)
+        ucitajKlubove()
+    }
 
 
-            async function generirajPDFZaKlub(klub) {
+    async function generirajPDFZaKlub(klub) {
 
 
-                const odgovorIgraci = await IgracService.get()
+        const odgovorIgraci = await IgracService.get()
 
 
-                const igraciKlubovi = odgovorIgraci.data.filter(p =>
-                    klub.igraci && klub.igraci.includes(p.sifra)
-                )
+        const igraciKlubovi = odgovorIgraci.data.filter(p =>
+            klub.igraci && klub.igraci.includes(p.sifra)
+        )
 
 
-                const generiraj = KlubPDFGenerator({
-                    klub,
-                    igraci: igraciKlubovi
-                })
-                await generiraj()
-            }
+        const generiraj = KlubPDFGenerator({
+            klub,
+            igraci: igraciKlubovi
+        })
+        await generiraj()
+    }
 
 
 
@@ -146,19 +137,18 @@ export default function klubPregled() {
                         />
                     ) : (
                         <KlubPregledTablica
-                            smjerovi={smjerovi}
+                            klubovi={klubovi}
                             navigate={navigate}
                             obrisi={obrisi}
                         />
                     )}
 
 
-                    Ukupno klubova: & nbsp;
+                    Ukupno klubova:
                     <Badge pill bg="success">
                         {klubovi && klubovi.length}
                     </Badge>
 
                 </>
             )
-        }
-    }
+}

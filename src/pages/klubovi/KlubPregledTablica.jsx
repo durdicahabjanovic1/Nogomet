@@ -61,10 +61,13 @@ export default function KlubPregledTablica({ klubovi, navigate, obrisi }) {
                 return sortConfig.direction === 'asc' ? result : -result;
             }
 
-           
-         
-      
-
+            // Ostalo: brojcno usporedivanje
+            const numA = Number(aValue);
+            const numB = Number(bValue);
+            return sortConfig.direction === 'asc' ? numA - numB : numB - numA;
+        });
+        return sorted;
+    };
     return (
         <Table striped bordered hover responsive>
             <thead>
@@ -106,7 +109,7 @@ export default function KlubPregledTablica({ klubovi, navigate, obrisi }) {
                             />
                         </td>
                         <td>
-                            <Button onClick={() => navigate(`/smjerovi/${klub.sifra}`)} title="Promjeni">
+                            <Button onClick={() => navigate(`/klubovi/${klub.sifra}`)} title="Promjeni">
                                  <FaEdit />
                             </Button>
                                 &nbsp;&nbsp;

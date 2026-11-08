@@ -2,7 +2,6 @@
 
 
 import { Button, Card, Row, Col, Container } from "react-bootstrap";
-import { NumericFormat } from "react-number-format";
 import { GrValidate } from "react-icons/gr";
 import FormatDatuma from "../../components/FormatDatuma";
 import { FaEdit, FaTrash } from "react-icons/fa";
