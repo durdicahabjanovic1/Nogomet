@@ -1,5 +1,23 @@
-.app{
+.app {
   min-height: 500px;
-  background-color: antiquewhite;
-  
+  background-color: rgb(121, 115, 184);
+}
+
+/* Početna stranica - hero sekcija */
+.nogomet-hero {
+  background: linear-gradient(135deg, #14532d 0%, #166534 55%, #15803d 100%);
+  color: #567fa8;
+}
+
+.nogomet-hero .lead {
+  color: #199e0b;
+}
+
+/* Lopta na početnoj stranici */
+.nogomet-lopta {
+  transition: transform 0.4s ease;
+}
+
+.nogomet-lopta:hover {
+  transform: rotate(12deg) scale(1.03);
 }
