@@ -1,7 +1,7 @@
 
 
 
-import {DATA_SOURCE } from "../../constants"
+import { DATA_SOURCE } from "../../constants"
 import IgracServiceLocalStorage from "./IgracServiceLocalStorage"
 import IgracServiceMemorija from "./IgracServiceMemorija"
 
@@ -9,39 +9,41 @@ import IgracServiceMemorija from "./IgracServiceMemorija"
 let Servis = null
 
 
-switch(DATA_SOURCE){
+switch (DATA_SOURCE) {
     case 'memorija':
         Servis = IgracServiceMemorija
         break
-        case 'localStorage':
-            Servis = IgracServiceLocalStorage
-            break
-            default:
-                Servis = null
+    case 'localStorage':
+        Servis = IgracServiceLocalStorage
+        break
+    default:
+        Servis = null
 }
 
 
 const PrazanServis = {
 
-     get: async () => ({data: []}),
-     getBySifra: async (sifra) => ({data: {}}),
-     dodaj: async (igrac) => {console.error('Servis nije implementiran')},
-     promijeni: async(sifra, igrac) => {console.error('Servis nije implementiran')},
-     obrisi: async (sifra) => {console.error('Servis nije implementiran')},
-     dohvatiStranicu: async (stranica, velicinaStranice) => ({ data: [], ukupnoStranica: 0, ukupnoStavki: 0 })
+    get: async () => ({ data: [] }),
+    getBySifra: async (sifra) => ({ data: {} }),
+    dodaj: async (igrac) => { console.error('Servis nije implementiran') },
+    promijeni: async (sifra, igrac) => { console.error('Servis nije implementiran') },
+    obrisi: async (sifra) => { console.error('Servis nije implementiran') },
+    dohvatiStranicu: async (stranica, velicinaStranice) => ({ data: [], ukupnoStranica: 0, ukupnoStavki: 0 })
+    dohvatiStranicu: async (stranica, velicinaStranice, uvjetPretrazivanja) => ({ data: [], ukupnoStranica: 0, ukupnoStavki: 0 }),
 
 }
 
 const AktivniServis = Servis || PrazanServis
-    
+
 
 
 export default {
-   
+
     get: () => AktivniServis.get(),
     getBySifra: (sifra) => AktivniServis.getBySifra(sifra),
     dodaj: (igrac) => AktivniServis.dodaj(igrac),
-    promijeni: (sifra,igrac) => AktivniServis.promijeni(sifra,igrac),
+    promijeni: (sifra, igrac) => AktivniServis.promijeni(sifra, igrac),
     obrisi: (sifra) => AktivniServis.obrisi(sifra),
     dohvatiStranicu: (stranica, velicinaStranice) => AktivniServis.dohvatiStranicu(stranica, velicinaStranice)
+    dohvatiStranicu: async (stranica, velicinaStranice, uvjetPretrazivanja) => AktivniServis.dohvatiStranicu(stranica, velicinaStranice, uvjetPretrazivanja),
 }
