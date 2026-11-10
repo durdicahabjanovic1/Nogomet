@@ -85,10 +85,6 @@ export default function IgracPromjena() {
             prezime: podaci.get('prezime'),
             brojDresa: podaci.get('brojDresa'),
             klub: parseInt(podaci.get('klub')),
-            brojKopackih: podaci.get('brojKopackih'),
-            pozicija: podaci.get('pozicija'),
-            datumRodenja: podaci.get('datumRodenja'),
-            brojRegistracije: podaci.get('brojRegistracije'),
             slika: dataUrl
 
 

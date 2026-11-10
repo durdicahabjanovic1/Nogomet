@@ -46,7 +46,7 @@ export default function IgracPregled() {
 
 
     function promijeniStranicu(stranica) {
-
+            
         postaviTrenutnuStranicu(stranica)
     }
 
