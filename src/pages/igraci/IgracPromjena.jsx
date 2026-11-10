@@ -23,7 +23,7 @@ export default function IgracPromjena() {
         await KlubService.get().then((res) => {
             // console.log(res.data)
             setKlubovi(res.data)
-
+            setSlikaZaCrop(res.data.slika)
         })
     }
     async function ucitajIgrac() {
@@ -44,10 +44,17 @@ export default function IgracPromjena() {
     }, [])
 
 
-    async function promijeni(igraca) {
-        await IgracService.promijeni(params.sifra, igraca).then(() => {
-            navigate(RouteNames.IGRACI)
-        })
+    async function promijeni(igrac) {
+        await IgracService.promijeni(params.sifra, igrac)
+        // mislim da ovo ne radi
+        const klub = await KlubService.getBySifra(igrac.klub)
+        //console.log(klub)
+        klub.data.igraci.push(igrac.sifra)
+        // debugger
+        // console.log(klub.data)
+        await KlubService.promijeni(klub.data.sifra, klub.data)
+
+        navigate(RouteNames.IGRACI)
     }
 
 
@@ -77,6 +84,7 @@ export default function IgracPromjena() {
             ime: podaci.get('ime'),
             prezime: podaci.get('prezime'),
             brojDresa: podaci.get('brojDresa'),
+            klub: parseInt(podaci.get('klub')),
             brojKopackih: podaci.get('brojKopackih'),
             pozicija: podaci.get('pozicija'),
             datumRodenja: podaci.get('datumRodenja'),
@@ -112,7 +120,7 @@ export default function IgracPromjena() {
     return (
         <>
             <h3>
-                Dodavanje novog igraca
+                Promjena igrača
             </h3>
 
             <Form onSubmit={obradiSubmit}>

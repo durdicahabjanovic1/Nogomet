@@ -56,10 +56,12 @@ export default function KlubPromjena(){
 
     function filtrirajIgrace() {
         if (!pretragaIgraca) return []
-        return igraci.filter(p =>
+       return igraci.filter(p =>
             !odabraniIgraci.find(op => op.sifra === p.sifra) &&
             (p.ime.toLowerCase().includes(pretragaIgraca.toLowerCase()) ||
-                p.prezime.toLowerCase().includes(pretragaIgraca.toLowerCase()))
+                p.prezime.toLowerCase().includes(pretragaIgraca.toLowerCase())))
+                .map((i)=>({...i, dodano: true})
+
         )
 
     }
@@ -231,6 +233,7 @@ return (
                                                             <Button
                                                                 variant="danger"
                                                                 size="sm"
+                                                                disabled={!igrac.dodano}
                                                                 onClick={() => ukloniIgraca(igrac.sifra)}
                                                             >
                                                                 Obriši

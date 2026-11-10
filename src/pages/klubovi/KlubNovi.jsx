@@ -2,7 +2,7 @@
 
 import { Link, useNavigate } from "react-router-dom";
 import { RouteNames } from "../../constants";
-import { Button, Col, Form, Row, Container, Card,Table, CardBody } from "react-bootstrap";
+import { Button, Col, Form, Row, Container, Card, Table, CardBody } from "react-bootstrap";
 import KlubService from "../../services/klubovi/KlubService";
 import { useEffect, useState } from "react";
 import IgracService from "../../services/igraci/IgracService"
@@ -43,33 +43,34 @@ export default function KlubNovi() {
     }
 
     function filtrirajIgrace() {
-        if(!pretragaIgraca) return []
-    
+        if (!pretragaIgraca) return []
+
         return igraci.filter(p =>
-          !odabraniIgraci.find(op => op.sifra === p.sifra) &&
-        (p.ime.toLowerCase().includes(pretragaIgraca.toLowerCase()) ||
-          p.prezime.toLowerCase().includes(pretragaIgraca.toLowerCase()) )
-    
-    )
+            !odabraniIgraci.find(op => op.sifra === p.sifra) &&
+            (p.ime.toLowerCase().includes(pretragaIgraca.toLowerCase()) ||
+                p.prezime.toLowerCase().includes(pretragaIgraca.toLowerCase())))
+                .map((i)=>({...i, dodano: true})
+
+        )
     }
     function handleKeyDown(e) {
         const filtriraniIgraci = filtrirajIgrace()
 
         if (e.key === 'ArrowDown') {
-            e.preventDefalt()
+            e.preventDefault()
             setOdabraniIndex(prev => {
-                if(prev + 1 === filtriraniIgraci.length) {
+                if (prev + 1 === filtriraniIgraci.length) {
                     return 0
-                    
+
                 }
-                return prev < filtriraniIgraci.length -1 ? prev + 1 : prev
+                return prev < filtriraniIgraci.length - 1 ? prev + 1 : prev
             }
-        )
+            )
         } else if (e.key === 'ArrowUp') {
             e.preventDefault()
             setOdabraniIndex(prev => {
-                if(prev===0){
-                    return filtriraniIgraci.length-1
+                if (prev === 0) {
+                    return filtriraniIgraci.length - 1
                 }
                 return prev > 0 ? prev - 1 : 0
             })
@@ -82,7 +83,7 @@ export default function KlubNovi() {
         }
     }
 
-    
+
 
     async function dodaj(klub) {
         await KlubService.dodaj(klub).then(() => {
@@ -90,7 +91,7 @@ export default function KlubNovi() {
         })
     }
 
-    
+
 
     function obradiSubmit(e) { // e je event
         e.preventDefault() // nemoj odraditi submit
@@ -100,19 +101,19 @@ export default function KlubNovi() {
             alert("Naziv je obavezan i ne smije sadržavati samo razmake!");
             return;
         }
-      if (podaci.get('naziv').trim().length < 3) {
-        alert("Naziv grupe mora imati najmanje 3 znaka!");
-        return;
-    }
+        if (podaci.get('naziv').trim().length < 3) {
+            alert("Naziv grupe mora imati najmanje 3 znaka!");
+            return;
+        }
+
 
         dodaj({
             naziv: podaci.get('naziv'),
             mjesto: podaci.get('mjesto'),
             igraci: odabraniIgraci.map(p => p.sifra)
-
-
-
         })
+
+        
     }
 
 
@@ -125,41 +126,41 @@ export default function KlubNovi() {
             <Form onSubmit={obradiSubmit}>
                 <Container className="mt-4">
 
-                <Row>
-                    
-                    <Col md={6}>
-                        <Card className="shadow-sm">
-                            <Card.Body>
-                                <Card.Title className="mb-4">Unos novog kluba</Card.Title>
+                    <Row>
+
+                        <Col md={6}>
+                            <Card className="shadow-sm">
+                                <Card.Body>
+                                    <Card.Title className="mb-4">Unos novog kluba</Card.Title>
 
 
-                        <Form.Group controlId="naziv" className="mb-3">
-                    <Form.Label className="fw-bold">Naziv</Form.Label>
-                    <Form.Control
-                     type="text"
-                      name="naziv"
-                      placeholder="Unesite naziv kluba"
-                      required
-                  />   
-                </Form.Group>
-              
-
-                <Form.Group controlId="mjesto" className="mb-3">
-                    <Form.Label className="fw-bold">Mjesto</Form.Label>
-                    <Form.Control
-                     type="text"
-                      name="mjesto" 
-                       placeholder="Unesite mjesto kluba"
-                       required
-                      />
-                </Form.Group>
-                </Card.Body>
-                </Card>
+                                    <Form.Group controlId="naziv" className="mb-3">
+                                        <Form.Label className="fw-bold">Naziv</Form.Label>
+                                        <Form.Control
+                                            type="text"
+                                            name="naziv"
+                                            placeholder="Unesite naziv kluba"
+                                            required
+                                        />
+                                    </Form.Group>
 
 
-                    </Col>
+                                    <Form.Group controlId="mjesto" className="mb-3">
+                                        <Form.Label className="fw-bold">Mjesto</Form.Label>
+                                        <Form.Control
+                                            type="text"
+                                            name="mjesto"
+                                            placeholder="Unesite mjesto kluba"
+                                            required
+                                        />
+                                    </Form.Group>
+                                </Card.Body>
+                            </Card>
 
-                     <Col md={6}>
+
+                        </Col>
+
+                        <Col md={6}>
                             <Card className="shadow-sm">
                                 <Card.Body>
                                     <Card.Title className="mb-4">Igraci</Card.Title>
@@ -195,7 +196,7 @@ export default function KlubNovi() {
                                                             setOdabraniIndex(index)
                                                         }}
                                                     >
-                                                      {igrac.ime} {igrac.prezime} 
+                                                        {igrac.ime} {igrac.prezime}
                                                     </div>
                                                 ))}
                                             </div>
@@ -220,6 +221,7 @@ export default function KlubNovi() {
                                                                 <Button
                                                                     variant="danger"
                                                                     size="sm"
+                                                                    disabled={!igrac.dodano}
                                                                     onClick={() => ukloniIgraca(igrac.sifra)}
                                                                 >
                                                                     Obriši
@@ -256,5 +258,4 @@ export default function KlubNovi() {
     )
 }
 
-                 
-               
+

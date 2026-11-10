@@ -85,7 +85,7 @@ export default function klubPregled() {
 
                 await KlubService.obrisi(sifra);
                 await KlubService.get().then((odgovor) => {
-                    set(odgovor.data)
+                    setKlubovi(odgovor.data)
                 })
             }
 
