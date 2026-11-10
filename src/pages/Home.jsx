@@ -57,10 +57,10 @@ export default function Home() {
                     </Col>
                     <Col md={6} className="text-center">
                         <img
-                            src="/slika lopte.jpg"
+                            src="/slikaLopte.webp"
                             alt="Nogometna lopta"
                             className="img-fluid nogomet-lopta rounded-circle shadow-lg"
-                            style={{ maxWidth: '320px', objectFit: 'cover' }}
+                            style={{ maxWidth: '220px', objectFit: 'cover' }}
                         />
                     </Col>
                 </Row>

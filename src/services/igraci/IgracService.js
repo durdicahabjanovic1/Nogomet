@@ -28,7 +28,6 @@ const PrazanServis = {
     dodaj: async (igrac) => { console.error('Servis nije implementiran') },
     promijeni: async (sifra, igrac) => { console.error('Servis nije implementiran') },
     obrisi: async (sifra) => { console.error('Servis nije implementiran') },
-    dohvatiStranicu: async (stranica, velicinaStranice) => ({ data: [], ukupnoStranica: 0, ukupnoStavki: 0 })
     dohvatiStranicu: async (stranica, velicinaStranice, uvjetPretrazivanja) => ({ data: [], ukupnoStranica: 0, ukupnoStavki: 0 }),
 
 }
@@ -44,6 +43,5 @@ export default {
     dodaj: (igrac) => AktivniServis.dodaj(igrac),
     promijeni: (sifra, igrac) => AktivniServis.promijeni(sifra, igrac),
     obrisi: (sifra) => AktivniServis.obrisi(sifra),
-    dohvatiStranicu: (stranica, velicinaStranice) => AktivniServis.dohvatiStranicu(stranica, velicinaStranice)
     dohvatiStranicu: async (stranica, velicinaStranice, uvjetPretrazivanja) => AktivniServis.dohvatiStranicu(stranica, velicinaStranice, uvjetPretrazivanja),
 }

@@ -53,56 +53,46 @@ async function obrisi(sifra) {
 }
 
 // Straničenje - dohvati stranicu polaznika
-async function dohvatiStranicu(stranica = 1, velicinaStranice = 8) {
-    const igraci = dohvatiSveIzStorage();
-    async function dohvatiStranicu(stranica = 1, velicinaStranice = 8, uvjetPretrazivanja = '') {
-        console.log('Dohvaćanje stranice storage')
-        let filtriraniIgraci = dohvatiSveIzStorage();
+
+async function dohvatiStranicu(stranica = 1, velicinaStranice = 8, uvjetPretrazivanja = '') {
+    console.log('Dohvaćanje stranice storage')
+    let filtriraniIgraci = dohvatiSveIzStorage();
 
 
-        if (uvjetPretrazivanja && uvjetPretrazivanja.trim() !== '') {
-            const loweruvjetPretrazivanja = uvjetPretrazivanja.toLowerCase().trim();
-            filtriraniIgraci = filtriraniIgraci.filter(igrac => {
-                const ime = (igrac.ime || '').toLowerCase();
-                const prezime = (igrac.prezime || '').toLowerCase();
-                const brojDreasa = (igrac.brojDresa || '').toLowerCase();
-                const brojKopackih = (igrac.brojKopackih || '').toLowerCase();
-                const pozicija = (igrac.pozicija || '').toLowerCase();
-                const datumRodenja = (igrac.datumRodenja || '').toLowerCase();
-                const brojRegistracije = (igrac.brojRegistracije || '').toLowerCase();
+    if (uvjetPretrazivanja && uvjetPretrazivanja.trim() !== '') {
+        const loweruvjetPretrazivanja = uvjetPretrazivanja.toLowerCase().trim();
+        filtriraniIgraci = filtriraniIgraci.filter(igrac => {
+            const ime = (igrac.ime || '').toLowerCase();
+            const prezime = (igrac.prezime || '').toLowerCase();
+            const brojRegistracije = (igrac.brojRegistracije || '').toLowerCase();
 
 
-                return ime.includes(loweruvjetPretrazivanja) ||
-                    prezime.includes(loweruvjetPretrazivanja) ||
-                    brojDreasa.includes(loweruvjetPretrazivanja) ||
-                    brojKopackih.includes(loweruvjetPretrazivanja) ||
-                    pozicija.includes(loweruvjetPretrazivanja) ||
-                    datumRodenja.includes(loweruvjetPretrazivanja) ||
-                    brojRegistracije.includes(loweruvjetPretrazivanja);
+            return ime.includes(loweruvjetPretrazivanja) ||
+                prezime.includes(loweruvjetPretrazivanja) ||
+                brojRegistracije.includes(loweruvjetPretrazivanja);
         });
-        }
-        const pocetniIndeks = (stranica - 1) * velicinaStranice;
-        const zavrsniIndeks = pocetniIndeks + velicinaStranice;
-        const stranicenjePodaci = igraci.slice(pocetniIndeks, zavrsniIndeks);
-        const ukupnoStavki = igraci.length;
-        const stranicenjePodaci = filtriraniIgraci.slice(pocetniIndeks, zavrsniIndeks);
-        const ukupnoStavki = filtriraniIgraci.length;
-        const ukupnoStranica = Math.ceil(ukupnoStavki / velicinaStranice);
-
-        return {
-            data: stranicenjePodaci,
-            ukupnoStranica: ukupnoStranica,
-            ukupnoStavki: ukupnoStavki
-        };
     }
+    const pocetniIndeks = (stranica - 1) * velicinaStranice;
+    const zavrsniIndeks = pocetniIndeks + velicinaStranice;
+    const stranicenjePodaci = filtriraniIgraci.slice(pocetniIndeks, zavrsniIndeks);
+    const ukupnoStavki = filtriraniIgraci.length;
+    const ukupnoStranica = Math.ceil(ukupnoStavki / velicinaStranice);
+
+    
+
+    return {
+        data: stranicenjePodaci,
+        ukupnoStranica: ukupnoStranica,
+        ukupnoStavki: ukupnoStavki
+    };
+}
 
 
-
-    export default {
-        get,
-        getBySifra,
-        dodaj,
-        promijeni,
-        obrisi,
-        dohvatiStranicu
-    }
+export default {
+    get,
+    getBySifra,
+    dodaj,
+    promijeni,
+    obrisi,
+    dohvatiStranicu
+}

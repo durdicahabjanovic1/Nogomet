@@ -37,30 +37,21 @@ async function promijeni(sifra, igrac) {
 
 
 // Straničenje - dohvati stranicu polaznika
-async function dohvatiStranicu(stranica = 1, velicinaStranice = 8) {
-    async function dohvatiStranicu(stranica = 1, velicinaStranice = 8, uvjetPretraživanja = '') {
+    async function dohvatiStranicu(stranica = 1, velicinaStranice = 8, uvjetPretrazivanja = '') {
 
         let filtriraniIgraci = [...igraci];
 
-        if (uvjetPretraživanja && uvjetPretraživanja.trim() !== '') {
-            const loweruvjetPretrazivanja = uvjetPretraživanja.toLowerCase().trim();
+        if (uvjetPretrazivanja && uvjetPretrazivanja.trim() !== '') {
+            const loweruvjetPretrazivanja = uvjetPretrazivanja.toLowerCase().trim();
             filtriraniIgraci = filtriraniIgraci.filter(igrac => {
                 const ime = (igrac.ime || '').toLowerCase();
                 const prezime = (igrac.prezime || '').toLowerCase();
-                const brojDreasa = (igrac.brojDresa || '').toLowerCase();
-                const brojKopackih = (igrac.brojKopackih || '').toLowerCase();
-                const pozicija = (igrac.pozicija || '').toLowerCase();
-                const datumRodenja = (igrac.datumRodenja || '').toLowerCase();
                 const brojRegistracije = (igrac.brojRegistracije || '').toLowerCase();
 
 
 
                 return ime.includes(loweruvjetPretrazivanja) ||
                     prezime.includes(loweruvjetPretrazivanja) ||
-                    brojDreasa.includes(loweruvjetPretrazivanja) ||
-                    brojKopackih.includes(loweruvjetPretrazivanja) ||
-                    pozicija.includes(loweruvjetPretrazivanja) ||
-                    datumRodenja.includes(loweruvjetPretrazivanja) ||
                     brojRegistracije.includes(loweruvjetPretrazivanja);
             });
 
@@ -68,9 +59,10 @@ async function dohvatiStranicu(stranica = 1, velicinaStranice = 8) {
 
         const pocetniIndeks = (stranica - 1) * velicinaStranice;
         const zavrsniIndeks = pocetniIndeks + velicinaStranice;
-        const stranicenjePodaci = igraci.slice(pocetniIndeks, zavrsniIndeks);
-        const ukupnoStavki = igraci.length;
+        const stranicenjePodaci = filtriraniIgraci.slice(pocetniIndeks, zavrsniIndeks);
+        const ukupnoStavki = filtriraniIgraci.length;
         const ukupnoStranica = Math.ceil(ukupnoStavki / velicinaStranice);
+
 
         return {
             data: stranicenjePodaci,
