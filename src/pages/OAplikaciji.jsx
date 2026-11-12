@@ -18,7 +18,8 @@ export default function OAplikaciji() {
     ];
 
     const tehnologija = ['React', 'Vite', 'Bootstrap', 'React Router', 'React Icons'];
-}
+
+
 
     return (
         <div className="py-2">
