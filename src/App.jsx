@@ -14,6 +14,11 @@ import KlubPregled from './pages/klubovi/KlubPregled';
 import KlubNovi from './pages/klubovi/KlubNovi'
 import KlubPromjena from './pages/klubovi/KlubPromjena'
 import GeneriranjePodataka from './pages/GeneriranjePodataka'
+import OperaterPregled from './pages/operateri/OperaterPregled'
+import OperaterNovi from './pages/operateri/OperaterNovi'
+import OperaterPromjena from './pages/operateri/OperaterPromjena'
+import OperaterPromjenaLozinke from './pages/operateri/OperaterPromjenaLozinke'
+
 
 
 function App() {
@@ -32,6 +37,12 @@ function App() {
           <Route path={RouteNames.KLUBOVI} element={<KlubPregled />} />
           <Route path={RouteNames.KLUBOVI_DODAJ} element={<KlubNovi />} />
           <Route path={RouteNames.KLUBOVI_PROMJENA} element={<KlubPromjena />} />
+
+             <Route path={RouteNames.OPERATERI} element={<OperaterPregled />} />
+            <Route path={RouteNames.OPERATERI_NOVI} element={<OperaterNovi />} />
+            <Route path={RouteNames.OPERATERI_PROMJENA} element={<OperaterPromjena />} />
+            <Route path={RouteNames.OPERATERI_PROMJENA_LOZINKE} element={<OperaterPromjenaLozinke />} />
+
           
             <Route path={RouteNames.GENERIRANJE_PODATAKA} element={<GeneriranjePodataka />} />
         </Routes>

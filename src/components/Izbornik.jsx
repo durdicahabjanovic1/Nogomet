@@ -53,6 +53,9 @@ const navigate= useNavigate()
                             <NavDropdown.Item
                                 onClick={() => navigate(RouteNames.GENERIRANJE_PODATAKA)}
                             >Generiraj podatke</NavDropdown.Item>
+
+                            onClick={() => navigate(RouteNames.OPERATERI)}
+                            >Operateri</NavDropdown.Item>
                            
                         </NavDropdown>
                          <Nav.Link 
