@@ -73,3 +73,4 @@ export default function OAplikaciji() {
             </Row>
         </div>
     )
+}

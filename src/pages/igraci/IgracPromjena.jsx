@@ -29,6 +29,7 @@ export default function IgracPromjena() {
     async function ucitajIgrac() {
         await IgracService.getBySifra(params.sifra).then((res) => {
             const s = res.data
+            console.log(s)
             s.datumRodenja = s.datumRodenja.substring(0, 10)
             setIgrac(s)
 
@@ -46,14 +47,6 @@ export default function IgracPromjena() {
 
     async function promijeni(igrac) {
         await IgracService.promijeni(params.sifra, igrac)
-        // mislim da ovo ne radi
-        const klub = await KlubService.getBySifra(igrac.klub)
-        //console.log(klub)
-        klub.data.igraci.push(igrac.sifra)
-        // debugger
-        // console.log(klub.data)
-        await KlubService.promijeni(klub.data.sifra, klub.data)
-
         navigate(RouteNames.IGRACI)
     }
 
@@ -83,10 +76,12 @@ export default function IgracPromjena() {
         promijeni({
             ime: podaci.get('ime'),
             prezime: podaci.get('prezime'),
-            brojDresa: podaci.get('brojDresa'),
+            brojDresa: parseInt(podaci.get('brojDresa')),
+            brojKopackih: parseInt(podaci.get('brojKopackih')),
+            pozicija: podaci.get('pozicija'),
             klub: parseInt(podaci.get('klub')),
-            slika: dataUrl
-
+            slika: dataUrl,
+            datumRodenja: new Date(podaci.get('datumRodenja')).toISOString()
 
         })
     }
@@ -170,9 +165,9 @@ export default function IgracPromjena() {
 
                 <Row>
                     <Col>
-                        <Form.Group controlId="brojKopacki">
+                        <Form.Group controlId="brojKopackih">
                             <Form.Label>Broj kopački</Form.Label>
-                            <Form.Control type="number" name="brojKopacki"
+                            <Form.Control type="number" name="brojKopackih"
                                 defaultValue={igrac.brojKopackih} />
                         </Form.Group>
                     </Col>

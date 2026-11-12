@@ -42,10 +42,10 @@ async function promijeni(sifra, klub) {
     const klubovi = dohvatiSveIzStorage()
     const index = klubovi.findIndex(s => s.sifra === parseInt(sifra))
     klubovi[index] = { ...klubovi[index], ...klub }
-    
-    klub.igraci.map(async (igracSifra) => {
-        await makniSDrugihKlubova(igracSifra, sifra)
-    })
+    // tu nešto ne štima
+    // klub.igraci.map(async (igracSifra) => {
+    //     await makniSDrugihKlubova(igracSifra, sifra)
+    // })
     spremiUStorage(klubovi)
 }
 
@@ -61,11 +61,13 @@ async function obrisi(sifra) {
 
 
 async function makniSDrugihKlubova(sifraIgraca, sifraKluba) {
-    [...klubovi]
+    let klubovi = dohvatiSveIzStorage()
+    klubovi
         .filter((k) => k.sifra != sifraKluba)
         .map((klub) => {
             klub.igraci = klub.igraci.filter(i => i.sifra != sifraIgraca)
         })
+    console.log(klubovi)
     const igrac = await IgracService.getBySifra(sifraIgraca)
     igrac.data.klub = parseInt(sifraKluba)
     await IgracService.promijeni(sifraIgraca, igrac.data)

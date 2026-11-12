@@ -43,9 +43,11 @@ export default function IgracNovi() {
             ime: podaci.get('ime'),
             prezime: podaci.get('prezime'),
             klub: parseInt(podaci.get('klub')),
-            brojRegistracije: podaci.get('brojRegistracije')
-
-
+            brojDresa: parseInt(podaci.get('brojDresa')),
+            brojKopackih: parseInt(podaci.get('brojKopackih')),
+            pozicija: podaci.get('pozicija'),
+            brojRegistracije: podaci.get('brojRegistracije'),
+            datumRodenja: new Date(podaci.get('datumRodenja')).toISOString()
         })
     }
 

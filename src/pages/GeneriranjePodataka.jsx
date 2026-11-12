@@ -6,7 +6,7 @@ import IgracService from '../services/igraci/IgracService';
 
 
 export default function GeneriranjePodataka() {
-    const [brojKlubova, setBrojKlubova] = useState(5);
+    const [brojKlubova, setBrojKlubova] = useState(2);
     const [poruka, setPoruka] = useState(null);
     const [loading, setLoading] = useState(false);
 
@@ -21,45 +21,47 @@ export default function GeneriranjePodataka() {
             'NK Osijek',
             'GNK Dinamo',
             'NK Jedinstvo',
-             'NK Rijeka',
-             'NK Rudeš',
+            'NK Rijeka',
+            'NK Rudeš',
         ];
-
-        for (let i = 0; i < broj; i++) {
-            let igraci = []
-             for (let i = 0; i < 11; i++) {
-                
+        for (let i = 0; i < 4; i++) {
             const igrac = {
                 ime: faker.person.firstName('male'),
                 prezime: faker.person.lastName(),
-                brojDresa: faker.number.int({min: 1, max: 100}),
-                brojKopackih: faker.number.int({min: 39, max: 47}),
+                brojDresa: faker.number.int({ min: 1, max: 100 }),
+                brojKopackih: faker.number.int({ min: 39, max: 47 }),
                 pozicija: 'ofenzivni vezni',
                 datumRodenja: faker.date.birthdate(),
                 brojRegistracije: '129/2026',
-                klub: faker.number.int({min: 1, max: broj}),
+                klub: i<2 ? 1 : 2,
                 slika: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAAEsCAIAAAAJmGvpAAADD0lEQVR4nO3SQQ0AIRDAwOP8C1tZmKAhITMK+uiamQ9O+28H8CZjkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBaJDVgNBLAk8IkcAAAAAElFTkSuQmCC'
-   
             };
             await IgracService.dodaj(igrac);
-            igraci.push(igrac.sifra)
-            }
-            await KlubService.dodaj({
-                naziv: naziviKlubova[i % naziviKlubova.length] + (i >= naziviKlubova.length ? ` ${Math.floor(i / naziviKlubova.length) + 1}` : ''),
-                mjesto: faker.location.city(),
-                igraci: igraci
-            });
-        
-
-       
         }
+
+        await KlubService.dodaj({
+            naziv: 'NK Osijek',
+            mjesto: faker.location.city(),
+            igraci: [
+                1,2
+            ]
+        });
+
+        await KlubService.dodaj({
+            naziv: 'NK Dinamo',
+            mjesto: faker.location.city(),
+            igraci: [
+                3,4
+            ]
+        });
+
 
     };
 
-    
 
 
-    const handleGeneriranjePodataka= async (e) => {
+
+    const handleGeneriranjePodataka = async (e) => {
         e.preventDefault();
         setLoading(true);
         setPoruka(null);
@@ -93,12 +95,12 @@ export default function GeneriranjePodataka() {
         try {
             const rezultat = await KlubService.get();
             const klubovi = rezultat.data;
-            
+
             for (const klub of klubovi) {
                 await KlubService.obrisi(klub.sifra);
             }
 
-             const rezultatI = await IgracService.get();
+            const rezultatI = await IgracService.get();
             const igraci = rezultatI.data;
 
             for (const i of igraci) {
@@ -119,7 +121,7 @@ export default function GeneriranjePodataka() {
         }
     };
 
-   
+
 
 
     return (
@@ -152,13 +154,13 @@ export default function GeneriranjePodataka() {
                                 Unesite broj klubova (1-50)
                             </Form.Text>
                         </Form.Group>
-                        <Button 
-                            variant="primary" 
-                            type="submit" 
+                        <Button
+                            variant="primary"
+                            type="submit"
                             disabled={loading}
                             className="w-100"
                         >
-                            {loading ? 'Generiranje...' : 'Generiraj klubove'}
+                            {loading ? 'Generiranje...' : 'Generiraj klubove i nogometaše'}
                         </Button>
                     </Form>
                 </Col>
@@ -166,12 +168,12 @@ export default function GeneriranjePodataka() {
                     KASNIJE
                 </Col>
                 <Col md={4}>
-                   KASNIJE
+                    KASNIJE
                 </Col>
             </Row>
 
             <Alert variant="warning" className="mt-3">
-                <strong>Upozorenje:</strong> Ove akcije će dodati nove podatke u postojeće. 
+                <strong>Upozorenje:</strong> Ove akcije će dodati nove podatke u postojeće.
                 Ako želite početi ispočetka, prvo obrišite postojeće podatke.
             </Alert>
 
@@ -184,8 +186,8 @@ export default function GeneriranjePodataka() {
 
             <Row className="mt-3">
                 <Col md={4}>
-                    <Button 
-                        variant="danger" 
+                    <Button
+                        variant="danger"
                         onClick={handleObrisiPodatke}
                         disabled={loading}
                         className="w-100 mb-2"

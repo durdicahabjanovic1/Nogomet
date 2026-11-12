@@ -55,7 +55,6 @@ async function obrisi(sifra) {
 // Straničenje - dohvati stranicu polaznika
 
 async function dohvatiStranicu(stranica = 1, velicinaStranice = 8, uvjetPretrazivanja = '') {
-    console.log('Dohvaćanje stranice storage')
     let filtriraniIgraci = dohvatiSveIzStorage();
 
 
