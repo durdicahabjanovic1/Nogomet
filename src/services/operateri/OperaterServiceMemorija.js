@@ -1,4 +1,3 @@
-@ -0,0 +1,119 @@
 import { operateri } from "./OperaterPodaci"
 import bcrypt from 'bcryptjs'
 

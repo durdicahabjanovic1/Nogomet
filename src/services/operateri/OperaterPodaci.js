@@ -1,4 +1,3 @@
-@ -0,0 +1,24 @@
 import bcrypt from 'bcryptjs'
 
 // Inicijalni operateri s hashiranim lozinkama

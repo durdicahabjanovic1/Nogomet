@@ -8,7 +8,7 @@ import { IME_APLIKACIJE } from '../constants';
 
 
 
-export default function  GeneriranjePodataka() {  
+export default function  GeneriranjePodataka() {
     const [brojKlubova, setBrojKlubova] = useState(2);
     const [brojOperatera, setBrojOperatera] = useState(5);
     const [poruka, setPoruka] = useState(null);
@@ -211,12 +211,9 @@ export default function  GeneriranjePodataka() {
 
 
 
-
-
-
-
     return (
-        <Container className="mt-4">
+        <>
+
             <h1>Generiranje podataka</h1>
             <p className="text-muted">
                 Koristite ovaj alat za generiranje testnih podataka s lažnim (fake) podacima na hrvatskom jeziku.
@@ -280,8 +277,8 @@ export default function  GeneriranjePodataka() {
                                 +1 admin (1-50)
                             </Form.Text>
                         </Form.Group>
-
-
+                    </Form>
+                </Col>
                     </Row>
 
                     <Alert variant="warning" className="mt-3">
@@ -318,6 +315,7 @@ export default function  GeneriranjePodataka() {
                     <Alert variant="danger" className="mt-3">
                         <strong>Oprez!</strong> Brisanje podataka je trajna akcija i ne može se poništiti.
                     </Alert>
-                </Container>
+            
+                </>
                 );
 }
