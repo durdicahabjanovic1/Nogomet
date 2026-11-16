@@ -31,22 +31,21 @@ export default function Izbornik() {
 
 
     return (
-        <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary">
+        <Navbar expand="lg" className="bg-body-tertiary">
 
             <Container>
-                <Navbar.Brand href="#home" >
-                    {IME_APLIKACIJE} {izvor(DATA_SOURCE)}
-                </Navbar.Brand>
-
+                {izvor()} {IME_APLIKACIJE}
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
                         <Nav.Link
-                            onClick={() => navigate(RouteNames.HOME)}
+                        onClick={() => navigate(RouteNames.HOME)}
+                        eventKey="početna"
+                        >Početna</Nav.Link>
+                        {isLoggedIn && (
+                            <>  
 
-                            eventKey="pocetna"
-                        >Početna
-                        </Nav.Link>
+              
 
                         <NavDropdown title="Programi" id="basic-nav-dropdown">
 
@@ -100,9 +99,9 @@ export default function Izbornik() {
                                             >Generiraj podatke</NavDropdown.Item>
                                         </>
                                     )}
-                                    </NavDropdown>
-                                    </>
-                        )}
+                                    
+                                    
+                        
                         </Nav>
 
 
@@ -110,26 +109,33 @@ export default function Izbornik() {
                                     <Nav className="ms-auto">
                                         <div className="btn-group">
                                             {isLoggedIn ? (
-                                                <Button
-                                                    className="me-2"
-                                                    onClick={() => logout()}
-                                                >Logout {authUser.email}</Button>
+                                                 <Nav.Link
+                                    onClick={() => logout()}
+                                    className='btn btn-primary'
+                                    style={{ color: 'white', backgroundColor: '#0d6efd' }}
+                                    eventKey="logout"
+                                >Logout {authUser.email}</Nav.Link>
                                             ) : (
-                                                <>
-                                                    <Button
-                                                        className="me-2"
-                                                        onClick={() => navigate(RouteNames.REGISTRACIJA)}
-                                                    >Registracija</Button>
-                                                    <Button
-                                                        onClick={() => navigate(RouteNames.LOGIN)}
-                                                    >Login</Button>
-                                                </>)}
-                                        </div>
+                                            <>
+                                             <Nav.Link
+                                        onClick={() => navigate(RouteNames.REGISTRACIJA)}
+                                        className='me-2 btn btn-primary'
+                                        style={{ color: 'white', backgroundColor: '#0d6efd' }}
+                                        eventKey="registracija"
+                                    >Registracija</Nav.Link>
+                                    <Nav.Link
+                                        onClick={() => navigate(RouteNames.LOGIN)}
+                                        className='btn btn-primary'
+                                        style={{ color: 'white', backgroundColor: '#0d6efd' }}
+                                        eventKey="login"
+                                    >Login</Nav.Link>
+                                </>)}
+                        </div>
+                    </Nav>
+                </Navbar.Collapse>
+            </Container>
+        </Navbar>
+    )
+}
 
-                                    </Nav>
-                                </Navbar.Collapse>
-                            </Container>
-                    </Navbar>
-                    );
-        }
-
+                                              
