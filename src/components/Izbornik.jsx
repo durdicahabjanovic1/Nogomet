@@ -3,17 +3,21 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import { IME_APLIKACIJE, RouteNames } from '../constants';
+import { DATA_SOURCE, IME_APLIKACIJE, RouteNames } from '../constants';
 import { useNavigate } from 'react-router-dom';
 import { FaMemory } from 'react-icons/fa';
 import { GrStatusUnknown, GrVirtualStorage } from 'react-icons/gr';
+import useAuth from '../hooks/useAuth';
+import { Button } from 'react-bootstrap';
+
 
 
 export default function Izbornik() {
-    
-const navigate= useNavigate()
 
- function izvor() {
+    const navigate = useNavigate()
+    const { isLoggedIn, logout, authUser } = useAuth()
+
+    function izvor(DATA_SOURCE) {
         switch (DATA_SOURCE) {
             case 'memorija':
                 return <FaMemory title='Memorija' />
@@ -27,44 +31,105 @@ const navigate= useNavigate()
 
 
     return (
-        <Navbar expand="lg" className="bg-body-tertiary">
+        <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary">
+
             <Container>
-                <Navbar.Brand href="#home">
-                    {IME_APLIKACIJE}
+                <Navbar.Brand href="#home" >
+                    {IME_APLIKACIJE} {izvor(DATA_SOURCE)}
                 </Navbar.Brand>
+
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
-                        <Nav.Link 
-                        onClick={()=>navigate(RouteNames.HOME)}
-                        >Početna</Nav.Link>
-                       
+                        <Nav.Link
+                            onClick={() => navigate(RouteNames.HOME)}
+
+                            eventKey="pocetna"
+                        >Početna
+                        </Nav.Link>
+
                         <NavDropdown title="Programi" id="basic-nav-dropdown">
 
                             <NavDropdown.Item
-                            onClick={()=>navigate(RouteNames.IGRACI)}
+                                onClick={() => navigate(RouteNames.IGRACI)}
                             >Igrači</NavDropdown.Item>
 
-                             <NavDropdown.Item
-                            onClick={()=>navigate(RouteNames.KLUBOVI)}
+                            <NavDropdown.Item
+                                onClick={() => navigate(RouteNames.KLUBOVI)}
                             >Klubovi</NavDropdown.Item>
 
-                          <NavDropdown.Divider />
+                            <NavDropdown.Divider />
                             <NavDropdown.Item
                                 onClick={() => navigate(RouteNames.GENERIRANJE_PODATAKA)}
                             >Generiraj podatke</NavDropdown.Item>
                             <NavDropdown.Item
-                            onClick={() => navigate(RouteNames.OPERATERI)}
+                                onClick={() => navigate(RouteNames.OPERATERI)}
                             >Operateri</NavDropdown.Item>
-                           
-                        </NavDropdown>
-                         <Nav.Link 
-                        onClick={()=>navigate(RouteNames.OAPLIKACIJI)}
-                        >O Aplikaciji</Nav.Link>
-                    </Nav>
-                </Navbar.Collapse>
-            </Container>
-        </Navbar>
-    )
 
-}
+                        </NavDropdown>
+                        <Nav.Link
+                            onClick={() => navigate(RouteNames.OAPLIKACIJI)}
+                        >O Aplikaciji</Nav.Link>
+
+                        {isLoggedIn && (
+                            <>
+                                <Nav.Link
+                                    onClick={() => navigate(RouteNames.NADZORNA_PLOCA)}
+                                    eventKey="nadzorna-ploca"
+                                >Nadzorna ploča</Nav.Link>
+                                <NavDropdown title="Programi" id="basic-nav-dropdown">
+                                    <NavDropdown.Item
+                                        onClick={() => navigate(RouteNames.KLUBOVI)}
+                                        eventKey="klubovi"
+                                    >Klubovi</NavDropdown.Item>
+                                    <NavDropdown.Item
+                                        onClick={() => navigate(RouteNames.IGRACI)}
+                                        eventKey="igraci"
+                                    >Igraci</NavDropdown.Item>
+
+                                    {authUser.uloga === 'admin' && (
+                                        <>
+                                            <NavDropdown.Divider />
+                                            <NavDropdown.Item
+                                                onClick={() => navigate(RouteNames.OPERATERI)}
+                                                eventKey="operateri"
+                                            >Operateri</NavDropdown.Item>
+                                            <NavDropdown.Item
+                                                onClick={() => navigate(RouteNames.GENERIRANJE_PODATAKA)}
+                                                eventKey="generiranje-podataka"
+                                            >Generiraj podatke</NavDropdown.Item>
+                                        </>
+                                    )}
+                                    </NavDropdown>
+                                    </>
+                        )}
+                        </Nav>
+
+
+
+                                    <Nav className="ms-auto">
+                                        <div className="btn-group">
+                                            {isLoggedIn ? (
+                                                <Button
+                                                    className="me-2"
+                                                    onClick={() => logout()}
+                                                >Logout {authUser.email}</Button>
+                                            ) : (
+                                                <>
+                                                    <Button
+                                                        className="me-2"
+                                                        onClick={() => navigate(RouteNames.REGISTRACIJA)}
+                                                    >Registracija</Button>
+                                                    <Button
+                                                        onClick={() => navigate(RouteNames.LOGIN)}
+                                                    >Login</Button>
+                                                </>)}
+                                        </div>
+
+                                    </Nav>
+                                </Navbar.Collapse>
+                            </Container>
+                    </Navbar>
+                    );
+        }
+

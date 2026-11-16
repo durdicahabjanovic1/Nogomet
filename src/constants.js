@@ -22,7 +22,12 @@ export const RouteNames = {
     OPERATERI_PROMJENA_LOZINKE: '/operateri/:sifra/lozinka',
 
 
-    GENERIRANJE_PODATAKA: '/generiraj-podatke'
+    GENERIRANJE_PODATAKA: '/generiraj-podatke',
+
+    LOGIN: '/login',
+    REGISTRACIJA: '/registracija',
+
+    NADZORNA_PLOCA: '/nadzorna-ploca',
 
 }
 // memorija   localStorage, firebase
