@@ -7,6 +7,8 @@ import KlubService from "../../services/klubovi/KlubService";
 import { useEffect, useState } from "react";
 import IgracService from "../../services/igraci/IgracService"
 import ujednaciPodatke from "../../services/UjednaciPodatke";
+import { useRive } from '@rive-app/react-canvas';
+import useBreakpoint from "../../hooks/useBreakpoint";
 
 
 
@@ -18,6 +20,34 @@ export default function KlubNovi() {
     const [pretragaIgraca, setPretragaIgraca] = useState('')
     const [prikaziAutocomplete, setPrikaziAutocomplete] = useState(false)
     const [odabraniIndex, setOdabraniIndex] = useState(-1)
+      const [spustiRuke, setSpustiRuke] = useState(true);
+    const [numLook, setNumLook] = useState(null);
+    const sirina = useBreakpoint();
+
+    const { rive, RiveComponent } = useRive({
+        src: '/animacija.riv',
+        stateMachines: 'State Machine 1', // Važno: mora odgovarati nazivu u Rive editoru
+        autoplay: true,
+    });
+
+    // za ispravak ove greške treba mijenjati animaciju pa ćemo ju ostaviti. Za ubuduće koristiti animacije s triggerima i inputima
+    const inputs = rive?.stateMachineInputs('State Machine 1');
+    const isHandsUp = inputs?.find((i) => i.name === 'hands_up');
+    const fail = inputs?.find((i) => i.name === 'fail');
+
+    useEffect(() => {
+        if (!rive || !isHandsUp) return;
+
+        if (!spustiRuke) {
+            // 1. Podigni ruke
+            isHandsUp.value = true;
+            // 2. Ako je tek pokrenut submit (puna lista grešaka), "stisni" fail trigger
+            if (fail) fail.fire();
+        } else {
+            isHandsUp.value = false;
+        }
+    }, [errors, isHandsUp, fail, rive, spustiRuke]);
+   
 
     useEffect(() => {
         ucitajIgrace()
@@ -110,6 +140,10 @@ export default function KlubNovi() {
             alert("Naziv grupe mora imati najmanje 3 znaka!");
             return;
         }
+
+        setSpustiRuke(false)
+
+        
 
 
         dodaj({
