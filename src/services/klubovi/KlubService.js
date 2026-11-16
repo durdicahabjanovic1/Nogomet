@@ -43,7 +43,7 @@ export default {
     getBySifra: (sifra) => AktivniServis.getBySifra(sifra),
     dodaj: (klub) => AktivniServis.dodaj(klub),
     promijeni: (sifra,klub) => AktivniServis.promijeni(sifra,klub),
-     dodaj: (klub) => AktivniServis.dodaj(klub),
+    dodaj: (klub) => AktivniServis.dodaj(klub),
     promijeni: (sifra,klub) => AktivniServis.promijeni(sifra,klub),
     obrisi: (sifra) => AktivniServis.obrisi(sifra)
 }

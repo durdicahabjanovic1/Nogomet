@@ -6,6 +6,7 @@ import { Button, Col, Form, Row } from "react-bootstrap";
 import IgracService from "../../services/igraci/IgracService";
 import { useEffect, useState } from "react";
 import KlubService from "../../services/klubovi/KlubService";
+import ujednaciPodatke from "../../services/UjednaciPodatke";
 
 
 export default function IgracNovi() {
@@ -26,13 +27,12 @@ export default function IgracNovi() {
   
 
     async function dodaj(igrac) {
-        const noviIgrac = await IgracService.dodaj(igrac)
-        const klub = await KlubService.getBySifra(igrac.klub)
-        //console.log(klub)
-        klub.data.igraci.push(noviIgrac.sifra)
-       // debugger
-       // console.log(klub.data)
-        await KlubService.promijeni(klub.data.sifra, klub.data)
+        //debugger
+       // console.log('ŠALJEM')
+       // console.log(klubovi.find(k=>k.sifra===igrac.klub))
+       // console.log(igrac)
+       // console.log('//////////////////////')
+        await ujednaciPodatke(klubovi.find(k=>k.sifra===igrac.klub), igrac)
         navigate(RouteNames.IGRACI)
     }
 
@@ -98,9 +98,9 @@ export default function IgracNovi() {
                 </Row>
                 <Row>
                     <Col>
-                        <Form.Group controlId="brojKopacki">
-                            <Form.Label>Broj kopački</Form.Label>
-                            <Form.Control type="number" name="brojKopacki" />
+                        <Form.Group controlId="brojKopackih">
+                            <Form.Label>Broj kopačkih</Form.Label>
+                            <Form.Control type="number" name="brojKopackih" />
                         </Form.Group>
                     </Col>
                     <Col>

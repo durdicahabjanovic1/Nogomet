@@ -19,10 +19,8 @@ async function dodaj(klub) {
     } else {
         klub.sifra = klubovi[klubovi.length - 1].sifra + 1
     }
-    klub.igraci.map(async (igracSifra) => {
-        await makniSDrugihKlubova(igracSifra, klub.sifra)
-    })
     klubovi.push(klub)
+    return klub
 }
 
 async function obrisi(sifra) {
@@ -35,23 +33,9 @@ function nadiIndex(sifra) {
 }
 async function promijeni(sifra, klub) {
     const index = nadiIndex(sifra)
-    klub.igraci.map(async (igracSifra) => {
-        await makniSDrugihKlubova(igracSifra, sifra)
-    })
     klubovi[index] = { ...klubovi[index], ...klub }
 }
 
-
-async function makniSDrugihKlubova(sifraIgraca, sifraKluba) {
-    [...klubovi]
-        .filter((k) => k.sifra != sifraKluba)
-        .map((klub) => {
-            klub.igraci = klub.igraci.filter(i => i.sifra != sifraIgraca)
-        })
-    const igrac = await IgracService.getBySifra(sifraIgraca)
-    igrac.data.klub = parseInt(sifraKluba)
-    await IgracService.promijeni(sifraIgraca, igrac.data)
-}
 
 
 

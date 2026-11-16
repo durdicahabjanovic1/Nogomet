@@ -6,6 +6,7 @@ import { Button, Col, Form, Row, Container, Card, Table, CardBody } from "react-
 import KlubService from "../../services/klubovi/KlubService";
 import { useEffect, useState } from "react";
 import IgracService from "../../services/igraci/IgracService"
+import ujednaciPodatke from "../../services/UjednaciPodatke";
 
 
 
@@ -86,9 +87,13 @@ export default function KlubNovi() {
 
 
     async function dodaj(klub) {
-        await KlubService.dodaj(klub).then(() => {
-            navigate(RouteNames.KLUBOVI)
+
+        const dodaniKlub = await KlubService.dodaj(klub)
+        dodaniKlub.igraci.map(async k => {
+            const podaci = await IgracService.getBySifra(k)
+            await ujednaciPodatke(dodaniKlub, podaci.data)
         })
+        navigate(RouteNames.KLUBOVI)
     }
 
 

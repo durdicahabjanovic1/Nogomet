@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import Cropper from 'react-cropper';
 import 'cropperjs/dist/cropper.css';
 import KlubService from "../../services/klubovi/KlubService"
+import ujednaciPodatke from "../../services/UjednaciPodatke";
 
 
 
@@ -46,7 +47,8 @@ export default function IgracPromjena() {
 
 
     async function promijeni(igrac) {
-        await IgracService.promijeni(params.sifra, igrac)
+        igrac.sifra = parseInt(params.sifra)
+        await ujednaciPodatke(klubovi.find(k=>k.sifra===igrac.klub), igrac)
         navigate(RouteNames.IGRACI)
     }
 
