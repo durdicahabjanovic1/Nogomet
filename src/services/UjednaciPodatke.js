@@ -7,7 +7,7 @@ export default async function ujednaciPodatke(klubUlaz, igracUlaz) {
     // NE RADI MICANJE S STAROG KLUBA KOD PROMJENE KLUBA - dodavanje na klub
     
     
-    // debugger
+   //  debugger
     // console.log('Klub ulaz')
     // console.log(klubUlaz)
     // console.log('Igrac ulaz')
@@ -39,7 +39,9 @@ export default async function ujednaciPodatke(klubUlaz, igracUlaz) {
   //  console.log('---------------')
  
     klubovi.data.map(async k => {
-        if (k.igraci.find(i => i.sifra === igrac.sifra)) {
+      const i = k.igraci.find(i => i === igrac.sifra)
+      //debugger
+        if (i) {
             const ostaliIgraci = k.igraci.filter(i => i !== igrac.sifra)
             k.igraci = ostaliIgraci
             await KlubService.promijeni(k.sifra, k)
@@ -55,5 +57,5 @@ export default async function ujednaciPodatke(klubUlaz, igracUlaz) {
     await IgracService.promijeni(igrac.sifra, igrac)
     //console.log('Novi podaci')
   //  console.log(klub)
-   // console.log(igrac)
+  //  console.log(igrac)
 }
