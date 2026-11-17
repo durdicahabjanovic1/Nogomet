@@ -56,8 +56,9 @@ export default function Home() {
                         <img
                             src="/slikaLopte.webp"
                             alt="Nogometna lopta"
-                            className="img-fluid nogomet-lopta rounded-circle , style={{width:'200px',height: '200px', objectFit:'cover', border: '5px solid #facc15}} shadow-lg/"
-                            style={{ maxWidth: '220px', objectFit: 'cover' }}
+                            className="img-fluid nogomet-lopta rounded-circle shadow-lg" 
+                            style={{width:'200px',height: '200px', objectFit:'cover', border: '5px solid #facc15'}} 
+                          
                         />
                     </Col>
                 </Row>
