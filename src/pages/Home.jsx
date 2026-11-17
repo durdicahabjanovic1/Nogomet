@@ -1,9 +1,5 @@
 
 
-
-
-
-
 import { Button, Card, Col, Row } from 'react-bootstrap'
 import { FaBuilding, FaDice, FaFutbol, FaUsers } from 'react-icons/fa'
 import { IME_APLIKACIJE, RouteNames } from '../constants'
@@ -60,7 +56,7 @@ export default function Home() {
                         <img
                             src="/slikaLopte.webp"
                             alt="Nogometna lopta"
-                           className="img-fluid nogomet-lopta rounded-circle , style={{width:'200px',height: '200px', objectFit:'cover', border: '5px solid #facc15}} shadow-lg/"
+                            className="img-fluid nogomet-lopta rounded-circle , style={{width:'200px',height: '200px', objectFit:'cover', border: '5px solid #facc15}} shadow-lg/"
                             style={{ maxWidth: '220px', objectFit: 'cover' }}
                         />
                     </Col>
