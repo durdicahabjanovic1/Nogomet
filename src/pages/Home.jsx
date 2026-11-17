@@ -47,10 +47,11 @@ export default function Home() {
                             klubovima — jednostavna, brza i pregledna.
                         </p>
                         <div className="d-flex flex-wrap gap-2 justify-content-center justify-content-md-start">
-                            <Button variant="light" onClick={() => navigate(RouteNames.IGRACI)}>
+                            <Button style={{ backgroundColor: '#529ce1', color: '#d15a5a', border: '2px solid blue' }}
+                                onClick={() => navigate(RouteNames.IGRACI)}>
                                 <FaUsers className="me-2" />Igrači
                             </Button>
-                            <Button variant="outline-light" onClick={() => navigate(RouteNames.KLUBOVI)}>
+                            <Button style={{ backgroundColor: '#7e3333', color: '#d15a5a', border: '1' }} onClick={() => navigate(RouteNames.KLUBOVI)}>
                                 <FaBuilding className="me-2" />Klubovi
                             </Button>
                         </div>
@@ -59,7 +60,7 @@ export default function Home() {
                         <img
                             src="/slikaLopte.webp"
                             alt="Nogometna lopta"
-                            className="img-fluid nogomet-lopta rounded-circle shadow-lg"
+                           className="img-fluid nogomet-lopta rounded-circle , style={{width:'200px',height: '200px', objectFit:'cover', border: '5px solid #facc15}} shadow-lg/"
                             style={{ maxWidth: '220px', objectFit: 'cover' }}
                         />
                     </Col>
@@ -72,7 +73,8 @@ export default function Home() {
                     const Ikona = opcija.Ikona
                     return (
                         <Col key={opcija.naziv} xs={12} md={4}>
-                            <Card className="h-100 shadow-sm border-0">
+                            <Card className="h-100 shadow-sm style={{backgroundColor: '#6793b0',borderColor: 'rgba(51, 187, 148, 0.87)'}} border-1">
+
                                 <Card.Body className="d-flex flex-column text-center">
                                     <Ikona size={36} className="mx-auto mb-3 text-primary" />
                                     <Card.Title>{opcija.naziv}</Card.Title>
