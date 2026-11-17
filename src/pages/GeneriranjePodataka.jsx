@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button, Form, Alert, Container, Row, Col } from 'react-bootstrap';
 import { Faker, hr } from '@faker-js/faker';
 import KlubService from '../services/klubovi/KlubService';
@@ -7,12 +7,12 @@ import OperaterService from '../services/operateri/OperaterService';
 import { DATA_SOURCE, IME_APLIKACIJE } from '../constants';
 import { klubovi } from '../services/klubovi/KlubPodaci';
 import { operateri } from '../services/operateri/OperaterPodaci';
-import { igraci} from '../services/igraci/IgracPodaci';
+import { igraci } from '../services/igraci/IgracPodaci';
 
 
 
 
-export default function  GeneriranjePodataka() {
+export default function GeneriranjePodataka() {
     const [brojKlubova, setBrojKlubova] = useState(2);
     const [brojIgraca, setBrojIgraca] = useState(5)
     const [brojOperatera, setBrojOperatera] = useState(5);
@@ -74,7 +74,7 @@ export default function  GeneriranjePodataka() {
 
 
 
-    const handleGeneriranjePodataka = async (e) => {   
+    const handleGeneriranjePodataka = async (e) => {
         e.preventDefault();
         setLoading(true);
         setPoruka(null);
@@ -231,7 +231,7 @@ export default function  GeneriranjePodataka() {
             localStorage.setItem('igraci', JSON.stringify(igraci))
             localStorage.setItem('operateri', JSON.stringify(operateri))
 
-           
+
             setPoruka({
                 tip: 'success',
                 tekst: `Uspješno presipano!`
@@ -245,9 +245,6 @@ export default function  GeneriranjePodataka() {
             setLoading(false);
         }
     };
-    
-
-
 
 
 
@@ -290,7 +287,6 @@ export default function  GeneriranjePodataka() {
                             className="w-100"
                         >
                             {loading ? 'Generiranje...' : 'Generiraj klubove i nogometaše'}
-                             {loading ? 'Generiranje...' : 'Generiraj operatere'}
 
                         </Button>
                     </Form>
@@ -320,65 +316,72 @@ export default function  GeneriranjePodataka() {
                         </Form.Group>
                     </Form>
                 </Col>
-                    </Row>
+            </Row>
 
-                    <Alert variant="warning" className="mt-3">
-                        <strong>Upozorenje:</strong> Ove akcije će dodati nove podatke u postojeće.
-                        Ako želite početi ispočetka, prvo obrišite postojeće podatke.
-                    </Alert>
+            <Alert variant="warning" className="mt-3">
+                <strong>Upozorenje:</strong> Ove akcije će dodati nove podatke u postojeće.
+                Ako želite početi ispočetka, prvo obrišite postojeće podatke.
+            </Alert>
 
-                    <hr className="my-4" />
+            <hr className="my-4" />
 
-                    <h3>Brisanje podataka</h3>
-                    <p className="text-muted">
-                        Koristite ove opcije za brisanje svih podataka iz baze.
-                    </p>
-
-                    <Row className="mt-3">
-                        <Col md={4}>
-                            <Button
-                                variant="danger"
-                                onClick={handleObrisiPodatke}
-                                disabled={loading}
-                                className="w-100 mb-2"
-                            >
-                                {loading ? 'Brisanje...' : 'Obriši sve klubove'}
-                            </Button>
-                        </Col>
-                        <Col md={4}>
-                            KASNIJE
-                        </Col>
-                        <Col md={4}>
-                            KASNIJE
-                        </Col>
-                    </Row>
-
-                    <Alert variant="danger" className="mt-3">
-                        <strong>Oprez!</strong> Brisanje podataka je trajna akcija i ne može se poništiti.
-                    </Alert>
-                      {DATA_SOURCE==='memorija' && (<>
-             <hr className="my-4" />
-
-            <h3>Presipavanje podataka</h3>
+            <h3>Brisanje podataka</h3>
             <p className="text-muted">
-                Koristite ove opcije za kopiranje iz jednog izvora u drugi.
+                Koristite ove opcije za brisanje svih podataka iz baze.
             </p>
 
             <Row className="mt-3">
-                <Col md={3}>
+                <Col md={4}>
+                    <Button
+                        variant="danger"
+                        onClick={handleObrisiPodatke}
+                        disabled={loading}
+                        className="w-100 mb-2"
+                    >
+                        {loading ? 'Brisanje...' : 'Obriši sve klubove'}
+                    </Button>
+                </Col>
+                <Col md={4}>
                     <Button
                         variant="danger"
                         onClick={handleMemorijaULocalStorage}
                         disabled={loading}
                         className="w-100 mb-2"
                     >
-                        {loading ? 'Presipavanje...' : 'Presipaj'}
+                        {loading ? 'Presipavam...' : 'Presipaj iz memorije u localStorage'}
                     </Button>
                 </Col>
-               
+                <Col md={4}>
+                    KASNIJE
+                </Col>
             </Row>
-            </>)}   
-            
-                </>
-                );
+
+            <Alert variant="danger" className="mt-3">
+                <strong>Oprez!</strong> Brisanje podataka je trajna akcija i ne može se poništiti.
+            </Alert>
+            {DATA_SOURCE === 'memorija' && (<>
+                <hr className="my-4" />
+
+                <h3>Presipavanje podataka</h3>
+                <p className="text-muted">
+                    Koristite ove opcije za kopiranje iz jednog izvora u drugi.
+                </p>
+
+                <Row className="mt-3">
+                    <Col md={3}>
+                        <Button
+                            variant="danger"
+                            onClick={handleMemorijaULocalStorage}
+                            disabled={loading}
+                            className="w-100 mb-2"
+                        >
+                            {loading ? 'Presipavanje...' : 'Presipaj'}
+                        </Button>
+                    </Col>
+
+                </Row>
+            </>)}
+
+        </>
+    );
 }
