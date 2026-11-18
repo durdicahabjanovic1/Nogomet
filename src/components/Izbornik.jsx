@@ -8,7 +8,6 @@ import { useNavigate } from 'react-router-dom';
 import { FaMemory } from 'react-icons/fa';
 import { GrStatusUnknown, GrVirtualStorage } from 'react-icons/gr';
 import useAuth from '../hooks/useAuth';
-import { Button } from 'react-bootstrap';
 
 
 
@@ -44,9 +43,6 @@ export default function Izbornik() {
                         >Početna</Nav.Link>
                         {isLoggedIn && (
                             <>
-
-
-
                                 <NavDropdown title="Programi" id="basic-nav-dropdown">
 
                                     <NavDropdown.Item
@@ -70,75 +66,51 @@ export default function Izbornik() {
                                     onClick={() => navigate(RouteNames.OAPLIKACIJI)}
                                 >O Aplikaciji</Nav.Link>
 
-                                {isLoggedIn && (
-                                    <>
-                                        <Nav.Link
-                                            onClick={() => navigate(RouteNames.NADZORNA_PLOCA)}
-                                            eventKey="nadzorna-ploca"
-                                        >Nadzorna ploča</Nav.Link>
-                                        <NavDropdown title="Programi" id="basic-nav-dropdown">
-                                            <NavDropdown.Item
-                                                onClick={() => navigate(RouteNames.KLUBOVI)}
-                                                eventKey="klubovi"
-                                            >Klubovi</NavDropdown.Item>
-                                            <NavDropdown.Item
-                                                onClick={() => navigate(RouteNames.IGRACI)}
-                                                eventKey="igraci"
-                                            >Igraci</NavDropdown.Item>
 
-                                            {authUser.uloga === 'admin' && (
-                                                <>
-                                                    <NavDropdown.Divider />
-                                                    <NavDropdown.Item
-                                                        onClick={() => navigate(RouteNames.OPERATERI)}
-                                                        eventKey="operateri"
-                                                    >Operateri</NavDropdown.Item>
-                                                    <NavDropdown.Item
-                                                        onClick={() => navigate(RouteNames.GENERIRANJE_PODATAKA)}
-                                                        eventKey="generiranje-podataka"
-                                                    >Generiraj podatke</NavDropdown.Item>
-                                                </>
-                                            )}
-
-                                        </NavDropdown>
-
-                                    </>
-                                )}
-
+                                <Nav.Link
+                                    onClick={() => navigate(RouteNames.NADZORNA_PLOCA)}
+                                    eventKey="nadzorna-ploca"
+                                >Nadzorna ploča</Nav.Link>
                             </>
                         )}
-                            </Nav>
+                    </Nav>
 
 
-                                <Nav className="ms-auto">
-                                    <div className="btn-group">
-                                        {isLoggedIn ? (
-                                            <Nav.Link
-                                                onClick={() => logout()}
-                                                className='btn btn-primary'
-                                                style={{ color: 'white', backgroundColor: '#0d6efd' }}
-                                                eventKey="logout"
-                                            >Logout {authUser.email}</Nav.Link>
-                                        ) : (
-                                            <>
-                                                <Nav.Link
-                                                    onClick={() => navigate(RouteNames.REGISTRACIJA)}
-                                                    className='me-2 btn btn-primary'
-                                                    style={{ color: 'white', backgroundColor: '#0d6efd' }}
-                                                    eventKey="registracija"
-                                                >Registracija</Nav.Link>
-                                                <Nav.Link
-                                                    onClick={() => navigate(RouteNames.LOGIN)}
-                                                    className='btn btn-primary'
-                                                    style={{ color: 'white', backgroundColor: '#0d6efd' }}
-                                                    eventKey="login"
-                                                >Login</Nav.Link>
-                                            </>)}
-                                    </div>
-                                </Nav>
-                            </Navbar.Collapse>
-                            </Container>
-                    </Navbar>
-                    )
+
+
+
+
+
+                    <Nav className="ms-auto">
+                        <div className="btn-group">
+                            {isLoggedIn ? (
+                                <Nav.Link
+                                    onClick={() => logout()}
+                                    className='btn btn-primary'
+                                    style={{ color: 'white', backgroundColor: '#0d6efd' }}
+                                    eventKey="logout"
+                                >Logout {authUser.email}</Nav.Link>
+                            ) : (
+                                <>
+                                    <Nav.Link
+                                        onClick={() => navigate(RouteNames.REGISTRACIJA)}
+                                        className='me-2 btn btn-primary'
+                                        style={{ color: 'white', backgroundColor: '#0d6efd' }}
+                                        eventKey="registracija"
+                                    >Registracija</Nav.Link>
+                                    <Nav.Link
+                                        onClick={() => navigate(RouteNames.LOGIN)}
+                                        className='btn btn-primary'
+                                        style={{ color: 'white', backgroundColor: '#0d6efd' }}
+                                        eventKey="login"
+                                    >Login</Nav.Link>
+                                </>)}
+                        </div>
+                    </Nav>
+                </Navbar.Collapse>
+            </Container >
+        </Navbar >
+    )
 }
+
 
