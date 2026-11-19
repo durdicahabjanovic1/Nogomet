@@ -46,7 +46,7 @@ export default function KlubNovi() {
         } else {
             isHandsUp.value = false;
         }
-    }, [errors, isHandsUp, fail, rive, spustiRuke]);
+    }, [ isHandsUp, fail, rive, spustiRuke]);
    
 
     useEffect(() => {
@@ -118,12 +118,16 @@ export default function KlubNovi() {
 
     async function dodaj(klub) {
 
-        const dodaniKlub = await KlubService.dodaj(klub)
-        dodaniKlub.igraci.map(async k => {
-            const podaci = await IgracService.getBySifra(k)
-            await ujednaciPodatke(dodaniKlub, podaci.data)
+        const dodaniKlub = await KlubService.dodaj(klub);
+        const listaIgraca = dodaniKlub?.igraci ?? dodaniKlub?.data?.igraci ?? [];
+       // dodaniKlub.igraci.map(async k => {
+        await Promise.all(
+            listaIgraca.map(async (k) => {
+            const podaci = await IgracService.getBySifra(k);
+            await ujednaciPodatke(dodaniKlub, podaci.data);
         })
-        navigate(RouteNames.KLUBOVI)
+    );
+        navigate(RouteNames.KLUBOVI);
     }
 
 

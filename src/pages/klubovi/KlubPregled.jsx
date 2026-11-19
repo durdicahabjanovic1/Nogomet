@@ -143,7 +143,7 @@ export default function klubPregled() {
                     )}
 
 
-                    Ukupno klubova: & nbsp;
+                    Ukupno klubova: 
                     <Badge pill bg="success">
                         {klubovi && klubovi.length}
                     </Badge>

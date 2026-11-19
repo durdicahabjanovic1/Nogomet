@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs'
 
 // Inicijalni operateri s hashiranim lozinkama
-// Lozinka za sve: "Nogeomet123!"
+// Lozinka za sve: "Edunova123!"
 const hashiranaLozinka = bcrypt.hashSync('Edunova123!', 10)
 
 export const operateri = [
