@@ -106,7 +106,7 @@ export default function IgracPromjena() {
             console.error(error);
         }
     }
-}
+
 
 
 
@@ -128,7 +128,7 @@ return (
                                     defaultValue={igrac.ime} />
                             </Form.Group>
                         </Col>
-                        <Col>
+                        </Row>
                             <Form.Group controlId="prezime">
                                 <Form.Label>Prezime</Form.Label>
                                 <Form.Control type="text" name="prezime" required
@@ -183,7 +183,7 @@ return (
                             </Form.Group>
                         </Col>
                     </Row>
-                    <Row className="mb-3">
+                    
                         <Col>
                             <Form.Group controlId="datumRodenja">
                                 <Form.Label>Datum rođenja</Form.Label>
@@ -197,8 +197,8 @@ return (
                                 <Form.Control type="text" name="brojRegistracije"
                                     defaultValue={igrac.brojRegistracije} />
                             </Form.Group>
-                        </Col>
-                    </Row>
+                        
+                   
 
 
                     <Row className="mt-4">
@@ -208,7 +208,7 @@ return (
                                 Odustani
                             </Link>
                         </Col>
-                        <Col>
+                        <Col> 
                             <Button type="submit" variant="success">
                                 Promijeni
                             </Button>
@@ -219,9 +219,11 @@ return (
                     <Form.Group controlId="slika" className="mb-3">
                         <Form.Label>Slika igrača</Form.Label>
                         <Form.Control className='mb-3' type='file' onChange={onChangeImage} />
+                            
+                            </Form.Group>
 
 
-                    </Form.Group>
+                   
 
 
 
@@ -241,6 +243,7 @@ return (
                         checkOrientation={false}
                         ref={cropperRef}
                     />
+                    
                 
                 </Col>
             </Row>
@@ -249,4 +252,5 @@ return (
 
     </>
 )
+
 
