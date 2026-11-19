@@ -21,6 +21,7 @@ import useAuth from './hooks/useAuth'
 import Login from './pages/login/Login'
 import Registracija from './pages/registracija/Registracija'
 import NadzornaPloca from './pages/NadzornaPloca'
+import OAplikaciji from './pages/OAplikaciji'
 
 function App() {
   const { isLoggedIn, authUser } = useAuth()
@@ -35,6 +36,7 @@ function App() {
       <Container className='app'>
         <Routes>
           <Route path={RouteNames.HOME} element={<Home />} />
+          <Route path={RouteNames.OAPLIKACIJI} element={<OAplikaciji />} />
           {isLoggedIn ? (
             <>
               <Route path={RouteNames.NADZORNA_PLOCA} element={<NadzornaPloca />} />
