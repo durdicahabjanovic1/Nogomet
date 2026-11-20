@@ -1,7 +1,8 @@
 
 
 
-import {DATA_SOURCE } from "../../constants"
+import { DATA_SOURCE } from "../../constants"
+import KlubServiceFireBase from "./KlubServiceFireBase"
 import KlubServiceLocalStorage from "./KlubServiceLocalStorage"
 import KlubServiceMemorija from "./KlubServiceMemorija"
 
@@ -9,41 +10,47 @@ import KlubServiceMemorija from "./KlubServiceMemorija"
 let Servis = null
 
 
-switch(DATA_SOURCE){
+
+    switch(DATA_SOURCE) {
+   
     case 'memorija':
         Servis = KlubServiceMemorija
         break
-        case 'localStorage':
-            Servis = KlubServiceLocalStorage
-            break
-            default:
-                Servis = null
+    case 'localStorage':
+        Servis = KlubServiceLocalStorage
+        break
+    case 'firebase':
+        Servis = KlubServiceFireBase
+        break
+    default:
+        Servis = null
+
 }
 
 
 const PrazanServis = {
 
-     get: async () => ({data: []}),
-     getBySifra: async (sifra) => ({data: {}}),
-     dodaj: async (klub) => {console.error('Servis nije implementiran')},
-     promijeni: async(sifra, klub) => {console.error('Servis nije implementiran')},
-      dodaj: async (klub) => {console.error('Servis nije implementiran')},
-    promijeni: async (sifra, klub) => {console.error('Servis nije implementiran')},
-     obrisi: async (sifra) => {console.error('Servis nije implementiran')}
+    get: async () => ({ data: [] }),
+    getBySifra: async (sifra) => ({ data: {} }),
+    dodaj: async (klub) => { console.error('Servis nije implementiran') },
+    promijeni: async (sifra, klub) => { console.error('Servis nije implementiran') },
+    dodaj: async (klub) => { console.error('Servis nije implementiran') },
+    promijeni: async (sifra, klub) => { console.error('Servis nije implementiran') },
+    obrisi: async (sifra) => { console.error('Servis nije implementiran') }
 
 }
 
 const AktivniServis = Servis || PrazanServis
-    
+
 
 
 export default {
-   
+
     get: () => AktivniServis.get(),
     getBySifra: (sifra) => AktivniServis.getBySifra(sifra),
     dodaj: (klub) => AktivniServis.dodaj(klub),
-    promijeni: (sifra,klub) => AktivniServis.promijeni(sifra,klub),
+    promijeni: (sifra, klub) => AktivniServis.promijeni(sifra, klub),
     dodaj: (klub) => AktivniServis.dodaj(klub),
-    promijeni: (sifra,klub) => AktivniServis.promijeni(sifra,klub),
+    promijeni: (sifra, klub) => AktivniServis.promijeni(sifra, klub),
     obrisi: (sifra) => AktivniServis.obrisi(sifra)
 }

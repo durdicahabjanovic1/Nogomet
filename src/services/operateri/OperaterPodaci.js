@@ -19,6 +19,3 @@ export const operateri = [
     }
 ]
 
-export default{
-    operateri
-}

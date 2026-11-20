@@ -8,6 +8,11 @@ import { DATA_SOURCE, IME_APLIKACIJE } from '../constants';
 import { klubovi } from '../services/klubovi/KlubPodaci';
 import { operateri } from '../services/operateri/OperaterPodaci';
 import { igraci } from '../services/igraci/IgracPodaci';
+import KlubServiceFireBase from '../services/klubovi/KlubServiceFireBase';
+import IgracServiceFireBase from '../services/igraci/IgracServiceFireBase';
+import OperaterServiceFireBase from '../services/operateri/OperaterServiceFireBase';
+
+
 
 
 
@@ -246,6 +251,79 @@ export default function GeneriranjePodataka() {
         }
     };
 
+    const handleMemorijaUFirebase = async () => {
+        if (!window.confirm('Jeste li sigurni da želite pretočiti iz memorije u firebase?')) {
+        return;
+    }
+
+    setLoading(true);
+    setPoruka(null);
+
+    try {
+        // 1. Operateri (mogu ići paralelno jer ne trebamo njihove ID-ove za kasnije)
+        const operateriPromises = operateri.map(e => {
+            const { sifra, ...ostatak } = e;
+            return OperaterServiceFireBase.dodajBezHash(ostatak);
+        });
+        await Promise.all(operateriPromises);
+
+
+        // 2. Klubovi (trebamo šifre za igrace)
+        let mapiranjeSifriKlubova = [];
+        for (const e of klubovi) {
+            const { sifra, ...ostatak } = e;
+            const fb = await KlubServiceFireBase.dodaj(ostatak);
+            const noviId = fb.id; 
+            mapiranjeSifriKlubova.push({ sifram: sifra, sifraf: noviId });
+        }
+
+
+        // 3. Igraci (trebamo šifre za klubove)
+        let mapiranjeSifriIgraca = [];
+        for (const e of igraci) {
+            const { sifra, ...ostatak } = e;
+            const fb = await IgracServiceFireBase.dodaj(ostatak);
+            const noviId = fb.data.sifra;
+            mapiranjeSifriIgraca.push({ sifram: sifra, sifraf: noviId });
+        }
+
+
+
+        // 4. Klubovi (povezivanje starih šifri s novim Firebase ID-ovima)
+        for (const e of klubovi) {
+            const { sifra, ...ostatak } = e;
+
+            // Pronađi novi ID kluba
+            const mKlub = mapiranjeSifriKlubova.find(m => m.sifram == ostatak.klub);
+            ostatak.klub = mKlub ? mKlub.sifraf : null;
+
+            // Mapiraj igrace na njihove nove ID-ove
+            ostatak.igraci = ostatak.igraci.map(pSifra => {
+                const mIgrac = mapiranjeSifriIgraca.find(m => m.sifram == pSifra);
+                return mIgrac? mIgrac.sifraf : null;
+            }).filter(id => id !== null); // Makni null ako igrac nije pronađen
+
+            //console.log('Dodajem klub:', ostatak);
+            await KlubServiceFireBase.dodaj(ostatak);
+        }
+
+        setPoruka({
+            tip: 'success',
+            tekst: 'Uspješno presipano u Firebase'
+        });
+
+    } catch (error) {
+        console.error("Greška pri presipanju:", error);
+        setPoruka({
+            tip: 'error',
+            tekst: 'Došlo je do greške prilikom sinkronizacije.'
+        });
+    } finally {
+        setLoading(false);
+    }
+    };
+
+
 
 
 
@@ -361,27 +439,49 @@ export default function GeneriranjePodataka() {
             </Alert>
             {DATA_SOURCE === 'memorija' && (<>
                 <hr className="my-4" />
-
+            
                 <h3>Presipavanje podataka</h3>
                 <p className="text-muted">
                     Koristite ove opcije za kopiranje iz jednog izvora u drugi.
                 </p>
 
                 <Row className="mt-3">
-                    <Col md={3}>
+                   
+                    <Col md={6}>
                         <Button
                             variant="danger"
                             onClick={handleMemorijaULocalStorage}
                             disabled={loading}
                             className="w-100 mb-2"
                         >
-                            {loading ? 'Presipavanje...' : 'Presipaj'}
+                            
+                            {loading ? 'Presipavanje...' : 'Iz memorije u localStorage'}
                         </Button>
                     </Col>
 
-                </Row>
-            </>)}
-
-        </>
-    );
+                     <Col md={6}>
+                            <Button
+                                variant="danger"
+                                onClick={handleMemorijaUFirebase}
+                                disabled={loading}
+                                className="w-100 mb-2"
+                            >
+                                {loading ? 'Pretakanje...' : 'Iz memorije u firebase'}
+                            </Button>
+                        </Col>
+                        
+                        
+                        </Row>
+                        </>
+            )}
+</>
+);
 }
+                        
+                    
+                        
+                        
+
+        
+
+                    

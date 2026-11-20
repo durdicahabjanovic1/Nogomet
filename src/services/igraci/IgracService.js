@@ -2,6 +2,7 @@
 
 
 import { DATA_SOURCE } from "../../constants"
+import IgracServiceFireBase from "./IgracServiceFireBase"
 import IgracServiceLocalStorage from "./IgracServiceLocalStorage"
 import IgracServiceMemorija from "./IgracServiceMemorija"
 
@@ -9,13 +10,18 @@ import IgracServiceMemorija from "./IgracServiceMemorija"
 let Servis = null
 
 
-switch (DATA_SOURCE) {
+
+    switch(DATA_SOURCE) {
+
     case 'memorija':
         Servis = IgracServiceMemorija
         break
     case 'localStorage':
         Servis = IgracServiceLocalStorage
         break
+        case 'firebase':
+            Servis = IgracServiceFireBase
+            break
     default:
         Servis = null
 }
