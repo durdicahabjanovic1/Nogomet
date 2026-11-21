@@ -37,9 +37,9 @@ export const DATA_SOURCE = 'firebase';
 // Predavač je e.
 // Igrači su eN. gdje je N broj s origo servera (npr e1.)
 export const PrefixStorage = {
-    KLUBOVI: 'e.klubovi',
-    IGRACI: 'e.igraci',
-    OPERATERI: 'e.operateri'
+    KLUBOVI: 'e39.klubovi',
+    IGRACI: 'e39.igraci',
+    OPERATERI: 'e39.operateri'
 }
 
 

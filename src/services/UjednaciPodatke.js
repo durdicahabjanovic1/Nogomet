@@ -10,13 +10,14 @@ export default async function ujednaciPodatke(klubUlaz, igracUlaz) {
    //  debugger
     // console.log('Klub ulaz')
     // console.log(klubUlaz)
-    // console.log('Igrac ulaz')
-    // console.log(igracUlaz)
+     console.log('Igrac ulaz')
+     console.log(igracUlaz)
     // console.log('*****************')
     let klub
     if(!klubUlaz?.sifra){
        // console.log('Nema kluba, dodajem')
-        klub = await KlubService.dodaj(klubUlaz)
+       const klubDodaj = await KlubService.dodaj(klubUlaz)
+        klub = klubDodaj.data
       //  console.log(klub)
     }else{
         klub = klubUlaz
@@ -25,7 +26,8 @@ export default async function ujednaciPodatke(klubUlaz, igracUlaz) {
     let igrac
     if(!igracUlaz?.sifra){
       //  console.log('Nema igrača, dodajem')
-        igrac = await IgracService.dodaj(igracUlaz)
+      const dodajIgrac = await IgracService.dodaj(igracUlaz)
+        igrac = dodajIgrac.data
        // console.log(igrac)
     }else{
         igrac = igracUlaz
@@ -47,9 +49,12 @@ export default async function ujednaciPodatke(klubUlaz, igracUlaz) {
             await KlubService.promijeni(k.sifra, k)
         }
     })
-
+    console.log ('Šifra e smije biti undefined')
+    console.log(igrac)
     // na klub dodaj igrača
     klub.igraci.push(igrac.sifra)
+    //console.log(klub.sifra)
+    //console.log(klub)
     await KlubService.promijeni(klub.sifra, klub)
 
     //igraču postavi trenutni klub

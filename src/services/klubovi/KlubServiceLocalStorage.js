@@ -10,7 +10,6 @@ import { PrefixStorage } from "../../constants";
 }
 
 function spremiUStorage(podaci) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(podaci))
     localStorage.setItem(PrefixStorage.KLUBOVI, JSON.stringify(podaci))
 }
 
@@ -38,7 +37,7 @@ async function dodaj(klub) {
     })
     klubovi.push(klub)
     spremiUStorage(klubovi)
-    return klub
+    return {data: klub}
 }
 
 

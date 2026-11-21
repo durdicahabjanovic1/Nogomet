@@ -1,18 +1,14 @@
 
-const STORAGE_KEY = 'igraci'
+
 import { PrefixStorage } from "../../constants";
 
 function dohvatiSveIzStorage() {
-    const podaci = localStorage.getItem(STORAGE_KEY)
-    function dohvatiSveIzStorage() {
-        const podaci = localStorage.getItem(PrefixStorage.KLUBOVI)
-    }
+        const podaci = localStorage.getItem(PrefixStorage.IGRACI)
     return podaci ? JSON.parse(podaci) : []
 }
 
 function spremiUStorage(podaci) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(podaci))
-    localStorage.setItem(PrefixStorage.KLUBOVI, JSON.stringify(podaci))
+    localStorage.setItem(PrefixStorage.IGRACI, JSON.stringify(podaci))
 }
 
 async function get() {
@@ -37,7 +33,7 @@ async function dodaj(igrac) {
 
     igraci.push(igrac)
     spremiUStorage(igraci)
-    return igrac
+    return {data: igrac}
 }
 
 

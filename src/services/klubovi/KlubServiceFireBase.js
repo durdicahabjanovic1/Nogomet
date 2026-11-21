@@ -9,20 +9,14 @@ async function get() {
     const kluboviSnapshot = await getDocs(skupKlubova);
     return {success: true, data: kluboviSnapshot.docs.map(doc => {
         const data = doc.data();
-        const d = data.datumPokretanja ? data.datumPokretanja.toDate() : new Date();
-        const isoDatum = d.toISOString();
         return {
             sifra: doc.id,
-            ...data,
-            datumPokretanja: isoDatum 
+            ...data
         };
     }) }
 }
 
 async function dodaj(klub) {
-    const dateObj = new Date(klub.datumPokretanja);
-    const firestoreTimestamp = Timestamp.fromDate(dateObj);
-    smjer.datumPokretanja = firestoreTimestamp;
     try {
         const skupKlubova = collection(getFirebaseDB(), PrefixStorage.KLUBOVI);
         const docRef = await addDoc(skupKlubova, klub);
@@ -47,15 +41,12 @@ async function getBySifra(sifra) {
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
             const data = docSnap.data();
-            const d = data.datumPokretanja ? data.datumPokretanja.toDate() : new Date();
-            const isoDatum = d.toISOString();
           
             return {
                 success: true,
                 data: {
                     sifra: docSnap.id,
                     ...data,
-                    datumPokretanja: isoDatum
                 }
             };
         } else {
@@ -76,9 +67,6 @@ async function getBySifra(sifra) {
 
 async function promijeni(sifra, klub) {
     try {
-        const dateObj = new Date(klub.datumPokretanja);
-        const firestoreTimestamp = Timestamp.fromDate(dateObj);
-        klub.datumPokretanja = firestoreTimestamp;
         const docRef = doc(getFirebaseDB(), PrefixStorage.KLUBOVI, sifra);
         await updateDoc(docRef, klub);
 

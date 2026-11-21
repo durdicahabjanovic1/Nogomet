@@ -3,7 +3,7 @@
 import { collection, doc, updateDoc, getDoc, getDocs, addDoc, deleteDoc, query, orderBy, limit, startAfter, where } from "firebase/firestore";
 import getFirebaseDB from "../Firebase";
 import { PrefixStorage } from "../../constants";
-import { igraci } from "./IgracPodaci";
+
 
 // 1/4 Read - dohvati sve
 async function get() {

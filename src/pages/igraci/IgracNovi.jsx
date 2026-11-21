@@ -42,7 +42,7 @@ export default function IgracNovi() {
         dodaj({
             ime: podaci.get('ime'),
             prezime: podaci.get('prezime'),
-            klub: parseInt(podaci.get('klub')),
+            klub: podaci.get('klub'),
             brojDresa: parseInt(podaci.get('brojDresa')),
             brojKopackih: parseInt(podaci.get('brojKopackih')),
             pozicija: podaci.get('pozicija'),

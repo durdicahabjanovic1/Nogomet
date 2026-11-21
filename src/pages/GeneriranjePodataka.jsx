@@ -269,43 +269,43 @@ export default function GeneriranjePodataka() {
 
 
         // 2. Klubovi (trebamo šifre za igrace)
-        let mapiranjeSifriKlubova = [];
-        for (const e of klubovi) {
-            const { sifra, ...ostatak } = e;
-            const fb = await KlubServiceFireBase.dodaj(ostatak);
-            const noviId = fb.id; 
-            mapiranjeSifriKlubova.push({ sifram: sifra, sifraf: noviId });
-        }
+        // let mapiranjeSifriKlubova = [];
+        // for (const e of klubovi) {
+        //     const { sifra, ...ostatak } = e;
+        //     const fb = await KlubServiceFireBase.dodaj(ostatak);
+        //     const noviId = fb.id; 
+        //     mapiranjeSifriKlubova.push({ sifram: sifra, sifraf: noviId });
+        // }
 
 
         // 3. Igraci (trebamo šifre za klubove)
-        let mapiranjeSifriIgraca = [];
-        for (const e of igraci) {
-            const { sifra, ...ostatak } = e;
-            const fb = await IgracServiceFireBase.dodaj(ostatak);
-            const noviId = fb.data.sifra;
-            mapiranjeSifriIgraca.push({ sifram: sifra, sifraf: noviId });
-        }
+        // let mapiranjeSifriIgraca = [];
+        // for (const e of igraci) {
+        //     const { sifra, ...ostatak } = e;
+        //     const fb = await IgracServiceFireBase.dodaj(ostatak);
+        //     const noviId = fb.data.sifra;
+        //     mapiranjeSifriIgraca.push({ sifram: sifra, sifraf: noviId });
+        // }
 
 
 
         // 4. Klubovi (povezivanje starih šifri s novim Firebase ID-ovima)
-        for (const e of klubovi) {
-            const { sifra, ...ostatak } = e;
+        // for (const e of klubovi) {
+        //     const { sifra, ...ostatak } = e;
 
-            // Pronađi novi ID kluba
-            const mKlub = mapiranjeSifriKlubova.find(m => m.sifram == ostatak.klub);
-            ostatak.klub = mKlub ? mKlub.sifraf : null;
+        //     // Pronađi novi ID kluba
+        //     const mKlub = mapiranjeSifriKlubova.find(m => m.sifram == ostatak.klub);
+        //     ostatak.klub = mKlub ? mKlub.sifraf : null;
 
-            // Mapiraj igrace na njihove nove ID-ove
-            ostatak.igraci = ostatak.igraci.map(pSifra => {
-                const mIgrac = mapiranjeSifriIgraca.find(m => m.sifram == pSifra);
-                return mIgrac? mIgrac.sifraf : null;
-            }).filter(id => id !== null); // Makni null ako igrac nije pronađen
+        //     // Mapiraj igrace na njihove nove ID-ove
+        //     ostatak.igraci = ostatak.igraci.map(pSifra => {
+        //         const mIgrac = mapiranjeSifriIgraca.find(m => m.sifram == pSifra);
+        //         return mIgrac? mIgrac.sifraf : null;
+        //     }).filter(id => id !== null); // Makni null ako igrac nije pronađen
 
-            //console.log('Dodajem klub:', ostatak);
-            await KlubServiceFireBase.dodaj(ostatak);
-        }
+        //     //console.log('Dodajem klub:', ostatak);
+        //     await KlubServiceFireBase.dodaj(ostatak);
+        // }
 
         setPoruka({
             tip: 'success',

@@ -20,7 +20,7 @@ async function dodaj(klub) {
         klub.sifra = klubovi[klubovi.length - 1].sifra + 1
     }
     klubovi.push(klub)
-    return klub
+    return {data: klub}
 }
 
 async function obrisi(sifra) {

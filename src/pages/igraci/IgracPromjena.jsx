@@ -47,8 +47,6 @@ export default function IgracPromjena() {
 
 
     async function promijeni(igrac) {
-       
-        igrac: podaci.get('igrac'),
         await ujednaciPodatke(klubovi.find(k => k.sifra === igrac.klub), igrac)
         navigate(RouteNames.IGRACI)
     }
@@ -82,7 +80,7 @@ export default function IgracPromjena() {
             brojDresa: parseInt(podaci.get('brojDresa')),
             brojKopackih: parseInt(podaci.get('brojKopackih')),
             pozicija: podaci.get('pozicija'),
-            klub: parseInt(podaci.get('klub')),
+            klub: podaci.get('klub'),
             slika: dataUrl,
             datumRodenja: new Date(podaci.get('datumRodenja')).toISOString()
 

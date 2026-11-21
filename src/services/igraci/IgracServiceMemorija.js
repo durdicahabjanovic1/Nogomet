@@ -19,7 +19,7 @@ async function dodaj(igrac) {
         igrac.sifra = igraci[igraci.length - 1].sifra + 1
     }
     igraci.push(igrac)
-    return igrac
+    return {data: igrac}
 }
 
 async function obrisi(sifra) {

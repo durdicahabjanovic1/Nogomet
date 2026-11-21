@@ -1,6 +1,5 @@
 
 import bcrypt from 'bcryptjs'
-const STORAGE_KEY='operateri'
 import { PrefixStorage } from'../../constants'
 
 
@@ -13,7 +12,6 @@ function dohvatiSveIzStorage() {
 
 // Pomoćna funkcija za spremanje podataka
 function spremiUStorage(podaci) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(podaci))
     localStorage.setItem(PrefixStorage.OPERATERI, JSON.stringify(podaci))
 }
 

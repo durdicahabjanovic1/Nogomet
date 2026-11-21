@@ -119,7 +119,7 @@ export default function KlubNovi() {
     async function dodaj(klub) {
 
         const dodaniKlub = await KlubService.dodaj(klub);
-        const listaIgraca = dodaniKlub?.igraci ?? dodaniKlub?.data?.igraci ?? [];
+        const listaIgraca = dodaniKlub.data.igraci;
        // dodaniKlub.igraci.map(async k => {
         await Promise.all(
             listaIgraca.map(async (k) => {
