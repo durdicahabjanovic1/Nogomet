@@ -172,7 +172,7 @@ export default function KlubNovi() {
                     <Row>
 
                         <Col md={6}>
-                            <Card className="shadow-sm">
+                            <Card className="shadow-sm" style={{ backgroundColor: '#888c8f'}}>
                                 <Card.Body>
                                     <Card.Title className="mb-4">Unos novog kluba</Card.Title>
 
@@ -183,6 +183,7 @@ export default function KlubNovi() {
                                             type="text"
                                             name="naziv"
                                             placeholder="Unesite naziv kluba"
+                                            style={{ backgroundColor: '#8b10105d'}}
                                             required
                                         />
                                     </Form.Group>
@@ -194,6 +195,7 @@ export default function KlubNovi() {
                                             type="text"
                                             name="mjesto"
                                             placeholder="Unesite mjesto kluba"
+                                            style={{backgroundColor:'#72b51f'}}
                                             required
                                         />
                                     </Form.Group>
@@ -204,17 +206,18 @@ export default function KlubNovi() {
                         </Col>
 
                         <Col md={6}>
-                            <Card className="shadow-sm">
+                            <Card className="shadow-sm" style={{backgroundColor: '#5d83c2'}}>
                                 <Card.Body>
-                                    <Card.Title className="mb-4">Igraci</Card.Title>
+                                    <Card.Title className="mb-4">Igrači</Card.Title>
 
                                     {/* Autocomplete pretraga */}
                                     <Form.Group className="mb-3 position-relative">
-                                        <Form.Label className="fw-bold">Dodaj Igraca</Form.Label>
+                                        <Form.Label className="fw-bold">Dodaj Igrača</Form.Label>
                                         <Form.Control
                                             type="text"
-                                            placeholder="Pretraži igraca..."
+                                            placeholder="Pretraži igrača..."
                                             value={pretragaIgraca}
+                                            style={{ backgroundColor: '#a9aa67' }}
                                             onChange={(e) => {
                                                 setPretragaIgraca(e.target.value)
                                                 setPrikaziAutocomplete(e.target.value.length > 0)
@@ -231,8 +234,8 @@ export default function KlubNovi() {
                                                         className="p-2 cursor-pointer"
                                                         style={{
                                                             cursor: 'pointer',
-                                                            backgroundColor: index === odabraniIndex ? '#007bff' : 'white',
-                                                            color: index === odabraniIndex ? 'white' : 'black'
+                                                            backgroundColor: index === odabraniIndex ? '#007bff' : 'rgb(50, 149, 155)',
+                                                            color: index === odabraniIndex ? '#c1c436' : '#240b0b'
                                                         }}
                                                         onClick={() => dodajIgraca(igrac)}
                                                         onMouseEnter={(e) => {
@@ -278,7 +281,7 @@ export default function KlubNovi() {
 
                                     )}
                                     {odabraniIgraci.length === 0 && (
-                                        <p className="text-muted">Nema odabranih igraca</p>
+                                        <p className="text-muted">Nema odabranih igrača</p>
                                     )}
                                 </Card.Body>
                             </Card>

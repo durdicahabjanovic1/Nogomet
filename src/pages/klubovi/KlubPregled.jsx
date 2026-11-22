@@ -120,7 +120,7 @@ export default function klubPregled() {
 
                     <Link to={RouteNames.KLUBOVI_DODAJ}
 
-                        className="btn btn-success w-100 my-3">
+                        className="btn btn-success w-100 my-3" style ={{backgroundColor: '#6b33ac22'}}>
 
                         Dodavanje novog kluba
                     </Link >
@@ -134,12 +134,15 @@ export default function klubPregled() {
                             generirajPDFZaKlub={generirajPDFZaKlub}
                         />
                     ) : (
+                        <div style={{ backgroundColor: '#2615c6', padding: '15px', borderRadius: '8px' }}>
                         <KlubPregledTablica
                             klubovi={klubovi}
                             navigate={navigate}
                             obrisi={obrisi}
                             generirajPDFZaKlub={generirajPDFZaKlub}
                         />
+                        </div>
+
                     )}
 
 

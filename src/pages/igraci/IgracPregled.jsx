@@ -98,7 +98,7 @@ export default function IgracPregled() {
             <Link to={RouteNames.IGRACI_DODAJ}
                 className="btn btn-success w-100 my-3">
 
-                Dodavanje novog igraca
+                Dodavanje novog igrača
             </Link >
             <InputGroup className="mb-3">
                 <InputGroup.Text>

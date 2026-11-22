@@ -55,7 +55,7 @@ export default function IgracNovi() {
     return (
         <>
             <h3>
-                Dodavanje novog igraca
+                Dodavanje novog igrača
             </h3>
 
             <Form onSubmit={obradiSubmit}>

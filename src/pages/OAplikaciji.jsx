@@ -32,7 +32,7 @@ export default function OAplikaciji() {
 
             <Row className="g-4 mt-2">
                 <Col md={7}>
-                    <Card className="shadow-sm border-0 h-100">
+                    <Card className="shadow-sm border-0 h-100" style= {{backgroundColor: '#716161'}}>
                         <Card.Body>
                             <Card.Title>
                                 <FaLaptopCode className="me-2" /> Što aplikacija omogućuje?
@@ -41,7 +41,7 @@ export default function OAplikaciji() {
                                 {znacajke.map((znacajka) => {
                                     const Ikona = znacajka.Ikona;
                                     return (
-                                        <li key={znacajka.tekst} className="d-flex align-items-center mb-2">
+                                        <li key={znacajka.tekst} className="d-flex align-items-center mb-2" style= {{backgroundColor: '#45272788'}}>
                                             <Ikona className="me-2 text-success" />
                                             <span>{znacajka.tekst}</span>
                                         </li>
@@ -53,16 +53,16 @@ export default function OAplikaciji() {
                 </Col>
 
                 <Col md={5}>
-                    <Card className="shadow-sm border-0 h-100">
+                    <Card className="shadow-sm border-0 h-100" style= {{backgroundColor: '#89313166'}}>
                         <Card.Body>
                             <Card.Title>
-                                <FaCode className="me-2" />Korištena tehnologija
+                                <FaCode className="me-2" style= {{backgroundColor: 'rgba(92, 35, 64, 0.6)'}} />Korištena tehnologija
                             </Card.Title>
-                            <p className="text-muted">
+                            <p className="text-muted" style= {{backgroundColor:'#86c4a199'}}>
                                 Aplikacija je izrađena u modernom JavaScript
                                 ekosustavu.
                             </p>
-                            <div className="d-flex flex-wrap gap-2">
+                            <div className="d-flex flex-wrap gap-2" style= {{backgroundColor: '#4444'}}>
                                 {tehnologija.map((t) => (
                                     <Badge key={t} bg="dark" className="fs-6">{t}</Badge>
                                 ))}

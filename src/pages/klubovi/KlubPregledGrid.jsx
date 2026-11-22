@@ -8,7 +8,7 @@ export default function KlubPregledGrid({ klubovi, navigate, obrisi,generirajPDF
             <Row>
                 {klubovi && klubovi.map((klub) => (
                     <Col key={klub.sifra} xs={12} md={6} className="mb-4">
-                        <Card className="shadow-sm h-100">
+                        <Card className="shadow-sm h-100" style= {{backgraoundColor: '#d5e2c0'}}>
                             <Card.Header className="d-flex justify-content-between align-items-center bg-white py-3">
                                 <span className="fw-bold text-primary" style={{ fontSize: '1.1rem' }}>
                                    

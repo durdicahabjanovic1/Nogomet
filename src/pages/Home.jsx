@@ -72,10 +72,10 @@ export default function Home() {
                         <Col key={opcija.naziv} xs={12} md={4}>
                             <Card className="h-100 shadow-sm style={{backgroundColor: '#6793b0',borderColor: 'rgba(51, 187, 148, 0.87)'}} border-1">
 
-                                <Card.Body className="d-flex flex-column text-center">
+                                <Card.Body className="d-flex flex-column text-center" style= {{backgroundColor:'#959'}}>
                                     <Ikona size={36} className="mx-auto mb-3 text-primary" />
                                     <Card.Title>{opcija.naziv}</Card.Title>
-                                    <Card.Text className="flex-grow-1">{opcija.opis}</Card.Text>
+                                    <Card.Text className="flex-grow-1" style= {{backgroundColor:'#888'}}>{opcija.opis}</Card.Text>
                                     <Button
                                         variant={opcija.boja}
                                         className="w-100"

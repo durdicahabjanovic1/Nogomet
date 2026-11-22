@@ -67,7 +67,7 @@ export default function NadzornaPloca() {
     return (
          
              <>
-            <Container className='mt-4'>
+            <Container className='mt-4' style= {{backgroundColor:'#125a17'}}>
                 {podaci.length > 0 && (
                     <HighchartsReact
                         highcharts={Highcharts}
