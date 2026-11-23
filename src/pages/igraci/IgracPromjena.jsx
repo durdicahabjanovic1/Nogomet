@@ -22,18 +22,15 @@ export default function IgracPromjena() {
 
     async function ucitajKlubove() {
         await KlubService.get().then((res) => {
-            // console.log(res.data)
             setKlubovi(res.data)
-            setSlikaZaCrop(res.data.slika)
         })
     }
     async function ucitajIgrac() {
         await IgracService.getBySifra(params.sifra).then((res) => {
             const s = res.data
-            console.log(s)
             s.datumRodenja = s.datumRodenja.substring(0, 10)
             setIgrac(s)
-
+            setSlikaZaCrop(s.slika)
         })
     }
 
@@ -47,6 +44,7 @@ export default function IgracPromjena() {
 
 
     async function promijeni(igrac) {
+        igrac.sifra = params.sifra
         await ujednaciPodatke(klubovi.find(k => k.sifra === igrac.klub), igrac)
         navigate(RouteNames.IGRACI)
     }
@@ -153,7 +151,7 @@ export default function IgracPromjena() {
                                     <Form.Label>Klub</Form.Label>
                                     <Form.Select name="klub" required
                                         value={igrac.klub}
-                                        onChange={(e) => setIgrac({ ...igrac, klub: parseInt(e.target.value) })}>
+                                        onChange={(e) => setIgrac({ ...igrac, klub: e.target.value })}>
                                         <option value="" key={0}>Obavezan odabir kluba</option>
                                         {klubovi && klubovi.map((s) => (
                                             <option value={s.sifra} key={s.sifra}>
@@ -181,10 +179,10 @@ export default function IgracPromjena() {
                                 defaultValue={igrac.brojDresa} />
                         </Form.Group>
 
-                        <Form.Group controlId="brojKopacki">
-                            <Form.Label>Broj kopački</Form.Label>
-                            <Form.Control type="number" name="brojKopacki"
-                                defaultValue={igrac.brojKopacki} />
+                        <Form.Group controlId="brojKopackih">
+                            <Form.Label>Broj kopačkih</Form.Label>
+                            <Form.Control type="number" name="brojKopackih"
+                                defaultValue={igrac.brojKopackih} />
                         </Form.Group>
 
                         <Form.Group controlId="pozicija">
@@ -220,8 +218,6 @@ export default function IgracPromjena() {
                     <Col md={4}>
                         <Form.Group controlId="slika" className="mb-3">
                             <Form.Label>Slika igrača</Form.Label>
-                            <Form.Control className='mb-3' type='file' onChange={onChangeImage} />
-
                         </Form.Group>
 
 

@@ -105,7 +105,7 @@ export default function KlubPromjena() {
     }, [])
 
     async function promijeni(klub) {
-        klub.sifra = parseInt(params.sifra)
+        klub.sifra = params.sifra
         klub.igraci.map(async k => {
             const podaci = await IgracService.getBySifra(k)
             await ujednaciPodatke(klub, podaci.data)

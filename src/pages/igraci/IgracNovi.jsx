@@ -32,7 +32,7 @@ export default function IgracNovi() {
        // console.log(klubovi.find(k=>k.sifra===igrac.klub))
        // console.log(igrac)
        // console.log('//////////////////////')
-        await ujednaciPodatke(klubovi.find(k=>k.sifra===igrac.klub), igrac)
+        await ujednaciPodatke(klubovi.find(k=>k.sifra==igrac.klub), igrac)
         navigate(RouteNames.IGRACI)
     }
 

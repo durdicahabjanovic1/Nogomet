@@ -54,7 +54,7 @@ export default function Home() {
                     </Col>
                     <Col md={6} className="text-center">
                         <img
-                            src="/public/slikejpg/slikaLopte.webp"
+                            src="slikejpg/slikaLopte.webp"
                             alt="Nogometna lopta"
                             className="img-fluid nogomet-lopta rounded-circle shadow-lg" 
                             style={{width:'200px',height: '200px', objectFit:'cover', border: '5px solid #facc15'}} 
