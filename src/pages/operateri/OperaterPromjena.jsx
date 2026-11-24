@@ -1,23 +1,34 @@
-
 import { useEffect, useState } from "react"
 import { Link, useNavigate, useParams } from "react-router-dom"
 import OperaterService from "../../services/operateri/OperaterService"
-import { Form, Button, Row, Col, Container, Card, Alert } from "react-bootstrap"
+import { Form, Button, Row, Col, Container, Card } from "react-bootstrap"
 import { RouteNames } from "../../constants"
-import { ShemaPromjenaLozinke } from "../../schemas/ShemaOperater"
+import { z } from 'zod'
 
-export default function OperaterPromjenaLozinke() {
+export default function OperaterPromjena() {
 
     const navigate = useNavigate()
     const params = useParams()
     const [operater, setOperater] = useState({})
     const [errors, setErrors] = useState({})
 
+    // Shema za email i ulogu (bez lozinke)
+    const ShemaEmailUloga = z.object({
+        email: z.string()
+            .trim()
+            .min(1, "Email je obavezan!")
+            .email("Unesite ispravan email format!"),
+        uloga: z.enum(['admin', 'korisnik'], {
+            errorMap: () => ({ message: "Uloga mora biti 'admin' ili 'korisnik'!" })
+        })
+    })
+
     useEffect(() => {
         ucitajOperatera()
     }, [])
 
     async function ucitajOperatera() {
+        
         const odgovor = await OperaterService.getBySifra(params.sifra)
         if (!odgovor.success) {
             alert('Operater nije pronađen')
@@ -27,13 +38,12 @@ export default function OperaterPromjenaLozinke() {
         setOperater(odgovor.data)
     }
 
-    async function promjeniLozinku(novaLozinka) {
-        const rezultat = await OperaterService.promjeniLozinku(params.sifra, novaLozinka)
+    async function promjeni(operater) {
+        const rezultat = await OperaterService.promjeni(params.sifra, operater)
         if (rezultat.success) {
-            alert('Lozinka uspješno promijenjena!')
             navigate(RouteNames.OPERATERI)
         } else {
-            alert(rezultat.message || 'Greška pri promjeni lozinke')
+            alert(rezultat.message || 'Greška pri promjeni operatera')
         }
     }
 
@@ -45,7 +55,7 @@ export default function OperaterPromjenaLozinke() {
         const objektPodataka = Object.fromEntries(podaci)
 
         // Provjera pomoću Zod sheme
-        const rezultat = ShemaPromjenaLozinke.safeParse(objektPodataka)
+        const rezultat = ShemaEmailUloga.safeParse(objektPodataka)
 
         if (!rezultat.success) {
             const noveGreske = {}
@@ -61,7 +71,10 @@ export default function OperaterPromjenaLozinke() {
             return
         }
 
-        promjeniLozinku(podaci.get('novaLozinka'))
+        promjeni({
+            email: podaci.get('email'),
+            uloga: podaci.get('uloga')
+        })
     }
 
     const ocistiGresku = (nazivPolja) => {
@@ -74,39 +87,27 @@ export default function OperaterPromjenaLozinke() {
 
     return (
         <>
-            <h3>Promjena lozinke</h3>
+            <h3>Promjena operatera</h3>
             <Form onSubmit={odradiSubmit}>
                 <Container className="mt-4">
                     <Card className="shadow-sm">
                         <Card.Body>
-                            <Card.Title className="mb-4">
-                                Promjena lozinke za: <strong>{operater.email}</strong>
-                            </Card.Title>
-
-                            <Alert variant="info">
-                                <strong>Zahtjevi za lozinku:</strong>
-                                <ul className="mb-0 mt-2">
-                                    <li>Najmanje 8 znakova</li>
-                                    <li>Barem jedno veliko slovo (A-Z)</li>
-                                    <li>Barem jedno malo slovo (a-z)</li>
-                                    <li>Barem jedan broj (0-9)</li>
-                                    <li>Barem jedan interpukcijski znak (!@#$%^&*...)</li>
-                                </ul>
-                            </Alert>
+                            <Card.Title className="mb-4">Podaci o operateru</Card.Title>
 
                             <Row>
                                 <Col xs={12}>
-                                    <Form.Group controlId="novaLozinka" className="mb-3">
-                                        <Form.Label className="fw-bold">Nova lozinka</Form.Label>
+                                    <Form.Group controlId="email" className="mb-3">
+                                        <Form.Label className="fw-bold">Email</Form.Label>
                                         <Form.Control
-                                            type="password"
-                                            name="novaLozinka"
-                                            placeholder="Unesite novu lozinku"
-                                            isInvalid={!!errors.novaLozinka}
-                                            onFocus={() => ocistiGresku('novaLozinka')}
+                                            type="email"
+                                            name="email"
+                                            placeholder="operater@edunova.hr"
+                                            defaultValue={operater.email}
+                                            isInvalid={!!errors.email}
+                                            onFocus={() => ocistiGresku('email')}
                                         />
                                         <Form.Control.Feedback type="invalid">
-                                            {errors.novaLozinka}
+                                            {errors.email}
                                         </Form.Control.Feedback>
                                     </Form.Group>
                                 </Col>
@@ -114,17 +115,21 @@ export default function OperaterPromjenaLozinke() {
 
                             <Row>
                                 <Col xs={12}>
-                                    <Form.Group controlId="potvrdaLozinke" className="mb-3">
-                                        <Form.Label className="fw-bold">Potvrda lozinke</Form.Label>
-                                        <Form.Control
-                                            type="password"
-                                            name="potvrdaLozinke"
-                                            placeholder="Ponovite novu lozinku"
-                                            isInvalid={!!errors.potvrdaLozinke}
-                                            onFocus={() => ocistiGresku('potvrdaLozinke')}
-                                        />
+                                    <Form.Group controlId="uloga" className="mb-3">
+                                        <Form.Label className="fw-bold">Uloga</Form.Label>
+                                        <Form.Select
+                                            onChange={(e) => setOperater({ ...operater, uloga: e.target.value})}
+                                            name="uloga"
+                                            value={operater.uloga || ''}
+                                            isInvalid={!!errors.uloga}
+                                            onFocus={() => ocistiGresku('uloga')}
+                                        >
+                                            <option value="">Odaberite ulogu...</option>
+                                            <option value="admin">Admin</option>
+                                            <option value="korisnik">Korisnik</option>
+                                        </Form.Select>
                                         <Form.Control.Feedback type="invalid">
-                                            {errors.potvrdaLozinke}
+                                            {errors.uloga}
                                         </Form.Control.Feedback>
                                     </Form.Group>
                                 </Col>
@@ -137,7 +142,7 @@ export default function OperaterPromjenaLozinke() {
                                     Odustani
                                 </Link>
                                 <Button type="submit" variant="success">
-                                    Promjeni lozinku
+                                    Promjeni operatera
                                 </Button>
                             </div>
                         </Card.Body>
